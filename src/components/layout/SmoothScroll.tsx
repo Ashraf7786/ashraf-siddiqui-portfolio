@@ -23,9 +23,12 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
         };
     }, []);
 
+    // @ts-ignore - The react-lenis types are out of sync with React 19 nodes
+    const LenisWrapper = ReactLenis as any;
+
     return (
-        <ReactLenis ref={lenisRef} root autoRaf={false} options={{ lerp: 0.05, syncTouch: true, smoothWheel: true }}>
+        <LenisWrapper ref={lenisRef} root autoRaf={false} options={{ lerp: 0.05, syncTouch: true, smoothWheel: true }}>
             {children}
-        </ReactLenis>
+        </LenisWrapper>
     );
 }
