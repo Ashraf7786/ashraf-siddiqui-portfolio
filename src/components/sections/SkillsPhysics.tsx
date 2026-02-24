@@ -101,13 +101,16 @@ export default function SkillsPhysics() {
             // Run
             Render.run(render);
             runner = Runner.create();
-            Runner.run(runner, engine);
 
             // Custom Render for Text and Emojis
             Matter.Events.on(render, 'afterRender', () => {
                 const ctx = render.context;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
+
+                // Cache fill style and font state per frame for performance
+                ctx.fillStyle = '#ffffff';
+                let currentFont = '';
 
                 const bodies = Composite.allBodies(world).filter(b => !b.isStatic && !b.isSensor);
 
@@ -124,11 +127,16 @@ export default function SkillsPhysics() {
                     if (body.label.startsWith('emoji:')) {
                         // @ts-ignore
                         const emoji = body.label.split(':')[1];
-                        ctx.font = '36px Arial';
-                        ctx.fillText(emoji, 0, 3); // Slight y-offset adjustment for emojis
+                        if (currentFont !== '36px Arial') {
+                            ctx.font = '36px Arial';
+                            currentFont = '36px Arial';
+                        }
+                        ctx.fillText(emoji, 0, 3);
                     } else {
-                        ctx.font = '500 24px Inter, sans-serif';
-                        ctx.fillStyle = '#ffffff';
+                        if (currentFont !== '500 24px Inter, sans-serif') {
+                            ctx.font = '500 24px Inter, sans-serif';
+                            currentFont = '500 24px Inter, sans-serif';
+                        }
                         // @ts-ignore
                         ctx.fillText(body.label, 0, 1);
                     }
@@ -138,6 +146,9 @@ export default function SkillsPhysics() {
             });
         };
 
+        // Initialize physics instantly to avoid layout drops on scroll
+        initPhysics();
+
         let triggered = false;
         const st = ScrollTrigger.create({
             trigger: containerRef.current,
@@ -145,13 +156,22 @@ export default function SkillsPhysics() {
             onEnter: () => {
                 if (!triggered) {
                     triggered = true;
+
+                    // Start physics calculations
+                    if (runner && engineRef.current) {
+                        Matter.Runner.run(runner, engineRef.current);
+                    }
+
                     // Intro animation for the container
                     gsap.fromTo(containerRef.current,
                         { y: 100, opacity: 0 },
                         { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
                     );
-                    initPhysics();
-                    spawnPills('CORE CAPABILITIES');
+
+                    // Delay pills spawn slightly until layout stabilizes
+                    requestAnimationFrame(() => {
+                        spawnPills('CORE CAPABILITIES');
+                    });
                 }
             }
         });
@@ -259,10 +279,6 @@ export default function SkillsPhysics() {
                     })}
                 </div>
 
-                {/* Subtle Action Hint */}
-                <div className="bg-[#D81B60] text-white text-[10px] md:text-xs px-4 py-1.5 rounded-full font-mono tracking-wider shadow-sm animate-pulse">
-                    Click to explore more..
-                </div>
             </div>
 
             {/* Physics Container */}

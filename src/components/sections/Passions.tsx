@@ -9,17 +9,18 @@ import { Fredoka } from 'next/font/google';
 const fredoka = Fredoka({ subsets: ['latin'], weight: ['500'] });
 
 const PASSIONS = [
-    {
+      {
         id: 1,
-        title: 'Audiophile',
-        desc: "Appreciating high fidelity sound and immersive musical experiences in my free time.",
-        image: "https://images.unsplash.com/photo-1542728928-1413d1894dcd?auto=format&fit=crop&q=80&w=800",
+        title: 'Code Artist',
+        desc: "Writing clean, scalable code and building robust architectures is more than just work—it's art.",
+        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800",
     },
+   
     {
         id: 2,
-        title: 'Wanderer',
-        desc: "Exploring new places fuels me. Been around India, Japan, and Indonesia - Tokyo still tops the list.",
-        image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&q=80&w=800",
+        title: 'Traveller Ashraf',
+        desc: "Already explored 20+ states across India. Now moving toward the remaining 9. One step closer to completing the entire map, then the real global journey begins.",
+        image: "/img/ashraf1.jpeg",
     },
     {
         id: 3,
@@ -27,11 +28,12 @@ const PASSIONS = [
         desc: "Riding is my therapy when life gets loud. I'm usually out on my bike for a spin.",
         image: "https://images.unsplash.com/photo-1558980394-4c7c9299fe96?auto=format&fit=crop&q=80&w=800",
     },
-    {
+  
+     {
         id: 4,
-        title: 'Code Artist',
-        desc: "Writing clean, scalable code and building robust architectures is more than just work—it's art.",
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800",
+        title: 'Visual Storyteller',
+        desc: "Passionate about capturing moments through photos and cinematic videos. Turning simple scenes into meaningful memories, one frame at a time.",
+        image: "/img/ashraf.jpeg",
     }
 ];
 

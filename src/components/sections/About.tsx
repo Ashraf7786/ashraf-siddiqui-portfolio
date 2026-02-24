@@ -89,7 +89,7 @@ export default function About() {
                     <div className="flex flex-col gap-4 md:gap-6 pt-12 md:pt-24">
                         <img
                             ref={el => { imagesRef.current[0] = el }}
-                            src="https://images.unsplash.com/photo-1544281679-05e8348ba97f?auto=format&fit=crop&q=80&w=800"
+                            src="/img/laptop.jpeg"
                             alt="Rajasthan Travel"
                             className="w-full h-[30vh] md:h-[40vh] rounded-2xl object-cover grayscale hover:grayscale-0 transition-all duration-700"
                         />
@@ -103,7 +103,7 @@ export default function About() {
                     <div className="flex flex-col gap-4 md:gap-6">
                         <img
                             ref={el => { imagesRef.current[2] = el }}
-                            src="https://images.unsplash.com/photo-1509319117193-57bab727e09d?auto=format&fit=crop&q=80&w=800"
+                            src="/img/ashraf2.jpeg"
                             alt="Fashion"
                             className="w-full h-[45vh] md:h-[55vh] rounded-2xl object-cover grayscale hover:grayscale-0 transition-all duration-700"
                         />
