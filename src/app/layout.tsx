@@ -10,8 +10,58 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
-  title: "Ashraf Siddiqui | Web Developer",
-  description: "Modern portfolio of Ashraf Siddiqui, a specialized Web Developer in Laravel, PHP, and Shopify.",
+  title: {
+    default: "Ashraf Siddiqui | Full Stack Web Developer & Software Engineer",
+    template: "%s | Ashraf Siddiqui"
+  },
+  description: "Portfolio of Ashraf Siddiqui, a specialized Full Stack Web Developer. Expert in React, Next.js, Laravel, PHP, Shopify, and modern scalable web applications.",
+  keywords: [
+    "Ashraf Siddiqui",
+    "Web Developer",
+    "Full Stack Developer",
+    "Frontend Developer",
+    "Backend Developer",
+    "React Developer",
+    "Next.js Expert",
+    "Laravel Developer",
+    "PHP Developer",
+    "Shopify Expert",
+    "Software Engineer",
+    "Portfolio",
+    "Ashraf",
+    "Freelance Developer",
+    "SEO"
+  ],
+  authors: [{ name: "Ashraf Siddiqui", url: "https://ashrafsiddiqui.com" }],
+  creator: "Ashraf Siddiqui",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://ashrafsiddiqui.com",
+    title: "Ashraf Siddiqui | Full Stack Web Developer",
+    description: "Portfolio of Ashraf Siddiqui. Specialized in creating fast, accessible, and dynamic web experiences using React, Next.js, Laravel, and Shopify.",
+    siteName: "Ashraf Siddiqui Portfolio",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ashraf Siddiqui | Full Stack Web Developer",
+    description: "Portfolio of Ashraf Siddiqui. Specialized in creating fast, accessible, and dynamic web experiences.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+};
+
+export const viewport = {
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({

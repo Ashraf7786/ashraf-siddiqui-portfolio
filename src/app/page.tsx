@@ -13,6 +13,23 @@ export default function Home() {
     <>
       <Header />
       <main className="w-full bg-[#0a0a0a]">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Ashraf Siddiqui",
+              url: "https://ashrafsiddiqui.com",
+              jobTitle: "Full Stack Web Developer",
+              description: "Expert in React, Next.js, Laravel, PHP, and modern web applications.",
+              sameAs: [
+                "https://github.com/Ashraf7786",
+                "https://linkedin.com/in/ashraf-siddiqui"
+              ]
+            })
+          }}
+        />
         <Hero />
         <Projects />
         <About />
