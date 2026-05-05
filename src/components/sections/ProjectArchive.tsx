@@ -12,6 +12,30 @@ gsap.registerPlugin(ScrollTrigger);
 const ARCHIVE_PROJECTS = [
     {
         year: '2025',
+        title: 'SocialArch',
+        tech: ['Next.js', 'GSAP', 'SEO', 'Tailwind'],
+        link: 'https://socialarchmedia.com/',
+    },
+    {
+        year: '2025',
+        title: 'Aerocool',
+        tech: ['React.js', 'Next.js', 'Matter.js', 'Tailwind'],
+        link: 'https://www.aerocooljaipur.in/',
+    },
+    {
+        year: '2025',
+        title: 'Adwoks Academy',
+        tech: ['Laravel', 'Vue.js', 'Tailwind', 'PHP'],
+        link: 'https://www.adwoksacademy.com/',
+    },
+    {
+        year: '2024',
+        title: 'Jagdamba Travels',
+        tech: ['React', 'Next.js', 'Tailwind'],
+        link: 'https://indiajagdambatours.com/',
+    },
+    {
+        year: '2025',
         title: "Dr. Priya's Skin Clinics",
         tech: ['Laravel', 'PHP', 'MySQL', 'JS', 'HTML/CSS'],
         link: 'https://www.drpriyaenhanceskinclinics.com/',
