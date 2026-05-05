@@ -58,8 +58,8 @@ export default function SkillsPhysics() {
 
             const engine = Engine.create({
                 gravity: { x: 0, y: 0.8, scale: 0.001 },
-                positionIterations: 10,
-                velocityIterations: 10
+                positionIterations: 6, // Lower iterations for performance
+                velocityIterations: 6
             });
             engineRef.current = engine;
             const world = engine.world;
@@ -72,7 +72,7 @@ export default function SkillsPhysics() {
                     height,
                     background: 'transparent',
                     wireframes: false,
-                    pixelRatio: window.devicePixelRatio,
+                    pixelRatio: Math.min(window.devicePixelRatio, 2), // Cap for high-end mobile screens
                 }
             });
 
@@ -194,9 +194,11 @@ export default function SkillsPhysics() {
         Matter.World.remove(engine.world, nonStaticBodies);
 
         const width = containerRef.current.clientWidth;
+        const isMobile = window.innerWidth < 768;
+        
         const baseItems = TABS[tab];
-        // Duplicate items array to make a much denser, playable pile of elements
-        const items = [...baseItems, ...baseItems];
+        // Reduce density on mobile - no duplication
+        const items = isMobile ? baseItems : [...baseItems, ...baseItems];
 
         let bodiesToAdd: Matter.Body[] = [];
 
@@ -227,7 +229,7 @@ export default function SkillsPhysics() {
         });
 
         // Spawn Emoji Circles
-        const emojiCount = 15;
+        const emojiCount = isMobile ? 8 : 15;
         for (let i = 0; i < emojiCount; i++) {
             const radius = 32;
             const x = (Math.random() * (width - 100)) + 50;

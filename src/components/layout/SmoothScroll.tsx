@@ -27,7 +27,17 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const LenisWrapper = ReactLenis as any;
 
     return (
-        <LenisWrapper ref={lenisRef} root autoRaf={false} options={{ lerp: 0.05, syncTouch: true, smoothWheel: true }}>
+        <LenisWrapper 
+            ref={lenisRef} 
+            root 
+            autoRaf={false} 
+            options={{ 
+                lerp: 0.1, // Faster lerp is often better for performance feel
+                syncTouch: false, // DO NOT sync touch on mobile, it's laggy
+                smoothWheel: true,
+                touchMultiplier: 2,
+            }}
+        >
             {children}
         </LenisWrapper>
     );
