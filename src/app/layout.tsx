@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./tw-animate.css";
 import "./globals.css";
-import SmoothScroll from "@/components/layout/SmoothScroll";
-import CustomCursor from "@/components/ui/CustomCursor";
-import Preloader from "@/components/ui/Preloader";
+import Providers from "@/components/layout/Providers";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -70,13 +69,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.variable} ${outfit.variable} antialiased bg-[#0a0a0a] text-[#f5f5f5] selection:bg-[#f5f5f5] selection:text-[#0a0a0a] cursor-none`}>
-        <Preloader />
-        <CustomCursor />
-        <SmoothScroll>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body 
+        className={cn(
+          inter.variable,
+          outfit.variable,
+          "antialiased bg-[#0a0a0a] text-[#f5f5f5] selection:bg-[#f5f5f5] selection:text-[#0a0a0a] cursor-none"
+        )}
+        suppressHydrationWarning
+      >
+        <Providers>
           {children}
-        </SmoothScroll>
+        </Providers>
       </body>
     </html>
   );

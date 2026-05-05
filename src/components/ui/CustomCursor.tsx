@@ -11,6 +11,9 @@ export default function CustomCursor() {
     const [isVisible, setIsVisible] = useState(false);
 
     useIsomorphicLayoutEffect(() => {
+        // Disable custom cursor on mobile / touch devices for performance
+        if (typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches) return;
+
         const cursorDot = cursorDotRef.current;
         const cursorRing = cursorRingRef.current;
         if (!cursorDot || !cursorRing) return;
@@ -105,7 +108,7 @@ export default function CustomCursor() {
         <>
             <div
                 ref={cursorRingRef}
-                className={`fixed top-0 left-0 rounded-full pointer-events-none z-[9999] mix-blend-difference transform shadow-sm flex items-center justify-center transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+                className={`hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] mix-blend-difference transform shadow-sm items-center justify-center transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
                 style={{
                     width: '32px',
                     height: '32px',
@@ -115,7 +118,7 @@ export default function CustomCursor() {
             />
             <div
                 ref={cursorDotRef}
-                className={`fixed top-0 left-0 w-2 h-2 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference transform transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+                className={`hidden md:block fixed top-0 left-0 w-2 h-2 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference transform transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
                 style={{
                     transform: 'translate(-50%, -50%)',
                 }}

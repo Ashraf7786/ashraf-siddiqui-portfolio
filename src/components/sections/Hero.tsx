@@ -63,6 +63,9 @@ export default function Hero() {
                 delay: 0.8,
             });
 
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+            if (isMobile) return;
+
             // Glowing cursor tracker
             const xTo = gsap.quickTo(glowRef.current, "x", { duration: 0.8, ease: "power3" });
             const yTo = gsap.quickTo(glowRef.current, "y", { duration: 0.8, ease: "power3" });
@@ -192,10 +195,10 @@ export default function Hero() {
             </div>
 
             {/* Main Typography */}
-            <div className="z-10 flex flex-col justify-center w-full px-4 text-center pointer-events-none mix-blend-difference mt-20 relative">
-                <div className="flex justify-center flex-wrap h-[20vw] max-h-[300px] items-center perspective-[1000px]">
+            <div className="z-10 flex flex-col justify-center w-full px-2 md:px-4 text-center pointer-events-none mix-blend-difference mt-20 relative">
+                <div className="flex justify-center flex-wrap h-[15vw] sm:h-[15vw] md:h-[20vw] max-h-[300px] items-center perspective-[1000px]">
                     <h1
-                        className="text-[20vw] md:text-[18vw] font-black uppercase tracking-tighter leading-none text-white mr-0 md:-mr-[10vw] relative z-20 flex gap-1 md:gap-2"
+                        className="text-[14vw] sm:text-[15vw] md:text-[18vw] font-black uppercase tracking-tighter leading-none text-white mr-0 md:-mr-[10vw] relative z-20 flex gap-0 sm:gap-1 md:gap-2"
                         style={{ fontFamily: 'var(--font-outfit)' }}
                     >
                         {creativeText.map((char, i) => (
@@ -210,9 +213,9 @@ export default function Hero() {
                         ))}
                     </h1>
                 </div>
-                <div className="flex justify-center flex-wrap h-[20vw] max-h-[300px] items-center -mt-[8vw] md:-mt-[6vw] perspective-[1000px]">
+                <div className="flex justify-center flex-wrap h-[15vw] sm:h-[15vw] md:h-[20vw] max-h-[300px] items-center -mt-[2vw] md:-mt-[6vw] perspective-[1000px]">
                     <h1
-                        className="text-[20vw] md:text-[18vw] font-black uppercase tracking-tighter leading-none text-transparent text-right ml-0 md:ml-[30vw] relative z-10 flex gap-1 md:gap-2"
+                        className="text-[14vw] sm:text-[15vw] md:text-[18vw] font-black uppercase tracking-tighter leading-none text-transparent text-right ml-0 md:ml-[30vw] relative z-10 flex gap-0 sm:gap-1 md:gap-2"
                         style={{
                             fontFamily: 'var(--font-outfit)',
                             WebkitTextStroke: '2px white',

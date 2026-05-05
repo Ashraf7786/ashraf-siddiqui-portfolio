@@ -6,6 +6,7 @@ import About from '@/components/sections/About';
 import Passions from '@/components/sections/Passions';
 import Playground from '@/components/sections/Playground';
 import SkillsPhysics from '@/components/sections/SkillsPhysics';
+import Approach from '@/components/sections/Approach';
 import Contact from '@/components/sections/Contact';
 
 export default function Home() {
@@ -33,6 +34,7 @@ export default function Home() {
         <Hero />
         <Projects />
         <About />
+        <Approach />
         <Passions />
         <Playground />
         <SkillsPhysics />
