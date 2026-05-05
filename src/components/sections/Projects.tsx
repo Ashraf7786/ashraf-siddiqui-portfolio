@@ -35,14 +35,15 @@ const PROJECTS = [
     },
     {
         id: '03',
-        title: 'Books Duniya',
-        desc: 'A comprehensive generic eCommerce solution built for massive scale out of the box with Shopify.',
-        tech: ['Shopify', 'Liquid', 'JS'],
-        color: '#0c1f17', // dark green/emerald
+        title: 'SocialArch',
+        desc: 'A premium results-driven digital marketing agency helping brands dominate with powerful SEO and high-converting creative websites.',
+        tech: ['Next.js', 'GSAP', 'SEO', 'Tailwind'],
+        color: '#120404', // Deep dark red matching SocialArch brand
         images: [
-            "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&q=80&w=1000",
-            "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=1000",
-            "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1000",
+            "/projects/socialarch-1.png",
+            "/projects/socialarch-2.png",
+            "/projects/socialarch-3.png",
+            "/projects/socialarch-4.png",
         ]
     },
     {
