@@ -14,7 +14,7 @@ const PROJECTS = [
         title: 'Adwoks Academy',
         desc: 'An immersive educational platform driving student engagement with modern design and high performance.',
         tech: ['Laravel', 'Vue.js', 'Tailwind'],
-        link: 'https://adwoksacademy.com/',
+        link: 'https://www.adwoksacademy.com/',
         color: '#0f172a', // dark slate
         images: [
             "/projects/adwoks/adwoks-1.png",
