@@ -25,15 +25,17 @@ const PROJECTS = [
     },
     {
         id: '02',
-        title: 'My Rajasthan Tours',
-        desc: 'Premium travel experience portal featuring custom booking flows and beautiful destination showcases.',
-        tech: ['PHP', 'MySQL', 'GSAP'],
+        title: 'Aerocool',
+        desc: 'A modern AC service agency website featuring comprehensive service booking, live chatbot integration, and certified technician profiles.',
+        tech: ['React.js', 'Next.js', 'HTML', 'CSS', 'JS'],
         link: '#',
-        color: '#311019', // dark red/rose
+        color: '#1e3a8a', // dark blue matching the Aerocool brand
         images: [
-            "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=1000",
-            "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&q=80&w=1000",
-            "https://images.unsplash.com/photo-1510414842594-5178619bcbb8?auto=format&fit=crop&q=80&w=1000",
+            "/projects/aerocool/aerocool-1.png",
+            "/projects/aerocool/aerocool-2.png",
+            "/projects/aerocool/aerocool-3.png",
+            "/projects/aerocool/aerocool-4.png",
+            "/projects/aerocool/aerocool-5.png",
         ]
     },
     {
