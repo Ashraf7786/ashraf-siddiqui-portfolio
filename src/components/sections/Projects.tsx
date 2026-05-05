@@ -15,7 +15,7 @@ const PROJECTS = [
         desc: 'A premium results-driven digital marketing agency helping brands dominate with powerful SEO and high-converting creative websites.',
         tech: ['Next.js', 'GSAP', 'SEO', 'Tailwind'],
         link: 'https://socialarchmedia.com/',
-        color: '#120404', // Deep dark red matching SocialArch brand
+        color: '#1c0505', // Refined deep red matching SocialArch agency photos
         images: [
             "/projects/socialarch-1.png",
             "/projects/socialarch-2.png",
