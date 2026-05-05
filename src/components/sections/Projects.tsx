@@ -14,6 +14,7 @@ const PROJECTS = [
         title: 'Adwoks Academy',
         desc: 'An immersive educational platform driving student engagement with modern design and high performance.',
         tech: ['Laravel', 'Vue.js', 'Tailwind'],
+        link: '#',
         color: '#0f172a', // dark slate
         images: [
             "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1000",
@@ -26,6 +27,7 @@ const PROJECTS = [
         title: 'My Rajasthan Tours',
         desc: 'Premium travel experience portal featuring custom booking flows and beautiful destination showcases.',
         tech: ['PHP', 'MySQL', 'GSAP'],
+        link: '#',
         color: '#311019', // dark red/rose
         images: [
             "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=1000",
@@ -38,6 +40,7 @@ const PROJECTS = [
         title: 'SocialArch',
         desc: 'A premium results-driven digital marketing agency helping brands dominate with powerful SEO and high-converting creative websites.',
         tech: ['Next.js', 'GSAP', 'SEO', 'Tailwind'],
+        link: 'https://socialarchmedia.com/',
         color: '#120404', // Deep dark red matching SocialArch brand
         images: [
             "/projects/socialarch-1.png",
@@ -51,6 +54,7 @@ const PROJECTS = [
         title: 'Jagdamba Travels',
         desc: 'A premium taxi rental and tour booking platform offering luxury travel experiences, seamless booking flows, and executive mobility services.',
         tech: ['React Js', 'HTML', 'CSS', 'JS'],
+        link: '#',
         color: '#0e2417', // deep forest green matching the brand identity
         images: [
             "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=1000", // Car interior/luxury
@@ -60,7 +64,7 @@ const PROJECTS = [
     },
 ];
 
-const ProjectImageCarousel = ({ images }: { images: string[] }) => {
+const ProjectImageCarousel = ({ images, link }: { images: string[], link: string }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
@@ -119,10 +123,15 @@ const ProjectImageCarousel = ({ images }: { images: string[] }) => {
                 );
             })}
 
-            <button className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full flex items-center justify-center z-50 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 ease-out text-black">
+            <a 
+                href={link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white rounded-full flex items-center justify-center z-50 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-500 ease-out text-black hover:bg-white/90"
+            >
                 <ExternalLink size={24} />
                 <span className="sr-only">Visit</span>
-            </button>
+            </a>
         </div>
     );
 };
@@ -213,7 +222,7 @@ export default function Projects() {
                             </div>
 
                             <div className="w-full relative group cursor-none mt-4 sm:mt-8 md:mt-0 aspect-video md:aspect-[4/3]">
-                                <ProjectImageCarousel images={project.images} />
+                                <ProjectImageCarousel images={project.images} link={project.link} />
                             </div>
                         </div>
                     </div>
