@@ -74,61 +74,67 @@ const ARCHIVE_PROJECTS = [
 
 export default function ProjectArchive() {
     const containerRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
     const rowsRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
-            // Animate rows on scroll
+            // Animate rows on scroll with a staggered entrance
             rowsRef.current.forEach((row, index) => {
                 if (!row) return;
                 
                 gsap.fromTo(row, 
                     { 
                         opacity: 0, 
-                        y: 20 
+                        x: 20 
                     },
                     {
                         opacity: 1,
-                        y: 0,
-                        duration: 0.6,
-                        ease: 'power2.out',
+                        x: 0,
+                        duration: 0.8,
+                        ease: 'power3.out',
                         scrollTrigger: {
                             trigger: row,
-                            start: 'top 90%',
+                            start: 'top 95%',
                             toggleActions: 'play none none reverse'
                         }
                     }
                 );
             });
+
+            // If we wanted to pin the whole section, we could do it here
+            // but a side-by-side sticky layout is often cleaner for lists.
         }, containerRef);
 
         return () => ctx.revert();
     }, []);
 
     return (
-        <section ref={containerRef} className="w-full py-24 md:py-32 bg-[#050505] text-white">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <section ref={containerRef} className="w-full py-24 md:py-40 bg-[#050505] text-white overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row gap-12 md:gap-24">
                 
-                {/* Section Header */}
-                <div className="mb-12 md:mb-20">
-                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter" style={{ fontFamily: 'var(--font-outfit)' }}>
-                        Project <span className="text-transparent" style={{ WebkitTextStroke: '1px white' }}>Archive</span>
-                    </h2>
-                    <p className="mt-4 text-gray-400 max-w-2xl text-sm md:text-base font-mono">
-                        A complete list of other web projects, applications, and experiments I've built.
-                    </p>
+                {/* Sticky Side Header */}
+                <div className="md:w-1/3">
+                    <div className="md:sticky md:top-32 space-y-6">
+                        <div className="inline-block px-3 py-1 border border-white/20 rounded-full text-[10px] font-mono uppercase tracking-[0.2em] text-gray-400">
+                            The Collection
+                        </div>
+                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-none" style={{ fontFamily: 'var(--font-outfit)' }}>
+                            Project <br />
+                            <span className="text-transparent" style={{ WebkitTextStroke: '1px white' }}>Archive</span>
+                        </h2>
+                        <p className="text-gray-400 max-w-xs text-sm font-mono leading-relaxed">
+                            A curated selection of experiments, applications, and legacy projects developed over the years.
+                        </p>
+                        
+                        <div className="pt-8 hidden md:block">
+                            <div className="h-[1px] w-20 bg-gradient-to-r from-white/40 to-transparent" />
+                        </div>
+                    </div>
                 </div>
 
-                {/* Table Header (Hidden on Mobile) */}
-                <div className="hidden md:grid grid-cols-12 gap-4 pb-4 border-b border-white/10 text-xs font-mono text-gray-500 uppercase tracking-widest">
-                    <div className="col-span-2">Year</div>
-                    <div className="col-span-5">Project</div>
-                    <div className="col-span-4">Built with</div>
-                    <div className="col-span-1 text-right">Link</div>
-                </div>
-
-                {/* Project Rows */}
-                <div className="flex flex-col">
+                {/* Scrolling List */}
+                <div ref={listRef} className="md:w-2/3 flex flex-col border-t border-white/10">
                     {ARCHIVE_PROJECTS.map((project, index) => (
                         <a 
                             key={index}
@@ -136,35 +142,41 @@ export default function ProjectArchive() {
                             target="_blank"
                             rel="noopener noreferrer"
                             ref={el => { rowsRef.current[index] = el; }}
-                            className="group grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 py-6 border-b border-white/10 hover:bg-white/[0.02] transition-colors duration-300 items-center relative overflow-hidden cursor-none"
+                            className="group relative flex flex-col md:flex-row md:items-center justify-between py-8 md:py-10 border-b border-white/10 hover:bg-white/[0.01] transition-all duration-500 cursor-none"
                         >
-                            {/* Hover effect background highlight */}
-                            <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/[0.03] to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 pointer-events-none" />
-
-                            <div className="md:col-span-2 text-sm text-gray-400 font-mono">
-                                {project.year}
-                            </div>
+                            {/* Animated Background Indicator */}
+                            <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-1 bg-white transition-all duration-500 ease-expo" />
                             
-                            <div className="md:col-span-5 text-xl md:text-2xl font-bold group-hover:text-white group-hover:translate-x-2 transition-transform duration-300">
-                                {project.title}
-                            </div>
-                            
-                            <div className="md:col-span-4 flex flex-wrap gap-2 hidden md:flex">
-                                {project.tech.map((t, i) => (
-                                    <span key={i} className="text-xs font-mono text-gray-500 bg-white/5 px-2 py-1 rounded-full group-hover:text-gray-300 transition-colors duration-300">
-                                        {t}
-                                    </span>
-                                ))}
-                            </div>
-                            
-                            <div className="md:col-span-1 flex md:justify-end items-center opacity-50 group-hover:opacity-100 transition-opacity duration-300">
-                                <span className="md:hidden text-xs font-mono text-gray-500 mr-2 flex-1">
-                                    {project.tech.join(' · ')}
+                            <div className="flex flex-col gap-1 z-10 md:pl-6 transition-transform duration-500 group-hover:translate-x-4">
+                                <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
+                                    {project.year}
                                 </span>
-                                <ExternalLink size={16} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform duration-300" />
+                                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight">
+                                    {project.title}
+                                </h3>
+                            </div>
+                            
+                            <div className="flex flex-col items-start md:items-end gap-3 mt-4 md:mt-0 z-10 md:pr-6 transition-all duration-500 group-hover:-translate-x-2">
+                                <div className="flex flex-wrap gap-2 md:justify-end">
+                                    {project.tech.map((t, i) => (
+                                        <span key={i} className="text-[9px] font-mono text-gray-500 uppercase tracking-widest border border-white/10 px-2 py-0.5 rounded-sm group-hover:border-white/30 group-hover:text-gray-300 transition-colors duration-300">
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+                                <div className="flex items-center gap-2 text-[10px] font-mono text-gray-600 group-hover:text-white transition-colors duration-300 uppercase tracking-[0.2em]">
+                                    View Project <ExternalLink size={10} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                                </div>
                             </div>
                         </a>
                     ))}
+                    
+                    {/* End Indicator */}
+                    <div className="py-12 flex justify-center opacity-20">
+                        <div className="w-1 h-1 rounded-full bg-white mx-1" />
+                        <div className="w-1 h-1 rounded-full bg-white mx-1" />
+                        <div className="w-1 h-1 rounded-full bg-white mx-1" />
+                    </div>
                 </div>
 
             </div>
