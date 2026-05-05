@@ -12,6 +12,12 @@ gsap.registerPlugin(ScrollTrigger);
 const ARCHIVE_PROJECTS = [
     {
         year: '2025',
+        title: "Dr. Priya's Skin Clinics",
+        tech: ['Laravel', 'PHP', 'MySQL', 'JS', 'HTML/CSS'],
+        link: 'https://www.drpriyaenhanceskinclinics.com/',
+    },
+    {
+        year: '2025',
         title: 'Books Duniya',
         tech: ['Shopify', 'Liquid JS', 'Tailwind'],
         link: '#',
