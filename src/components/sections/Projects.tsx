@@ -57,12 +57,13 @@ const PROJECTS = [
         title: 'Jagdamba Travels',
         desc: 'A premium taxi rental and tour booking platform offering luxury travel experiences, seamless booking flows, and executive mobility services.',
         tech: ['React Js', 'HTML', 'CSS', 'JS'],
-        link: '#',
+        link: 'https://indiajagdambatours.com/',
         color: '#0e2417', // deep forest green matching the brand identity
         images: [
-            "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=1000", // Car interior/luxury
-            "https://images.unsplash.com/photo-1600104310591-b2239e50d4d0?auto=format&fit=crop&q=80&w=1000", // Travel/tourism
-            "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1000", // Executive car
+            "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80&w=1000", // Black Audi R8 matching user screenshot
+            "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=1000", // Luxury car interior
+            "https://images.unsplash.com/photo-1542362567-b05260533350?auto=format&fit=crop&q=80&w=1000", // High-end performance car
+            "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80&w=1000", // Executive mobility
         ]
     },
 ];
