@@ -11,16 +11,16 @@ gsap.registerPlugin(ScrollTrigger);
 const PROJECTS = [
     {
         id: '01',
-        title: 'Adwoks Academy',
-        desc: 'An immersive educational platform driving student engagement with modern design and high performance.',
-        tech: ['Laravel', 'Vue.js', 'Tailwind'],
-        link: 'https://www.adwoksacademy.com/',
-        color: '#0f172a', // dark slate
+        title: 'SocialArch',
+        desc: 'A premium results-driven digital marketing agency helping brands dominate with powerful SEO and high-converting creative websites.',
+        tech: ['Next.js', 'GSAP', 'SEO', 'Tailwind'],
+        link: 'https://socialarchmedia.com/',
+        color: '#120404', // Deep dark red matching SocialArch brand
         images: [
-            "/projects/adwoks/adwoks-1.png",
-            "/projects/adwoks/adwoks-2.png",
-            "/projects/adwoks/adwoks-3.png",
-            "/projects/adwoks/adwoks-4.png",
+            "/projects/socialarch-1.png",
+            "/projects/socialarch-2.png",
+            "/projects/socialarch-3.png",
+            "/projects/socialarch-4.png",
         ]
     },
     {
@@ -40,16 +40,16 @@ const PROJECTS = [
     },
     {
         id: '03',
-        title: 'SocialArch',
-        desc: 'A premium results-driven digital marketing agency helping brands dominate with powerful SEO and high-converting creative websites.',
-        tech: ['Next.js', 'GSAP', 'SEO', 'Tailwind'],
-        link: 'https://socialarchmedia.com/',
-        color: '#120404', // Deep dark red matching SocialArch brand
+        title: 'Adwoks Academy',
+        desc: 'An immersive educational platform driving student engagement with modern design and high performance.',
+        tech: ['Laravel', 'Vue.js', 'Tailwind'],
+        link: 'https://www.adwoksacademy.com/',
+        color: '#0f172a', // dark slate
         images: [
-            "/projects/socialarch-1.png",
-            "/projects/socialarch-2.png",
-            "/projects/socialarch-3.png",
-            "/projects/socialarch-4.png",
+            "/projects/adwoks/adwoks-1.png",
+            "/projects/adwoks/adwoks-2.png",
+            "/projects/adwoks/adwoks-3.png",
+            "/projects/adwoks/adwoks-4.png",
         ]
     },
     {
