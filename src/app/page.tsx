@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '@/components/layout/Header';
 import Hero from '@/components/sections/Hero';
 import Projects from '@/components/sections/Projects';
+import ProjectArchive from '@/components/sections/ProjectArchive';
 import About from '@/components/sections/About';
 import Passions from '@/components/sections/Passions';
 import Playground from '@/components/sections/Playground';
@@ -33,6 +34,7 @@ export default function Home() {
         />
         <Hero />
         <Projects />
+        <ProjectArchive />
         <About />
         <Approach />
         <Passions />
