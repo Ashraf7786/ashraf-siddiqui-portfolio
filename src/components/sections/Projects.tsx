@@ -14,12 +14,13 @@ const PROJECTS = [
         title: 'Adwoks Academy',
         desc: 'An immersive educational platform driving student engagement with modern design and high performance.',
         tech: ['Laravel', 'Vue.js', 'Tailwind'],
-        link: '#',
+        link: 'https://adwoksacademy.com/',
         color: '#0f172a', // dark slate
         images: [
-            "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&q=80&w=1000",
-            "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=1000",
-            "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1000",
+            "/projects/adwoks/adwoks-1.png",
+            "/projects/adwoks/adwoks-2.png",
+            "/projects/adwoks/adwoks-3.png",
+            "/projects/adwoks/adwoks-4.png",
         ]
     },
     {
