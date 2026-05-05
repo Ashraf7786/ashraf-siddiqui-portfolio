@@ -28,7 +28,7 @@ const PROJECTS = [
         title: 'Aerocool',
         desc: 'A modern AC service agency website featuring comprehensive service booking, live chatbot integration, and certified technician profiles.',
         tech: ['React.js', 'Next.js', 'HTML', 'CSS', 'JS'],
-        link: '#',
+        link: 'https://www.aerocooljaipur.in/',
         color: '#1e3a8a', // dark blue matching the Aerocool brand
         images: [
             "/projects/aerocool/aerocool-1.png",
