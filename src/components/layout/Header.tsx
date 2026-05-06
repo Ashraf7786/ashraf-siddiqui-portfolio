@@ -25,8 +25,7 @@ export default function Header() {
         return () => ctx.revert();
     }, []);
 
-    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-        e.preventDefault();
+    const scrollToSection = (id: string) => {
         if (lenis) {
             lenis.scrollTo(id, {
                 offset: 0,
@@ -46,34 +45,30 @@ export default function Header() {
             </Link>
 
             <nav className="hidden md:flex items-center gap-8 text-sm tracking-wide">
-                <a 
-                    href="#projects" 
-                    onClick={(e) => scrollToSection(e, '#projects')}
-                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer"
+                <button 
+                    onClick={() => scrollToSection('#projects')}
+                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer bg-transparent border-none outline-none"
                 >
                     Projects
-                </a>
-                <a 
-                    href="#about" 
-                    onClick={(e) => scrollToSection(e, '#about')}
-                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer"
+                </button>
+                <button 
+                    onClick={() => scrollToSection('#about')}
+                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer bg-transparent border-none outline-none"
                 >
                     About Me
-                </a>
-                <a 
-                    href="#services" 
-                    onClick={(e) => scrollToSection(e, '#approach')}
-                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer"
+                </button>
+                <button 
+                    onClick={() => scrollToSection('#approach')}
+                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer bg-transparent border-none outline-none"
                 >
                     Services
-                </a>
-                <a 
-                    href="#contact" 
-                    onClick={(e) => scrollToSection(e, '#contact')}
-                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer"
+                </button>
+                <button 
+                    onClick={() => scrollToSection('#contact')}
+                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer bg-transparent border-none outline-none"
                 >
                     Contact
-                </a>
+                </button>
             </nav>
 
             <div className="flex items-center gap-4">
