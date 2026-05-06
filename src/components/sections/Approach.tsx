@@ -90,7 +90,7 @@ export default function Approach() {
     }, []);
 
     return (
-        <section ref={containerRef} className="relative w-full py-24 md:py-40 bg-[#050505] text-white overflow-hidden">
+        <section id="approach" ref={containerRef} className="relative w-full py-24 md:py-40 bg-[#050505] text-white overflow-hidden">
             {/* Background elements */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-900/30 rounded-full blur-[100px]" />

@@ -5,9 +5,11 @@ import gsap from 'gsap';
 import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 import Link from 'next/link';
 import ResumeButton from '@/components/ui/ResumeButton';
+import { useLenis } from '@studio-freight/react-lenis';
 
 export default function Header() {
     const headerRef = useRef<HTMLElement>(null);
+    const lenis = useLenis();
 
     useIsomorphicLayoutEffect(() => {
         let ctx = gsap.context(() => {
@@ -23,6 +25,17 @@ export default function Header() {
         return () => ctx.revert();
     }, []);
 
+    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+        e.preventDefault();
+        if (lenis) {
+            lenis.scrollTo(id, {
+                offset: 0,
+                duration: 1.5,
+                easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expo out
+            });
+        }
+    };
+
     return (
         <header
             ref={headerRef}
@@ -33,10 +46,34 @@ export default function Header() {
             </Link>
 
             <nav className="hidden md:flex items-center gap-8 text-sm tracking-wide">
-                <Link href="#projects" className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all">Projects</Link>
-                <Link href="#about" className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all">About Me</Link>
-                <Link href="#services" className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all">Services</Link>
-                <Link href="#contact" className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all">Contact</Link>
+                <a 
+                    href="#projects" 
+                    onClick={(e) => scrollToSection(e, '#projects')}
+                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer"
+                >
+                    Projects
+                </a>
+                <a 
+                    href="#about" 
+                    onClick={(e) => scrollToSection(e, '#about')}
+                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer"
+                >
+                    About Me
+                </a>
+                <a 
+                    href="#services" 
+                    onClick={(e) => scrollToSection(e, '#approach')}
+                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer"
+                >
+                    Services
+                </a>
+                <a 
+                    href="#contact" 
+                    onClick={(e) => scrollToSection(e, '#contact')}
+                    className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all cursor-pointer"
+                >
+                    Contact
+                </a>
             </nav>
 
             <div className="flex items-center gap-4">
@@ -50,3 +87,4 @@ export default function Header() {
         </header>
     );
 }
+
