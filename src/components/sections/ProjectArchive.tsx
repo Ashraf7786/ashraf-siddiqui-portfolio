@@ -86,7 +86,7 @@ export default function ProjectArchive() {
 
     // Get the first image from the main projects for the archive preview
     const getPreviewImage = (title: string) => {
-        if (title === 'Neuro Spine Solution') return "https://images.unsplash.com/photo-1631217818242-274970834aa7?auto=format&fit=crop&q=80&w=400"; // Modern clinic/rehab context
+        if (title === 'Neuro Spine Solution') return "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=400"; // Professional clinic exterior/interior
         if (title === 'SocialArch') return "/projects/socialarch-1.png";
         if (title === 'Aerocool') return "/projects/aerocool/aerocool-1.png";
         if (title === 'Adwoks Academy') return "/projects/adwoks/adwoks-1.png";
