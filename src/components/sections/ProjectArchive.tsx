@@ -12,6 +12,12 @@ gsap.registerPlugin(ScrollTrigger);
 const ARCHIVE_PROJECTS = [
     {
         year: '2025',
+        title: 'Neuro Spine Solution',
+        tech: ['HTML', 'CSS', 'JS', 'Laravel'],
+        link: 'https://www.neurospinesolution.com/',
+    },
+    {
+        year: '2025',
         title: 'SocialArch',
         tech: ['Next.js', 'GSAP', 'SEO', 'Tailwind'],
         link: 'https://socialarchmedia.com/',
