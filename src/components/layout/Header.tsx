@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 import Link from 'next/link';
+import ResumeButton from '@/components/ui/ResumeButton';
 
 export default function Header() {
     const headerRef = useRef<HTMLElement>(null);
@@ -38,9 +39,14 @@ export default function Header() {
                 <Link href="#contact" className="text-[#f5f5f5]/70 hover:text-[#f5f5f5] hover:-translate-y-0.5 transition-all">Contact</Link>
             </nav>
 
-            <button className="md:hidden text-[#f5f5f5] text-sm tracking-widest font-medium">
-                Menu
-            </button>
+            <div className="flex items-center gap-4">
+                <div className="hidden sm:block">
+                    <ResumeButton />
+                </div>
+                <button className="md:hidden text-[#f5f5f5] text-sm tracking-widest font-medium">
+                    Menu
+                </button>
+            </div>
         </header>
     );
 }

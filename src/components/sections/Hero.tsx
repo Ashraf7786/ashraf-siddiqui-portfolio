@@ -3,6 +3,7 @@
 import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
+import ResumeButton from '@/components/ui/ResumeButton';
 
 export default function Hero() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -234,6 +235,11 @@ export default function Hero() {
                         ))}
                     </h1>
                 </div>
+            </div>
+
+            {/* Resume CTA (New) */}
+            <div className="z-20 mt-12 md:mt-16">
+                <ResumeButton />
             </div>
 
             {/* Scroll Hint */}
