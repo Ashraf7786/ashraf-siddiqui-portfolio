@@ -17,13 +17,13 @@ const ARCHIVE_PROJECTS = [
         link: 'https://www.neurospinesolution.com/',
     },
     {
-        year: '2025',
+        year: '2026',
         title: 'SocialArch',
         tech: ['Next.js', 'GSAP', 'SEO', 'Tailwind'],
         link: 'https://socialarchmedia.com/',
     },
     {
-        year: '2025',
+        year: '2026',
         title: 'Aerocool',
         tech: ['React.js', 'Next.js', 'Matter.js', 'Tailwind'],
         link: 'https://www.aerocooljaipur.in/',
@@ -99,8 +99,8 @@ export default function ProjectArchive() {
         let ctx = gsap.context(() => {
             rowsRef.current.forEach((row, index) => {
                 if (!row) return;
-                
-                gsap.fromTo(row, 
+
+                gsap.fromTo(row,
                     { opacity: 0, y: 30 },
                     {
                         opacity: 1,
@@ -130,29 +130,29 @@ export default function ProjectArchive() {
 
     return (
         <section ref={containerRef} className="w-full py-24 md:py-48 bg-[#050505] text-white overflow-hidden relative">
-            
+
             {/* Floating Image Preview (Premium Effect) */}
-            <div 
+            <div
                 className="fixed pointer-events-none z-[100] w-64 h-40 rounded-xl overflow-hidden transition-opacity duration-300 ease-out shadow-2xl border border-white/10 hidden md:block"
-                style={{ 
-                    left: mousePos.x + 20, 
+                style={{
+                    left: mousePos.x + 20,
                     top: mousePos.y - 80,
                     opacity: hoveredImage ? 1 : 0,
-                    transform: `rotate(${ (mousePos.x % 10) - 5 }deg) scale(${hoveredImage ? 1 : 0.8})`,
+                    transform: `rotate(${(mousePos.x % 10) - 5}deg) scale(${hoveredImage ? 1 : 0.8})`,
                     transition: 'opacity 0.3s, transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)'
                 }}
             >
                 {hoveredImage && (
-                    <img 
-                        src={hoveredImage} 
-                        alt="Preview" 
+                    <img
+                        src={hoveredImage}
+                        alt="Preview"
                         className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                     />
                 )}
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row gap-12 md:gap-24 relative z-10">
-                
+
                 {/* Sticky Side Header */}
                 <div className="md:w-1/3">
                     <div className="md:sticky md:top-32 space-y-8">
@@ -166,7 +166,7 @@ export default function ProjectArchive() {
                         <p className="text-gray-400 max-w-xs text-sm md:text-base font-mono leading-relaxed opacity-60 hover:opacity-100 transition-opacity duration-500">
                             A historical record of my technical growth, from agency work to creative experiments and full-stack solutions.
                         </p>
-                        
+
                         <div className="pt-8 hidden md:block">
                             <div className="h-[1px] w-24 bg-gradient-to-r from-white/20 via-white/40 to-transparent" />
                         </div>
@@ -176,7 +176,7 @@ export default function ProjectArchive() {
                 {/* Scrolling List */}
                 <div className="md:w-2/3 flex flex-col border-t border-white/10">
                     {ARCHIVE_PROJECTS.map((project, index) => (
-                        <a 
+                        <a
                             key={index}
                             href={project.link}
                             target="_blank"
@@ -188,7 +188,7 @@ export default function ProjectArchive() {
                         >
                             {/* Animated Background Indicator */}
                             <div className="absolute left-0 top-0 bottom-0 w-0 group-hover:w-1 bg-white transition-all duration-500 ease-out" />
-                            
+
                             <div className="flex flex-col gap-2 z-10 md:pl-8 transition-transform duration-500 group-hover:translate-x-6">
                                 <span className="text-[11px] font-mono text-gray-500 uppercase tracking-[0.2em] group-hover:text-white transition-colors duration-300">
                                     {project.year}
@@ -197,7 +197,7 @@ export default function ProjectArchive() {
                                     {project.title}
                                 </h3>
                             </div>
-                            
+
                             <div className="flex flex-col items-start md:items-end gap-5 mt-6 md:mt-0 z-10 md:pr-8 transition-all duration-500 group-hover:-translate-x-4">
                                 <div className="flex flex-wrap gap-3 md:justify-end">
                                     {project.tech.map((t, i) => (
@@ -212,7 +212,7 @@ export default function ProjectArchive() {
                             </div>
                         </a>
                     ))}
-                    
+
                     {/* End Indicator */}
                     <div className="py-20 flex justify-center items-center gap-4 opacity-10">
                         <div className="h-[1px] w-12 bg-white" />
