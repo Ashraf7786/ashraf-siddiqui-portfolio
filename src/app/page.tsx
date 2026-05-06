@@ -9,11 +9,13 @@ import Playground from '@/components/sections/Playground';
 import SkillsPhysics from '@/components/sections/SkillsPhysics';
 import Approach from '@/components/sections/Approach';
 import Contact from '@/components/sections/Contact';
+import ActiveSectionTracker from '@/components/layout/ActiveSectionTracker';
 
 export default function Home() {
   return (
     <>
       <Header />
+      <ActiveSectionTracker />
       <main className="w-full bg-[#0a0a0a]">
         <script
           type="application/ld+json"
@@ -32,7 +34,9 @@ export default function Home() {
             })
           }}
         />
-        <Hero />
+        <section id="hero">
+          <Hero />
+        </section>
         <Projects />
         <ProjectArchive />
         <About />
