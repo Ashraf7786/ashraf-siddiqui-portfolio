@@ -32,8 +32,8 @@ export default function ResumeButton() {
     const handleDownload = () => {
         // Trigger actual download
         const link = document.createElement('a');
-        link.href = '/Ashraf-Siddiqui-Resume.pdf'; // Path to the resume file
-        link.download = 'Ashraf-Siddiqui-Resume.pdf';
+        link.href = '/Ashraf%20Resume%202026_.pdf'; // Path to the resume file
+        link.download = 'Ashraf Resume 2026_.pdf';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
