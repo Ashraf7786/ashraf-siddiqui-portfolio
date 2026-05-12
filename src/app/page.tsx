@@ -32,7 +32,7 @@ export default function Home() {
                 addressRegion: "Maharashtra",
                 addressCountry: "India"
               },
-              description: "Best Full Stack Web Developer in India. Expert in React, Next.js, Laravel, PHP, and modern web applications.",
+              description: "Best Full Stack Web Developer in India, serving clients in Jaipur, Patna, Kolkata, Delhi, and worldwide. Expert in React, Next.js, Laravel, PHP, and modern web applications.",
               sameAs: [
                 "https://github.com/Ashraf7786",
                 "https://linkedin.com/in/ashraf-siddiqui"

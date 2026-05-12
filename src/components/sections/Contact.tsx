@@ -98,7 +98,7 @@ export default function Contact() {
                     </div>
                     <div className="mt-6 md:mt-8 max-w-xl">
                         <p className="text-[#f5f5f5]/70 text-base md:text-lg mb-6 leading-relaxed">
-                            Let’s build something remarkable together. I’m currently available for agency partnerships, freelance commissions, and impactful remote roles.
+                            Let’s build something remarkable together. I’m currently available for projects in Jaipur, Patna, Kolkata, Delhi, and globally. I specialize in agency partnerships, freelance commissions, and impactful remote roles.
                         </p>
                         <a href="mailto:ashrafsiddiqui6378@gmail.com" className="group inline-flex items-center gap-3 px-8 py-4 bg-[#f5f5f5] text-[#0a0a0a] text-sm uppercase tracking-widest font-bold font-mono rounded-full hover:bg-white hover:scale-105 active:scale-95 transition-all duration-300 mix-blend-difference cursor-none shadow-[0_0_0_0_rgba(245,245,245,0.4)] hover:shadow-[0_0_20px_0_rgba(245,245,245,0.4)]">
                             <span>Let's Work Together</span>
