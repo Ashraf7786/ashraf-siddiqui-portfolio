@@ -24,9 +24,15 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Ashraf Siddiqui",
-              url: "https://ashrafsiddiqui.com",
+              url: "https://iamashraf.in",
               jobTitle: "Full Stack Web Developer",
-              description: "Expert in React, Next.js, Laravel, PHP, and modern web applications.",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Mumbai",
+                addressRegion: "Maharashtra",
+                addressCountry: "India"
+              },
+              description: "Best Full Stack Web Developer in India. Expert in React, Next.js, Laravel, PHP, and modern web applications.",
               sameAs: [
                 "https://github.com/Ashraf7786",
                 "https://linkedin.com/in/ashraf-siddiqui"

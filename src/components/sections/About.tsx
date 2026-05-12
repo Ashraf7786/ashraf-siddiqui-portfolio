@@ -63,7 +63,10 @@ export default function About() {
                         <span className="block reveal-line">/ About Me</span>
                     </h2>
                     <div className="overflow-hidden">
-                        <p className="reveal-line">I’m a full-stack developer</p>
+                        <p className="reveal-line">I’m a top-rated full-stack</p>
+                    </div>
+                    <div className="overflow-hidden">
+                        <p className="reveal-line">developer based in India,</p>
                     </div>
                     <div className="overflow-hidden">
                         <p className="reveal-line">passionate about building</p>

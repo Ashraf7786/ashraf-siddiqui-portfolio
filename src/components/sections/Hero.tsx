@@ -197,8 +197,9 @@ export default function Hero() {
 
             {/* Main Typography */}
             <div className="z-10 flex flex-col justify-center w-full px-2 md:px-4 text-center pointer-events-none mix-blend-difference mt-20 relative">
+                <h1 className="sr-only">Ashraf Siddiqui | Best Full Stack Web Developer in India</h1>
                 <div className="flex justify-center flex-wrap h-[15vw] sm:h-[15vw] md:h-[20vw] max-h-[300px] items-center perspective-[1000px]">
-                    <h1
+                    <div
                         className="text-[14vw] sm:text-[15vw] md:text-[18vw] font-black uppercase tracking-tighter leading-none text-white mr-0 md:-mr-[10vw] relative z-20 flex gap-0 sm:gap-1 md:gap-2"
                         style={{ fontFamily: 'var(--font-outfit)' }}
                     >
@@ -212,10 +213,10 @@ export default function Hero() {
                                 {char}
                             </span>
                         ))}
-                    </h1>
+                    </div>
                 </div>
                 <div className="flex justify-center flex-wrap h-[15vw] sm:h-[15vw] md:h-[20vw] max-h-[300px] items-center -mt-[2vw] md:-mt-[6vw] perspective-[1000px]">
-                    <h1
+                    <div
                         className="text-[14vw] sm:text-[15vw] md:text-[18vw] font-black uppercase tracking-tighter leading-none text-transparent text-right ml-0 md:ml-[30vw] relative z-10 flex gap-0 sm:gap-1 md:gap-2"
                         style={{
                             fontFamily: 'var(--font-outfit)',
@@ -233,7 +234,7 @@ export default function Hero() {
                                 {char}
                             </span>
                         ))}
-                    </h1>
+                    </div>
                 </div>
             </div>
 
