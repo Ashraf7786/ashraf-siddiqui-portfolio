@@ -4,6 +4,7 @@ import "./tw-animate.css";
 import "./globals.css";
 import Providers from "@/components/layout/Providers";
 import { cn } from "@/lib/utils";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -78,6 +79,19 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Providers>
+          <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-Y2HQ6R00KB"
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-Y2HQ6R00KB');
+            `}
+          </Script>
           {children}
         </Providers>
       </body>
