@@ -4,7 +4,6 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 import Link from 'next/link';
-import ResumeButton from '@/components/ui/ResumeButton';
 import { useLenis } from '@studio-freight/react-lenis';
 
 export default function Header() {
@@ -72,9 +71,6 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center gap-4">
-                <div className="hidden sm:block">
-                    <ResumeButton />
-                </div>
                 <button className="md:hidden text-[#f5f5f5] text-sm tracking-widest font-medium">
                     Menu
                 </button>
@@ -82,4 +78,3 @@ export default function Header() {
         </header>
     );
 }
-
