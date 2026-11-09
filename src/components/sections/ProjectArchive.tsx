@@ -11,6 +11,12 @@ gsap.registerPlugin(ScrollTrigger);
 // You can add all your past projects here
 const ARCHIVE_PROJECTS = [
     {
+        year: '2026',
+        title: 'NOVA AI Assistant',
+        tech: ['Next.js', 'Vector DB', 'AI SDK', 'RAG'],
+        link: '#', // Replace with actual GitHub or Demo link
+    },
+    {
         year: '2025',
         title: 'Neuro Spine Solution',
         tech: ['HTML', 'CSS', 'JS', 'Laravel'],
@@ -86,6 +92,7 @@ export default function ProjectArchive() {
 
     // Get the first image from the main projects for the archive preview
     const getPreviewImage = (title: string) => {
+        if (title === 'NOVA AI Assistant') return "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=400"; // Cyber/AI theme
         if (title === 'Neuro Spine Solution') return "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=400"; // Professional clinic exterior/interior
         if (title === 'SocialArch') return "/projects/socialarch-1.png";
         if (title === 'Aerocool') return "/projects/aerocool/aerocool-1.png";
