@@ -280,7 +280,7 @@ export default function TravelHero() {
       onTouchEnd={handleTouchEnd}
       aria-label="Expedition Announcement Showcase"
     >
-      {/* ─── 1. CINEMATIC BACKGROUND MEDIA (Video + High-Res Poster Fallback) ─── */}
+      {/* ─── 1. CINEMATIC BACKGROUND MEDIA (Full Visibility Video + Poster Fallback) ─── */}
       {EXPEDITION_SLIDES.map((slide, idx) => {
         const isActive = idx === currentSlideIndex;
         return (
@@ -291,8 +291,8 @@ export default function TravelHero() {
             }`}
             aria-hidden={!isActive}
           >
-            {/* Background Video (if available) */}
-            {slide.videoUrl && !prefersReducedMotion && (
+            {/* Background Video — Full visibility, no heavy opacity */}
+            {slide.videoUrl && !prefersReducedMotion ? (
               <video
                 ref={(el) => {
                   videoRefs.current[idx] = el;
@@ -303,42 +303,36 @@ export default function TravelHero() {
                 loop
                 playsInline
                 preload={idx === 0 ? "auto" : "none"}
-                className="absolute inset-0 w-full h-full object-cover object-center"
+                className="absolute inset-0 w-full h-full object-cover object-center brightness-90 contrast-105"
               />
+            ) : (
+              /* Poster Image fallback when no video or prefers-reduced-motion */
+              <div
+                className={`relative w-full h-full transition-transform duration-7000 ease-out ${
+                  isActive ? "scale-105" : "scale-100"
+                }`}
+              >
+                <Image
+                  src={slide.posterImage}
+                  alt={slide.imageAlt}
+                  fill
+                  priority={idx === 0}
+                  className="object-cover object-center brightness-90 contrast-105"
+                  sizes="100vw"
+                />
+              </div>
             )}
 
-            {/* Poster Image fallback and ken-burns background */}
-            <div
-              className={`relative w-full h-full transition-transform duration-7000 ease-out ${
-                isActive ? "scale-105" : "scale-100"
-              }`}
-            >
-              <Image
-                src={slide.posterImage}
-                alt={slide.imageAlt}
-                fill
-                priority={idx === 0}
-                className={`object-cover object-center ${slide.videoUrl ? "opacity-35" : "opacity-80"}`}
-                sizes="100vw"
-              />
-            </div>
-
-            {/* Layered dark gradient overlay in strict Phase 1 palette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/60 to-[#080808]/85" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/90 via-[#080808]/40 to-[#080808]/90" />
-            <div
-              className="absolute inset-0"
-              style={{
-                background: "radial-gradient(ellipse at center, transparent 15%, rgba(8,8,8,0.85) 100%)",
-              }}
-            />
+            {/* Subtle cinematic gradient — minimal darkening so video stays clearly visible */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-[#080808]/50" />
+            <div className="absolute inset-0 bg-black/20" />
           </div>
         );
       })}
 
       {/* ─── 2. TOP EXPEDITION BADGE ─────────────────────────────────── */}
-      <div className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-4 flex justify-center pointer-events-none">
-        <div className="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111113]/85 backdrop-blur-md border border-[#f5f5f5]/15 shadow-2xl transition-all hover:border-[#f5f5f5]/35">
+      <div className="absolute top-16 sm:top-20 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-4 flex justify-center pointer-events-none">
+        <div className="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111113]/85 backdrop-blur-md border border-[#f5f5f5]/20 shadow-2xl transition-all hover:border-[#f5f5f5]/40">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
@@ -356,18 +350,18 @@ export default function TravelHero() {
       {/* ─── 3. MAIN HERO CONTENT STAGE ───────────────────────────────── */}
       <div
         ref={contentStageRef}
-        className="relative z-10 h-full max-w-5xl mx-auto px-4 sm:px-6 md:px-10 flex flex-col justify-center items-center text-center pt-20 sm:pt-16 pb-28 sm:pb-24"
+        className="relative z-10 h-full max-w-5xl mx-auto px-4 sm:px-6 md:px-10 flex flex-col justify-center items-center text-center pt-32 sm:pt-36 pb-28 sm:pb-24"
       >
         <div className="w-full flex flex-col items-center">
-          {/* Eyebrow Label */}
-          <p className="hero-anim-eyebrow text-[10px] sm:text-xs md:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#f5f5f5]/50 mb-2 sm:mb-3 font-semibold">
+          {/* Eyebrow Label — cleanly below the top badge */}
+          <p className="hero-anim-eyebrow text-[10px] sm:text-xs md:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#f5f5f5]/60 mb-3 sm:mb-4 font-semibold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
             ASHRAF SIDDIQUI &nbsp;·&nbsp; SOLO TRAVELLER &nbsp;·&nbsp; JAIPUR, INDIA
           </p>
 
           {/* Solid Dominant Heading */}
           <div className="overflow-hidden">
             <h1
-              className="hero-anim-title-solid leading-[0.92] font-bold tracking-tight text-[#f5f5f5]"
+              className="hero-anim-title-solid leading-[0.92] font-bold tracking-tight text-[#f5f5f5] drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
               style={{
                 fontFamily: "var(--font-fredoka)",
                 fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
@@ -380,11 +374,11 @@ export default function TravelHero() {
           {/* Outlined Secondary Heading */}
           <div className="overflow-hidden mb-3 sm:mb-5">
             <h1
-              className="hero-anim-title-outline leading-[0.92] font-bold tracking-tight text-transparent"
+              className="hero-anim-title-outline leading-[0.92] font-bold tracking-tight text-transparent drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
               style={{
                 fontFamily: "var(--font-fredoka)",
                 fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
-                WebkitTextStroke: "1.5px rgba(245, 245, 245, 0.75)",
+                WebkitTextStroke: "1.5px rgba(245, 245, 245, 0.85)",
               }}
             >
               {currentSlide.titleLine2}
@@ -392,7 +386,7 @@ export default function TravelHero() {
           </div>
 
           {/* Concise Supporting Description */}
-          <p className="hero-anim-desc text-xs sm:text-sm md:text-base text-[#f5f5f5]/70 max-w-2xl leading-relaxed mb-5 sm:mb-7 font-normal px-2">
+          <p className="hero-anim-desc text-xs sm:text-sm md:text-base text-[#f5f5f5]/85 max-w-2xl leading-relaxed mb-5 sm:mb-7 font-normal px-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
             {currentSlide.subtitle}
           </p>
 
