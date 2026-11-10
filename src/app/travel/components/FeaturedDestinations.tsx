@@ -58,29 +58,46 @@ export default function FeaturedDestinations() {
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".dest-header", {
-        y: 50, opacity: 0, duration: 1.0, ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        y: 30,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 95%" },
+        clearProps: "all",
       });
       gsap.from(".dest-card", {
-        y: 70, opacity: 0, duration: 0.9, stagger: 0.15, ease: "power3.out",
-        scrollTrigger: { trigger: ".dest-grid", start: "top 80%" },
+        y: 35,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 95%" },
+        clearProps: "all",
       });
     }, sectionRef);
-    return () => ctx.revert();
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   return (
     <section
       id="destinations"
       ref={sectionRef}
-      className="py-24 md:py-32 bg-[#080808] border-b border-[#f5f5f5]/5"
+      className="py-16 sm:py-24 md:py-32 bg-[#080808] border-b border-[#f5f5f5]/5"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         {/* Header */}
-        <div className="dest-header flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+        <div className="dest-header flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div>
-            <p className="text-xs tracking-[0.3em] uppercase text-[#f5f5f5]/30 mb-4">
-              Featured Destinations · Phase 3
+            <p className="text-xs tracking-[0.3em] uppercase text-[#f5f5f5]/40 mb-3 font-semibold">
+              Curated Field Guides &amp; Itineraries
             </p>
             <h2
               className="font-bold text-[#f5f5f5] leading-[1.05]"
@@ -95,9 +112,9 @@ export default function FeaturedDestinations() {
             </p>
             <Link
               href="/travel/destinations"
-              className="text-xs px-4 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 text-[#f5f5f5] transition-all whitespace-nowrap self-start"
+              className="text-xs px-4 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 text-[#f5f5f5] hover:bg-white/5 transition-all whitespace-nowrap self-start"
             >
-              All Guides & Timeline →
+              All Guides &amp; Timeline &rarr;
             </Link>
           </div>
         </div>

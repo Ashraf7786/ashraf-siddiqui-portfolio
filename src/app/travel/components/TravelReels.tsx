@@ -32,30 +32,41 @@ export default function TravelReels() {
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".reels-header", {
-        y: 40,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-      });
-      gsap.from(".insta-profile-bar", {
         y: 30,
         opacity: 0,
         duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".insta-profile-bar", start: "top 85%" },
+        ease: "power2.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 95%" },
+        clearProps: "all",
+      });
+      gsap.from(".insta-profile-bar", {
+        y: 25,
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 95%" },
+        clearProps: "all",
       });
       gsap.from(".iphone-reel-item", {
-        y: 50,
+        y: 35,
         opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".reels-showcase", start: "top 85%" },
+        duration: 0.7,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 95%" },
+        clearProps: "all",
       });
     }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
+  }, [reelsList]);
 
   const handleOpenModal = (id: string) => {
     setSelectedReelId(id);

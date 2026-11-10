@@ -14,15 +14,31 @@ export default function AboutTraveller() {
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".about-content", {
-        y: 60, opacity: 0, duration: 1.0, ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 95%" },
+        clearProps: "all",
       });
       gsap.from(".about-photo", {
-        scale: 0.95, opacity: 0, duration: 1.2, ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
+        scale: 0.95,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 95%" },
+        clearProps: "all",
       });
     }, sectionRef);
-    return () => ctx.revert();
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   const PHILOSOPHY_PILLARS = [
