@@ -1,12 +1,14 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { TravelStory, StorySection } from "@/app/travel/data/stories";
+import DonezoDashboardOverview from "./components/DonezoDashboardOverview";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
-type AdminTab = "hero" | "gallery" | "reels" | "trips" | "stories" | "enquiries";
+type AdminTab = "dashboard" | "hero" | "gallery" | "reels" | "trips" | "stories" | "enquiries";
 
 interface MetricPill {
   label: string;
@@ -129,6 +131,22 @@ interface LeadEnquiryItem {
 }
 
 // ── Pure SVG Icons ─────────────────────────────────────────────────────────────
+const DashboardIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <rect x="3" y="3" width="7" height="7" rx="1.5" />
+    <rect x="14" y="3" width="7" height="7" rx="1.5" />
+    <rect x="14" y="14" width="7" height="7" rx="1.5" />
+    <rect x="3" y="14" width="7" height="7" rx="1.5" />
+  </svg>
+);
+
+const SettingsIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="3" />
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+  </svg>
+);
+
 const SlidersIcon = () => (
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <line x1="4" y1="21" x2="4" y2="14" />
@@ -409,7 +427,8 @@ function ImageInspectorBadge({
       setDim(null);
       return;
     }
-    const img = new Image();
+    if (typeof window === "undefined") return;
+    const img = new window.Image();
     img.src = src;
     img.onload = () => setDim({ width: img.naturalWidth, height: img.naturalHeight });
     img.onerror = () => setDim({ error: true });
@@ -455,7 +474,7 @@ function ImageInspectorBadge({
 // ── Main Dashboard Component ──────────────────────────────────────────────────
 export default function DashboardClient({ adminUsername }: { adminUsername: string }) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<AdminTab>("hero");
+  const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Status and loading states
@@ -858,14 +877,14 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
   }
 
   return (
-    <div className="min-h-screen bg-[#080808] text-[#f5f5f5] flex flex-col pb-20 lg:pb-0">
+    <div className="min-h-screen bg-[#f4f5f7] text-gray-900 flex flex-col pb-20 lg:pb-0">
       {/* Toast Notification */}
       {statusMessage && (
         <div
-          className={`fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-50 px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs font-semibold backdrop-blur-xl border transition-all ${
+          className={`fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-50 px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 text-xs font-semibold backdrop-blur-xl border transition-all ${
             statusMessage.type === "success"
-              ? "bg-emerald-950/90 text-emerald-300 border-emerald-500/30"
-              : "bg-red-950/90 text-red-300 border-red-500/30"
+              ? "bg-[#155e38] text-white border-emerald-600 shadow-emerald-900/10"
+              : "bg-red-600 text-white border-red-700 shadow-red-900/10"
           }`}
         >
           {statusMessage.type === "success" ? <CheckIcon /> : null}
@@ -873,13 +892,13 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
         </div>
       )}
 
-      {/* Top Header Bar */}
-      <header className="h-16 border-b border-white/10 bg-[#0c0c0e]/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between shrink-0 sticky top-0 z-40">
-        <div className="flex items-center gap-3">
+      {/* ─── Donezo Top Header Bar ─── */}
+      <header className="h-16 border-b border-gray-200/80 bg-white/95 backdrop-blur-md px-4 sm:px-8 flex items-center justify-between shrink-0 sticky top-0 z-40">
+        <div className="flex items-center gap-3 flex-1">
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10"
+            className="lg:hidden p-2 rounded-xl bg-gray-100 border border-gray-200 text-gray-700 hover:bg-gray-200"
             title="Toggle Menu"
             aria-label="Toggle modules menu"
           >
@@ -890,50 +909,98 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
             </svg>
           </button>
 
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse hidden sm:block" />
-          <div>
-            <h1 className="text-sm sm:text-base font-bold text-white tracking-wide" style={{ fontFamily: "var(--font-fredoka)" }}>
-              Ashraf Siddiqui · CMS Control Center
-            </h1>
-            <p className="text-[11px] text-[#f5f5f5]/50 hidden sm:block">
-              Logged in as <span className="text-white font-mono font-semibold">@{adminUsername}</span> · In-Memory Fast Cache Enabled
-            </p>
+          {/* Search Box with ⌘F Badge */}
+          <div className="relative w-64 sm:w-80">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+              <SearchIcon />
+            </div>
+            <input
+              type="text"
+              placeholder="Search task, tours, stories..."
+              className="w-full pl-9 pr-12 py-2 rounded-full bg-gray-50 border border-gray-200 text-xs text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#155e38]/20 focus:border-[#155e38] transition-all"
+            />
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <kbd className="px-1.5 py-0.5 text-[10px] font-mono text-gray-400 bg-white border border-gray-200 rounded">
+                ⌘F
+              </kbd>
+            </div>
           </div>
         </div>
 
+        {/* Right Actions: Messages, Notifications, User Capsule */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <Link
-            href="/travel"
-            target="_blank"
-            className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-[#f5f5f5]/80 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1.5"
-          >
-            <span className="hidden sm:inline">View Live Website</span>
-            <span className="sm:hidden">Live</span>
-            <ExternalLinkIcon />
-          </Link>
+          {/* Messages Icon */}
           <button
-            onClick={handleLogout}
-            title="Log out of CMS"
-            className="p-2 rounded-full bg-white/5 border border-white/10 text-[#f5f5f5]/70 hover:text-red-400 hover:border-red-500/30 hover:bg-red-500/10 transition-all cursor-pointer"
+            onClick={() => setActiveTab("enquiries")}
+            className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all cursor-pointer"
+            title="Tour Enquiries & Leads"
           >
-            <LogoutIcon />
+            <MailIcon />
           </button>
+
+          {/* Notifications Bell */}
+          <button
+            onClick={() => setActiveTab("enquiries")}
+            className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all relative cursor-pointer"
+            title="Notifications"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            </svg>
+            {newEnquiriesCount > 0 && (
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            )}
+          </button>
+
+          {/* User Profile Capsule (Donezo Style) */}
+          <div className="flex items-center gap-2.5 pl-2">
+            <div className="w-9 h-9 rounded-full overflow-hidden bg-[#155e38] border border-gray-200 flex items-center justify-center text-white font-bold text-xs shrink-0">
+              <Image
+                src="/img/travel/ashraf.jpeg"
+                alt="Ashraf Siddiqui"
+                width={36}
+                height={36}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.currentTarget as HTMLElement).style.display = "none";
+                }}
+              />
+              <span className="font-semibold text-white">AS</span>
+            </div>
+            <div className="text-left hidden md:block">
+              <div className="text-xs font-bold text-gray-900 leading-tight">
+                Ashraf Siddiqui
+              </div>
+              <div className="text-[10px] text-gray-500 leading-tight">
+                ashrafsiddiquitravel@gmail.com
+              </div>
+            </div>
+            <button
+              onClick={handleLogout}
+              title="Logout"
+              className="p-1.5 rounded-full text-gray-400 hover:text-red-600 hover:bg-red-50 transition-all cursor-pointer ml-1"
+            >
+              <LogoutIcon />
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Mobile Drawer Navigation (When toggled) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-[#0c0c0e] border-b border-white/10 p-4 space-y-2 z-30">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-[#f5f5f5]/40 block mb-1">
-            Switch Module
+        <div className="lg:hidden bg-white border-b border-gray-200 p-4 space-y-2 z-30 shadow-md">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400 block mb-1">
+            Menu Navigation
           </span>
           <div className="grid grid-cols-2 gap-2">
             {[
-              { id: "hero", label: "Hero Banner", count: `${slides.length} Slides`, icon: <SlidersIcon /> },
-              { id: "gallery", label: "Photo Gallery", count: `${photos.length} Photos`, icon: <CameraIcon /> },
-              { id: "reels", label: "Reels & Dispatches", count: `${reels.length} Clips`, icon: <FilmIcon /> },
+              { id: "dashboard", label: "Dashboard", count: "Overview", icon: <DashboardIcon /> },
               { id: "trips", label: "Expeditions", count: `${trips.length} Tours`, icon: <CompassIcon /> },
+              { id: "hero", label: "Hero Banner", count: `${slides.length} Slides`, icon: <SlidersIcon /> },
               { id: "stories", label: "Travel Stories", count: `${stories.length} Articles`, icon: <BookOpenIcon /> },
+              { id: "gallery", label: "Visual Gallery", count: `${photos.length} Photos`, icon: <CameraIcon /> },
+              { id: "reels", label: "Reels & Video", count: `${reels.length} Clips`, icon: <FilmIcon /> },
               { id: "enquiries", label: "Tour Leads", count: `${enquiries.length} Inquiries`, icon: <InboxIcon />, badge: newEnquiriesCount },
             ].map((item) => (
               <button
@@ -944,17 +1011,17 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                 }}
                 className={`p-3 rounded-xl text-left border flex items-center gap-2.5 transition-all ${
                   activeTab === item.id
-                    ? "bg-white text-black border-white shadow-md font-bold"
-                    : "bg-white/[0.03] text-white/70 border-white/5"
+                    ? "bg-[#155e38] text-white border-[#155e38] shadow-sm font-bold"
+                    : "bg-gray-50 text-gray-700 border-gray-200"
                 }`}
               >
                 <div className="shrink-0">{item.icon}</div>
                 <div className="min-w-0 flex-1">
                   <div className="text-xs truncate">{item.label}</div>
-                  <div className={`text-[9px] ${activeTab === item.id ? "text-black/60" : "text-white/40"}`}>{item.count}</div>
+                  <div className={`text-[9px] ${activeTab === item.id ? "text-emerald-100" : "text-gray-400"}`}>{item.count}</div>
                 </div>
                 {item.badge ? (
-                  <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-500 text-black">
+                  <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-500 text-white">
                     {item.badge}
                   </span>
                 ) : null}
@@ -966,143 +1033,281 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
 
       {/* Main Container with Sidebar + Content */}
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Left Navigation Sidebar (Desktop) */}
-        <aside className="w-full lg:w-64 bg-[#0a0a0c] border-b lg:border-b-0 lg:border-r border-white/10 p-3 sm:p-4 shrink-0 hidden lg:flex flex-col justify-between">
+        {/* Left Navigation Sidebar (Desktop - Donezo Style) */}
+        <aside className="w-full lg:w-64 bg-white border-b lg:border-b-0 lg:border-r border-gray-200/80 p-5 shrink-0 hidden lg:flex flex-col justify-between">
           <div>
-            <span className="text-[10px] uppercase font-bold tracking-wider text-[#f5f5f5]/40 px-3 mb-2 block">
-              Website Modules
+            {/* Donezo Brand Logo & Title */}
+            <div
+              onClick={() => setActiveTab("dashboard")}
+              className="flex items-center gap-3 px-2 mb-8 cursor-pointer group"
+            >
+              <div className="w-9 h-9 rounded-full bg-[#155e38] flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4z" />
+                </svg>
+              </div>
+              <div>
+                <span
+                  className="text-lg font-bold tracking-tight text-gray-900 group-hover:text-[#155e38] transition-colors"
+                  style={{ fontFamily: "var(--font-fredoka), sans-serif" }}
+                >
+                  Donezo
+                </span>
+                <span className="text-[10px] font-mono uppercase text-gray-400 block -mt-1">
+                  Travel CMS
+                </span>
+              </div>
+            </div>
+
+            {/* Section: MENU */}
+            <span className="text-[11px] uppercase font-bold tracking-wider text-gray-400 px-3 mb-2.5 block">
+              Menu
             </span>
-            <nav className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-              {/* Tab 1: Hero Banner */}
+            <nav className="flex flex-col gap-1">
+              {/* Dashboard */}
               <button
-                onClick={() => setActiveTab("hero")}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer text-left w-full ${
-                  activeTab === "hero"
-                    ? "bg-white text-black font-semibold shadow-md"
-                    : "text-[#f5f5f5]/70 hover:bg-white/5 hover:text-white"
+                onClick={() => setActiveTab("dashboard")}
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left w-full ${
+                  activeTab === "dashboard"
+                    ? "bg-[#155e38] text-white font-semibold shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                 }`}
               >
-                <SlidersIcon />
-                <div className="flex-1">
-                  <div className="leading-tight">Hero Banner</div>
-                  <div className={`text-[10px] ${activeTab === "hero" ? "text-black/60" : "text-[#f5f5f5]/40"}`}>
-                    {slides.length} Dynamic Slides
-                  </div>
-                </div>
+                <DashboardIcon />
+                <span className="flex-1">Dashboard</span>
               </button>
 
-              {/* Tab 2: Visual Gallery */}
-              <button
-                onClick={() => setActiveTab("gallery")}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer text-left w-full ${
-                  activeTab === "gallery"
-                    ? "bg-white text-black font-semibold shadow-md"
-                    : "text-[#f5f5f5]/70 hover:bg-white/5 hover:text-white"
-                }`}
-              >
-                <CameraIcon />
-                <div className="flex-1">
-                  <div className="leading-tight">Visual Gallery</div>
-                  <div className={`text-[10px] ${activeTab === "gallery" ? "text-black/60" : "text-[#f5f5f5]/40"}`}>
-                    {photos.length} Photos & Notes
-                  </div>
-                </div>
-              </button>
-
-              {/* Tab 3: Reels & Videos */}
-              <button
-                onClick={() => setActiveTab("reels")}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer text-left w-full ${
-                  activeTab === "reels"
-                    ? "bg-white text-black font-semibold shadow-md"
-                    : "text-[#f5f5f5]/70 hover:bg-white/5 hover:text-white"
-                }`}
-              >
-                <FilmIcon />
-                <div className="flex-1">
-                  <div className="leading-tight">Reels & Dispatches</div>
-                  <div className={`text-[10px] ${activeTab === "reels" ? "text-black/60" : "text-[#f5f5f5]/40"}`}>
-                    {reels.length} Video Clips
-                  </div>
-                </div>
-              </button>
-
-              {/* Tab 4: Group Tours */}
+              {/* Expeditions */}
               <button
                 onClick={() => setActiveTab("trips")}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer text-left w-full ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left w-full ${
                   activeTab === "trips"
-                    ? "bg-white text-black font-semibold shadow-md"
-                    : "text-[#f5f5f5]/70 hover:bg-white/5 hover:text-white"
+                    ? "bg-[#155e38] text-white font-semibold shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                 }`}
               >
                 <CompassIcon />
-                <div className="flex-1">
-                  <div className="leading-tight">Group Expeditions</div>
-                  <div className={`text-[10px] ${activeTab === "trips" ? "text-black/60" : "text-[#f5f5f5]/40"}`}>
-                    {trips.length} Tours Active
-                  </div>
+                <div className="flex-1 flex items-center justify-between">
+                  <span>Group Expeditions</span>
+                  <span className={`text-[10px] ${activeTab === "trips" ? "text-emerald-100" : "text-gray-400"}`}>
+                    {trips.length}
+                  </span>
                 </div>
               </button>
 
-              {/* Tab 5: Stories & Editorial Journal */}
+              {/* Hero Banner */}
+              <button
+                onClick={() => setActiveTab("hero")}
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left w-full ${
+                  activeTab === "hero"
+                    ? "bg-[#155e38] text-white font-semibold shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                }`}
+              >
+                <SlidersIcon />
+                <div className="flex-1 flex items-center justify-between">
+                  <span>Hero Banner</span>
+                  <span className={`text-[10px] ${activeTab === "hero" ? "text-emerald-100" : "text-gray-400"}`}>
+                    {slides.length}
+                  </span>
+                </div>
+              </button>
+
+              {/* Travel Stories */}
               <button
                 onClick={() => setActiveTab("stories")}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer text-left w-full ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left w-full ${
                   activeTab === "stories"
-                    ? "bg-white text-black font-semibold shadow-md"
-                    : "text-[#f5f5f5]/70 hover:bg-white/5 hover:text-white"
+                    ? "bg-[#155e38] text-white font-semibold shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                 }`}
               >
                 <BookOpenIcon />
-                <div className="flex-1">
-                  <div className="leading-tight">Travel Stories</div>
-                  <div className={`text-[10px] ${activeTab === "stories" ? "text-black/60" : "text-[#f5f5f5]/40"}`}>
-                    {stories.length} Field Dispatches
-                  </div>
+                <div className="flex-1 flex items-center justify-between">
+                  <span>Travel Stories</span>
+                  <span className={`text-[10px] ${activeTab === "stories" ? "text-emerald-100" : "text-gray-400"}`}>
+                    {stories.length}
+                  </span>
                 </div>
               </button>
 
-              {/* Tab 6: Booking Leads & Enquiries */}
+              {/* Visual Gallery */}
+              <button
+                onClick={() => setActiveTab("gallery")}
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left w-full ${
+                  activeTab === "gallery"
+                    ? "bg-[#155e38] text-white font-semibold shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                }`}
+              >
+                <CameraIcon />
+                <div className="flex-1 flex items-center justify-between">
+                  <span>Visual Gallery</span>
+                  <span className={`text-[10px] ${activeTab === "gallery" ? "text-emerald-100" : "text-gray-400"}`}>
+                    {photos.length}
+                  </span>
+                </div>
+              </button>
+
+              {/* Reels & Clips */}
+              <button
+                onClick={() => setActiveTab("reels")}
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left w-full ${
+                  activeTab === "reels"
+                    ? "bg-[#155e38] text-white font-semibold shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                }`}
+              >
+                <FilmIcon />
+                <div className="flex-1 flex items-center justify-between">
+                  <span>Reels & Video</span>
+                  <span className={`text-[10px] ${activeTab === "reels" ? "text-emerald-100" : "text-gray-400"}`}>
+                    {reels.length}
+                  </span>
+                </div>
+              </button>
+
+              {/* Tour Leads & Enquiries */}
               <button
                 onClick={() => setActiveTab("enquiries")}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer text-left w-full ${
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer text-left w-full ${
                   activeTab === "enquiries"
-                    ? "bg-white text-black font-semibold shadow-md"
-                    : "text-[#f5f5f5]/70 hover:bg-white/5 hover:text-white"
+                    ? "bg-[#155e38] text-white font-semibold shadow-sm"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                 }`}
               >
                 <InboxIcon />
                 <div className="flex-1 flex items-center justify-between">
-                  <div>
-                    <div className="leading-tight">Tour Enquiries</div>
-                    <div className={`text-[10px] ${activeTab === "enquiries" ? "text-black/60" : "text-[#f5f5f5]/40"}`}>
-                      {enquiries.length} Inquiries
-                    </div>
-                  </div>
-                  {newEnquiriesCount > 0 && (
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-black">
+                  <span>Tour Enquiries</span>
+                  {newEnquiriesCount > 0 ? (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#155e38] text-white border border-white/20">
                       {newEnquiriesCount}
                     </span>
+                  ) : (
+                    <span className="text-[10px] text-gray-400">{enquiries.length}</span>
                   )}
                 </div>
               </button>
             </nav>
+
+            {/* Section: GENERAL */}
+            <span className="text-[11px] uppercase font-bold tracking-wider text-gray-400 px-3 mt-6 mb-2.5 block">
+              General
+            </span>
+            <nav className="flex flex-col gap-1">
+              <button
+                onClick={() => setActiveTab("dashboard")}
+                className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all cursor-pointer text-left w-full"
+              >
+                <SettingsIcon />
+                <span>Settings</span>
+              </button>
+
+              <Link
+                href="/travel"
+                target="_blank"
+                className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all cursor-pointer text-left w-full"
+              >
+                <ExternalLinkIcon />
+                <span>View Live Site</span>
+              </Link>
+
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all cursor-pointer text-left w-full"
+              >
+                <LogoutIcon />
+                <span>Logout</span>
+              </button>
+            </nav>
           </div>
 
-          {/* Sidebar Footer info */}
-          <div className="hidden lg:block pt-6 border-t border-white/5 px-2">
-            <div className="text-[11px] text-[#f5f5f5]/40 space-y-1">
-              <p className="font-semibold text-[#f5f5f5]/60">Optimization & Cache</p>
-              <p>In-memory file mtime cache</p>
-              <p>Edge Cache-Control 60s</p>
-              <p>Automatic format & ratio inspector</p>
+          {/* Bottom Card in Sidebar (Donezo Download App Card Style) */}
+          <div className="rounded-2xl p-4 bg-[#154e2f] text-white relative overflow-hidden mt-6 shadow-sm">
+            <div
+              className="absolute inset-0 opacity-20 pointer-events-none"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 100% 100%, transparent 20%, rgba(255,255,255,0.3) 21%, transparent 22%, transparent 40%, rgba(255,255,255,0.3) 41%, transparent 42%)",
+              }}
+            />
+            <div className="relative z-10 space-y-2">
+              <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-xs">
+                ✦
+              </div>
+              <h4 className="text-xs font-bold leading-tight">
+                Live Travel Diaries
+              </h4>
+              <p className="text-[10px] text-emerald-100 opacity-90 leading-tight">
+                Live platform across 24 Indian states.
+              </p>
+              <Link
+                href="/travel"
+                target="_blank"
+                className="mt-2 block w-full py-1.5 px-3 rounded-full bg-[#1e6f44] hover:bg-[#258553] text-[11px] font-semibold text-center text-white transition-colors"
+              >
+                Visit Site &rarr;
+              </Link>
             </div>
           </div>
         </aside>
 
         {/* Dynamic Content Area */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          {/* Breadcrumb back button when not on dashboard */}
+          {activeTab !== "dashboard" && (
+            <div className="mb-6 flex items-center justify-between pb-3 border-b border-gray-200">
+              <div className="flex items-center gap-2 text-xs text-gray-500">
+                <button
+                  onClick={() => setActiveTab("dashboard")}
+                  className="font-medium hover:text-[#155e38] transition-colors flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Dashboard</span>
+                </button>
+                <span>/</span>
+                <span className="font-bold text-gray-900 capitalize">
+                  {activeTab === "hero"
+                    ? "Hero Banner"
+                    : activeTab === "gallery"
+                    ? "Visual Gallery"
+                    : activeTab === "reels"
+                    ? "Reels & Dispatches"
+                    : activeTab === "trips"
+                    ? "Group Expeditions"
+                    : activeTab === "stories"
+                    ? "Travel Stories"
+                    : "Tour Enquiries"}
+                </span>
+              </div>
+              <button
+                onClick={() => setActiveTab("dashboard")}
+                className="px-3.5 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-semibold text-gray-700 hover:text-black hover:border-gray-400 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+              >
+                <span>&larr; Back to Dashboard</span>
+              </button>
+            </div>
+          )}
+
+          {/* ══════════════════════════════════════════════════════════════════════
+              TAB 0: DONEZO DASHBOARD OVERVIEW
+              ══════════════════════════════════════════════════════════════════════ */}
+          {activeTab === "dashboard" && (
+            <DonezoDashboardOverview
+              slidesCount={slides.length}
+              photosCount={photos.length}
+              reelsCount={reels.length}
+              tripsCount={trips.length}
+              storiesCount={stories.length}
+              enquiries={enquiries}
+              trips={trips}
+              onNavigateTab={(tab) => setActiveTab(tab)}
+              onAddNewTrip={() => {
+                setSelectedTripIndex(0);
+                setActiveTab("trips");
+              }}
+            />
+          )}
+
           {/* ══════════════════════════════════════════════════════════════════════
               TAB 1: HERO BANNER
               ══════════════════════════════════════════════════════════════════════ */}
@@ -3947,62 +4152,64 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
       </div>
 
       {/* Floating Sticky Mobile Publish Button */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-[#0c0c0e]/95 backdrop-blur-md border-t border-white/10 z-30 flex items-center justify-between gap-3 shadow-2xl">
-        <div className="text-xs">
-          <span className="text-white/40 block text-[10px] uppercase font-bold">Module</span>
-          <span className="font-bold text-white capitalize">{activeTab}</span>
+      {activeTab !== "dashboard" && (
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-white/95 backdrop-blur-md border-t border-gray-200 z-30 flex items-center justify-between gap-3 shadow-xl">
+          <div className="text-xs">
+            <span className="text-gray-400 block text-[10px] uppercase font-bold">Module</span>
+            <span className="font-bold text-gray-900 capitalize">{activeTab}</span>
+          </div>
+          {activeTab === "hero" && (
+            <button
+              onClick={handleSaveHero}
+              disabled={isSaving}
+              className="px-5 py-2.5 rounded-full bg-[#155e38] text-white font-bold text-xs hover:bg-[#124e2d] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-md touch-manipulation"
+            >
+              <CheckIcon />
+              <span>{isSaving ? "Saving..." : "Publish Banner"}</span>
+            </button>
+          )}
+          {activeTab === "gallery" && (
+            <button
+              onClick={handleSaveGallery}
+              disabled={isSaving}
+              className="px-5 py-2.5 rounded-full bg-[#155e38] text-white font-bold text-xs hover:bg-[#124e2d] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-md touch-manipulation"
+            >
+              <CheckIcon />
+              <span>{isSaving ? "Saving..." : "Publish Gallery"}</span>
+            </button>
+          )}
+          {activeTab === "reels" && (
+            <button
+              onClick={handleSaveReels}
+              disabled={isSaving}
+              className="px-5 py-2.5 rounded-full bg-[#155e38] text-white font-bold text-xs hover:bg-[#124e2d] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-md touch-manipulation"
+            >
+              <CheckIcon />
+              <span>{isSaving ? "Saving..." : "Publish Reels"}</span>
+            </button>
+          )}
+          {activeTab === "trips" && (
+            <button
+              onClick={handleSaveTrips}
+              disabled={isSaving}
+              className="px-5 py-2.5 rounded-full bg-[#155e38] text-white font-bold text-xs hover:bg-[#124e2d] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-md touch-manipulation"
+            >
+              <CheckIcon />
+              <span>{isSaving ? "Saving..." : "Publish Trips"}</span>
+            </button>
+          )}
+          {activeTab === "stories" && (
+            <button
+              onClick={handleSaveStories}
+              disabled={isSaving}
+              className="px-5 py-2.5 rounded-full bg-[#155e38] text-white font-bold text-xs hover:bg-[#124e2d] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-md touch-manipulation"
+            >
+              <CheckIcon />
+              <span>{isSaving ? "Saving..." : "Publish Stories"}</span>
+            </button>
+          )}
         </div>
-        {activeTab === "hero" && (
-          <button
-            onClick={handleSaveHero}
-            disabled={isSaving}
-            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
-          >
-            <CheckIcon />
-            <span>{isSaving ? "Saving..." : "Publish Banner"}</span>
-          </button>
-        )}
-        {activeTab === "gallery" && (
-          <button
-            onClick={handleSaveGallery}
-            disabled={isSaving}
-            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
-          >
-            <CheckIcon />
-            <span>{isSaving ? "Saving..." : "Publish Gallery"}</span>
-          </button>
-        )}
-        {activeTab === "reels" && (
-          <button
-            onClick={handleSaveReels}
-            disabled={isSaving}
-            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
-          >
-            <CheckIcon />
-            <span>{isSaving ? "Saving..." : "Publish Reels"}</span>
-          </button>
-        )}
-        {activeTab === "trips" && (
-          <button
-            onClick={handleSaveTrips}
-            disabled={isSaving}
-            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
-          >
-            <CheckIcon />
-            <span>{isSaving ? "Saving..." : "Publish Trips"}</span>
-          </button>
-        )}
-        {activeTab === "stories" && (
-          <button
-            onClick={handleSaveStories}
-            disabled={isSaving}
-            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
-          >
-            <CheckIcon />
-            <span>{isSaving ? "Saving..." : "Publish Stories"}</span>
-          </button>
-        )}
-      </div>
+      )}
     </div>
   );
 }
