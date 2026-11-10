@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import TravelNav from "../components/TravelNav";
 import TravelFooter from "../components/TravelFooter";
-import { TRAVEL_STORIES } from "../data/stories";
+import { TRAVEL_STORIES, TravelStory } from "../data/stories";
 
 const CATEGORIES = [
   "All Stories",
@@ -15,12 +15,34 @@ const CATEGORIES = [
   "Northeast Trails",
 ];
 
-export default function StoriesClient() {
+interface StoriesClientProps {
+  initialStories?: TravelStory[];
+}
+
+export default function StoriesClient({ initialStories }: StoriesClientProps) {
+  const [stories, setStories] = useState<TravelStory[]>(initialStories || TRAVEL_STORIES);
   const [selectedCategory, setSelectedCategory] = useState("All Stories");
   const [searchQuery, setSearchQuery] = useState("");
 
+  useEffect(() => {
+    async function fetchDynamicStories() {
+      try {
+        const res = await fetch("/api/travel/stories");
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.stories) && data.stories.length > 0) {
+            setStories(data.stories);
+          }
+        }
+      } catch {
+        // Fallback silently to initial
+      }
+    }
+    fetchDynamicStories();
+  }, []);
+
   const filteredStories = useMemo(() => {
-    return TRAVEL_STORIES.filter((story) => {
+    return stories.filter((story) => {
       const matchCat =
         selectedCategory === "All Stories" || story.category === selectedCategory;
       const matchQuery =
@@ -31,9 +53,9 @@ export default function StoriesClient() {
         story.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchCat && matchQuery;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [stories, selectedCategory, searchQuery]);
 
-  const featuredStory = TRAVEL_STORIES[0];
+  const featuredStory = stories[0] || TRAVEL_STORIES[0];
 
   return (
     <div className="min-h-screen bg-[#080808] text-[#f5f5f5]">

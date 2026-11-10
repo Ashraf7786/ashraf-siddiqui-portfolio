@@ -1,12 +1,4 @@
-import { Fredoka } from "next/font/google";
 import type { Metadata } from "next";
-
-const fredoka = Fredoka({
-  subsets: ["latin"],
-  variable: "--font-fredoka",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "Admin Control Center | Ashraf Siddiqui Travel",
@@ -17,11 +9,10 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`${fredoka.variable} min-h-screen bg-[#080808] text-[#f5f5f5] selection:bg-white/20`}
+      className="min-h-screen bg-[#080808] text-[#f5f5f5] selection:bg-white/20"
       style={{ fontFamily: "var(--font-inter), sans-serif" }}
     >
       {children}
     </div>
   );
 }
-

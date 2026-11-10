@@ -9,9 +9,10 @@ import { TravelStory, TRAVEL_STORIES } from "../../data/stories";
 
 interface StoryReaderClientProps {
   story: TravelStory;
+  allStories?: TravelStory[];
 }
 
-export default function StoryReaderClient({ story }: StoryReaderClientProps) {
+export default function StoryReaderClient({ story, allStories }: StoryReaderClientProps) {
   const [readingProgress, setReadingProgress] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
   const [activeTocId, setActiveTocId] = useState<string>(story.sections[0]?.id || "");
@@ -19,8 +20,9 @@ export default function StoryReaderClient({ story }: StoryReaderClientProps) {
   const articleRef = useRef<HTMLElement>(null);
 
   // Related stories: same category first, then others; limit to 2
+  const storyPool = allStories && allStories.length > 0 ? allStories : TRAVEL_STORIES;
   const relatedStories = (() => {
-    const others = TRAVEL_STORIES.filter((s) => s.slug !== story.slug);
+    const others = storyPool.filter((s) => s.slug !== story.slug);
     const sameCategory = others.filter((s) => s.category === story.category);
     const different = others.filter((s) => s.category !== story.category);
     return [...sameCategory, ...different].slice(0, 2) as TravelStory[];

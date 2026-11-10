@@ -1,22 +1,27 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { TRAVEL_STORIES } from "../../data/stories";
+import { TRAVEL_STORIES, TravelStory } from "../../data/stories";
+import { getCachedJson } from "@/lib/travelDataCache";
 import StoryReaderClient from "./StoryReaderClient";
+
+export const dynamic = "force-dynamic";
 
 interface StoryPageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return TRAVEL_STORIES.map((story) => ({
+  const stories = getCachedJson<TravelStory[]>("stories.json", TRAVEL_STORIES);
+  return stories.map((story) => ({
     slug: story.slug,
   }));
 }
 
 export async function generateMetadata({ params }: StoryPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const story = TRAVEL_STORIES.find((s) => s.slug === slug);
+  const stories = getCachedJson<TravelStory[]>("stories.json", TRAVEL_STORIES);
+  const story = stories.find((s) => s.slug === slug);
 
   if (!story) {
     return {
@@ -37,12 +42,12 @@ export async function generateMetadata({ params }: StoryPageProps): Promise<Meta
 
 export default async function StoryPage({ params }: StoryPageProps) {
   const { slug } = await params;
-  const story = TRAVEL_STORIES.find((s) => s.slug === slug);
+  const stories = getCachedJson<TravelStory[]>("stories.json", TRAVEL_STORIES);
+  const story = stories.find((s) => s.slug === slug);
 
   if (!story) {
     notFound();
   }
 
-  return <StoryReaderClient story={story} />;
+  return <StoryReaderClient story={story} allStories={stories} />;
 }
-

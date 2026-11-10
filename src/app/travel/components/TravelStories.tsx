@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
-import { TRAVEL_STORIES } from "../data/stories";
+import { TRAVEL_STORIES, TravelStory } from "../data/stories";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,12 +20,30 @@ const CATEGORIES = [
 
 export default function TravelStories() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [stories, setStories] = useState<TravelStory[]>(TRAVEL_STORIES);
   const [activeCategory, setActiveCategory] = useState("all");
+
+  useEffect(() => {
+    async function loadDynamicStories() {
+      try {
+        const res = await fetch("/api/travel/stories");
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.stories) && data.stories.length > 0) {
+            setStories(data.stories);
+          }
+        }
+      } catch {
+        // Fallback silently to static stories
+      }
+    }
+    loadDynamicStories();
+  }, []);
 
   const filtered =
     activeCategory === "all"
-      ? TRAVEL_STORIES
-      : TRAVEL_STORIES.filter((s) => s.category === activeCategory);
+      ? stories
+      : stories.filter((s) => s.category === activeCategory);
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {

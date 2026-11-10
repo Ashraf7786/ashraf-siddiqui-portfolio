@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { TravelStory, StorySection } from "@/app/travel/data/stories";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
-type AdminTab = "hero" | "gallery" | "reels" | "trips" | "enquiries";
+type AdminTab = "hero" | "gallery" | "reels" | "trips" | "stories" | "enquiries";
 
 interface MetricPill {
   label: string;
@@ -169,6 +170,13 @@ const InboxIcon = () => (
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
     <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+  </svg>
+);
+
+const BookOpenIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
   </svg>
 );
 
@@ -469,7 +477,13 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
   const [trips, setTrips] = useState<GroupTripItem[]>([]);
   const [selectedTripIndex, setSelectedTripIndex] = useState(0);
 
-  // Tab 5: Enquiries State
+  // Tab 5: Stories State
+  const [stories, setStories] = useState<TravelStory[]>([]);
+  const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
+  const [storyFilter, setStoryFilter] = useState("All");
+  const [storySearch, setStorySearch] = useState("");
+
+  // Tab 6: Enquiries State
   const [enquiries, setEnquiries] = useState<LeadEnquiryItem[]>([]);
   const [enquiryStatusFilter, setEnquiryStatusFilter] = useState<string>("All");
   const [enquirySearch, setEnquirySearch] = useState("");
@@ -479,11 +493,12 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
     async function loadAllData() {
       setIsLoading(true);
       try {
-        const [heroRes, galRes, reelsRes, tripsRes, enqRes] = await Promise.all([
+        const [heroRes, galRes, reelsRes, tripsRes, storiesRes, enqRes] = await Promise.all([
           fetch("/api/admin/hero"),
           fetch("/api/admin/gallery"),
           fetch("/api/admin/reels"),
           fetch("/api/admin/trips"),
+          fetch("/api/admin/stories"),
           fetch("/api/admin/enquiries"),
         ]);
 
@@ -502,6 +517,10 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
         if (tripsRes.ok) {
           const d = await tripsRes.json();
           if (d.trips) setTrips(d.trips);
+        }
+        if (storiesRes.ok) {
+          const d = await storiesRes.json();
+          if (d.stories) setStories(d.stories);
         }
         if (enqRes.ok) {
           const d = await enqRes.json();
@@ -616,6 +635,28 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
     }
   };
 
+  const handleSaveStories = async () => {
+    setIsSaving(true);
+    setStatusMessage(null);
+    try {
+      const res = await fetch("/api/admin/stories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ stories }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatusMessage({ type: "success", text: "Travel stories updated and published live!" });
+      } else {
+        setStatusMessage({ type: "error", text: data.error || "Failed to save stories." });
+      }
+    } catch {
+      setStatusMessage({ type: "error", text: "Network error saving travel stories." });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const handleUpdateEnquiryStatus = async (id: string, newStatus: LeadEnquiryItem["status"]) => {
     try {
       const res = await fetch("/api/admin/enquiries", {
@@ -662,6 +703,97 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
   const currentPhoto = photos[selectedPhotoIndex] || photos[0];
   const currentReel = reels[selectedReelIndex] || reels[0];
   const currentTrip = trips[selectedTripIndex] || trips[0];
+  const currentStory = stories[selectedStoryIndex] || stories[0];
+
+  const filteredStories = useMemo(() => {
+    return stories.filter((s) => {
+      const matchCat = storyFilter === "All" || s.category === storyFilter;
+      const matchSearch =
+        !storySearch.trim() ||
+        s.title.toLowerCase().includes(storySearch.toLowerCase()) ||
+        s.subtitle.toLowerCase().includes(storySearch.toLowerCase()) ||
+        s.destination.toLowerCase().includes(storySearch.toLowerCase()) ||
+        s.state.toLowerCase().includes(storySearch.toLowerCase()) ||
+        (Array.isArray(s.tags) && s.tags.some((t) => t.toLowerCase().includes(storySearch.toLowerCase())));
+      return matchCat && matchSearch;
+    });
+  }, [stories, storyFilter, storySearch]);
+
+  const updateCurrentStory = (updater: (s: TravelStory) => TravelStory) => {
+    setStories((prev) => {
+      const copy = [...prev];
+      if (copy[selectedStoryIndex]) {
+        copy[selectedStoryIndex] = updater(copy[selectedStoryIndex]);
+      }
+      return copy;
+    });
+  };
+
+  const handleAddStory = () => {
+    const newStory: TravelStory = {
+      id: `story-${Date.now()}`,
+      slug: `new-journey-${stories.length + 1}`,
+      title: "New Travel Dispatch",
+      subtitle: "Raw field notes and editorial accounts from high-altitude trails.",
+      category: "Mountain Stories",
+      destination: "Himalayas",
+      destinationSlug: "himalayas",
+      state: "Himachal Pradesh",
+      year: "2026",
+      publishedAt: "March 2026",
+      readTime: "6 min read",
+      author: {
+        name: "Ashraf Siddiqui",
+        role: "Solo Explorer & Storyteller",
+        avatar: "/img/travel/kashmir_hero.jpg",
+        bio: "24 states explored across India. Documenting raw mountain passes, ancient trails, and local lives.",
+      },
+      coverImage: "/img/travel/kashmir_hero.jpg",
+      tagColor: "#38bdf8",
+      tags: ["Mountains", "Expedition", "Field Notes"],
+      excerpt: "A new story from remote trails and high mountain passes across India.",
+      sections: [
+        {
+          id: "intro-dispatch",
+          heading: "1. The Cold Whispers at First Light",
+          content: [
+            "The morning began in frozen stillness before the mountain winds started their daily roar.",
+            "Stepping onto the ridge, the expansive Himalayan horizon unfolded with crystal clarity.",
+          ],
+          quote: "You do not visit the mountains to escape reality; you visit to discover what reality feels like when stripped of artificial noise.",
+          fieldNote: {
+            title: "Field Note: High-Altitude Acclimatization",
+            text: "Take slow rhythmic breaths, maintain constant hydration, and never ignore early altitude signals.",
+          },
+        },
+      ],
+    };
+    setStories((prev) => [newStory, ...prev]);
+    setSelectedStoryIndex(0);
+  };
+
+  const handleDeleteStory = (index: number) => {
+    if (stories.length <= 1) {
+      alert("At least one travel story must remain in the archive.");
+      return;
+    }
+    if (!confirm("Are you sure you want to delete this travel story?")) return;
+    setStories((prev) => prev.filter((_, idx) => idx !== index));
+    setSelectedStoryIndex(0);
+  };
+
+  const handleMoveStory = (index: number, direction: "up" | "down") => {
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= stories.length) return;
+    setStories((prev) => {
+      const copy = [...prev];
+      const temp = copy[index];
+      copy[index] = copy[targetIndex];
+      copy[targetIndex] = temp;
+      return copy;
+    });
+    setSelectedStoryIndex(targetIndex);
+  };
 
   const filteredPhotos = useMemo(() => {
     return photos.filter((p) => {
@@ -777,6 +909,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
               { id: "gallery", label: "Photo Gallery", count: `${photos.length} Photos`, icon: <CameraIcon /> },
               { id: "reels", label: "Reels & Dispatches", count: `${reels.length} Clips`, icon: <FilmIcon /> },
               { id: "trips", label: "Expeditions", count: `${trips.length} Tours`, icon: <CompassIcon /> },
+              { id: "stories", label: "Travel Stories", count: `${stories.length} Articles`, icon: <BookOpenIcon /> },
               { id: "enquiries", label: "Tour Leads", count: `${enquiries.length} Inquiries`, icon: <InboxIcon />, badge: newEnquiriesCount },
             ].map((item) => (
               <button
@@ -888,7 +1021,25 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                 </div>
               </button>
 
-              {/* Tab 5: Booking Leads & Enquiries */}
+              {/* Tab 5: Stories & Editorial Journal */}
+              <button
+                onClick={() => setActiveTab("stories")}
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer text-left w-full ${
+                  activeTab === "stories"
+                    ? "bg-white text-black font-semibold shadow-md"
+                    : "text-[#f5f5f5]/70 hover:bg-white/5 hover:text-white"
+                }`}
+              >
+                <BookOpenIcon />
+                <div className="flex-1">
+                  <div className="leading-tight">Travel Stories</div>
+                  <div className={`text-[10px] ${activeTab === "stories" ? "text-black/60" : "text-[#f5f5f5]/40"}`}>
+                    {stories.length} Field Dispatches
+                  </div>
+                </div>
+              </button>
+
+              {/* Tab 6: Booking Leads & Enquiries */}
               <button
                 onClick={() => setActiveTab("enquiries")}
                 className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all shrink-0 cursor-pointer text-left w-full ${
@@ -2421,7 +2572,734 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
           )}
 
           {/* ══════════════════════════════════════════════════════════════════════
-              TAB 5: BOOKING ENQUIRIES & LEADS INBOX
+              TAB 5: TRAVEL STORIES & FIELD DISPATCHES
+              ══════════════════════════════════════════════════════════════════════ */}
+          {activeTab === "stories" && (
+            <div className="max-w-6xl mx-auto space-y-6">
+              {/* Header Action Bar */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold" style={{ fontFamily: "var(--font-fredoka)" }}>
+                    Travel Stories & Field Notes
+                  </h2>
+                  <p className="text-xs text-[#f5f5f5]/50 mt-0.5">
+                    Draft, publish, and curate multi-section editorial accounts, high-altitude field notes, and photo galleries.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleAddStory}
+                    className="px-4 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-bold text-xs hover:bg-white/20 transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <PlusIcon />
+                    <span>New Story</span>
+                  </button>
+                  <button
+                    onClick={handleSaveStories}
+                    disabled={isSaving}
+                    className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-lg cursor-pointer shrink-0"
+                  >
+                    <CheckIcon />
+                    <span>{isSaving ? "Publishing..." : "Publish All Stories"}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Search & Category Filter */}
+              <div className="flex flex-col sm:flex-row items-center gap-3">
+                <div className="relative flex-1 w-full">
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40">
+                    <SearchIcon />
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Search stories by title, destination, state, or tags..."
+                    value={storySearch}
+                    onChange={(e) => setStorySearch(e.target.value)}
+                    className="w-full bg-[#111113] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-base sm:text-xs text-white placeholder-white/30 outline-none focus:border-white/30"
+                  />
+                </div>
+
+                <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+                  {["All", "Mountain Stories", "Road Adventures", "Hidden India", "Northeast Trails"].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setStoryFilter(cat)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all shrink-0 cursor-pointer ${
+                        storyFilter === cat
+                          ? "bg-white text-black font-semibold"
+                          : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Main Stories Editor Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                {/* Left Column: Stories List */}
+                <div className="lg:col-span-5 space-y-2 max-h-[760px] overflow-y-auto pr-1">
+                  {filteredStories.map((story, idx) => {
+                    const actualIdx = stories.findIndex((s) => s.id === story.id);
+                    const isSelected = selectedStoryIndex === actualIdx;
+                    return (
+                      <div
+                        key={story.id}
+                        onClick={() => setSelectedStoryIndex(actualIdx)}
+                        className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center gap-3 ${
+                          isSelected
+                            ? "bg-white/10 border-white/40 text-white shadow-lg"
+                            : "bg-[#111113] border-white/5 text-[#f5f5f5]/70 hover:bg-white/5"
+                        }`}
+                      >
+                        <div className="w-16 h-16 rounded-xl overflow-hidden bg-black shrink-0 relative border border-white/10">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={story.coverImage} alt="" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold truncate text-white">{story.title}</p>
+                          <p className="text-[10px] text-[#f5f5f5]/50 truncate mt-0.5">
+                            {story.destination} · {story.readTime}
+                          </p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span
+                              className="text-[9px] font-bold px-2 py-0.5 rounded-full"
+                              style={{ backgroundColor: `${story.tagColor || "#38bdf8"}20`, color: story.tagColor || "#38bdf8" }}
+                            >
+                              {story.category}
+                            </span>
+                            <span className="text-[10px] text-white/40">
+                              {story.sections?.length || 0} sections
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Order & Delete */}
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleMoveStory(actualIdx, "up");
+                            }}
+                            disabled={actualIdx === 0}
+                            className="p-1.5 rounded-lg text-white/40 hover:text-white disabled:opacity-20 hover:bg-white/10 transition-colors"
+                            title="Move story up"
+                          >
+                            <ArrowUpIcon />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleMoveStory(actualIdx, "down");
+                            }}
+                            disabled={actualIdx === stories.length - 1}
+                            className="p-1.5 rounded-lg text-white/40 hover:text-white disabled:opacity-20 hover:bg-white/10 transition-colors"
+                            title="Move story down"
+                          >
+                            <ArrowDownIcon />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteStory(actualIdx);
+                            }}
+                            className="p-1.5 rounded-lg text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                            title="Delete story"
+                          >
+                            <TrashIcon />
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Right Column: Active Story Comprehensive Editor */}
+                <div className="lg:col-span-7">
+                  {currentStory ? (
+                    <div className="p-6 rounded-3xl bg-[#111113] border border-white/10 space-y-6">
+                      {/* Editor Top Bar */}
+                      <div className="flex items-center justify-between pb-4 border-b border-white/5">
+                        <div className="min-w-0 pr-3">
+                          <h3 className="text-sm font-bold uppercase tracking-wider text-[#f5f5f5]/70 truncate">
+                            Editing: {currentStory.title}
+                          </h3>
+                          <span className="text-[11px] font-mono text-white/40">ID: {currentStory.id}</span>
+                        </div>
+                        <Link
+                          href={`/travel/stories/${currentStory.slug}`}
+                          target="_blank"
+                          className="px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-white/80 hover:text-white flex items-center gap-1.5 shrink-0"
+                        >
+                          <span>Read Live Article</span>
+                          <ExternalLinkIcon />
+                        </Link>
+                      </div>
+
+                      {/* 1. Article Headline & URL Slug */}
+                      <div className="space-y-3 p-4 rounded-2xl bg-[#080808] border border-white/10">
+                        <span className="text-[11px] uppercase tracking-wider text-white/50 font-bold block">
+                          1. Headline & Unique URL
+                        </span>
+                        <div>
+                          <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Article Title</label>
+                          <input
+                            type="text"
+                            value={currentStory.title}
+                            onChange={(e) => updateCurrentStory((s) => ({ ...s, title: e.target.value }))}
+                            placeholder="e.g. Kashmir — Where the Mountains Breathe and Time Stands Still"
+                            className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-semibold"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Subtitle / Editorial Hook</label>
+                          <textarea
+                            rows={2}
+                            value={currentStory.subtitle}
+                            onChange={(e) => updateCurrentStory((s) => ({ ...s, subtitle: e.target.value }))}
+                            placeholder="From solitary shikara drifts on frozen Dal Lake to high-altitude powder runs at Apharwat Peak."
+                            className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-base sm:text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
+                          />
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                          <div className="flex-1">
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">URL Slug</label>
+                            <input
+                              type="text"
+                              value={currentStory.slug}
+                              onChange={(e) => updateCurrentStory((s) => ({ ...s, slug: e.target.value }))}
+                              placeholder="kashmir-heaven-on-earth"
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white font-mono outline-none focus:border-white/40"
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const autoSlug = currentStory.title
+                                .toLowerCase()
+                                .replace(/[^a-z0-9]+/g, "-")
+                                .replace(/(^-|-$)/g, "");
+                              updateCurrentStory((s) => ({ ...s, slug: autoSlug }));
+                            }}
+                            className="sm:mt-5 px-3 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-white/80 shrink-0 font-medium"
+                          >
+                            Sync from Title
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* 2. Category & Journey Metadata */}
+                      <div className="space-y-3 p-4 rounded-2xl bg-[#080808] border border-white/10">
+                        <span className="text-[11px] uppercase tracking-wider text-white/50 font-bold block">
+                          2. Category & Journey Metadata
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Category</label>
+                            <select
+                              value={currentStory.category}
+                              onChange={(e) => updateCurrentStory((s) => ({ ...s, category: e.target.value as any }))}
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            >
+                              <option value="Mountain Stories">Mountain Stories</option>
+                              <option value="Road Adventures">Road Adventures</option>
+                              <option value="Hidden India">Hidden India</option>
+                              <option value="Northeast Trails">Northeast Trails</option>
+                              <option value="Rail Diaries">Rail Diaries</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Destination</label>
+                            <input
+                              type="text"
+                              value={currentStory.destination}
+                              onChange={(e) => updateCurrentStory((s) => ({ ...s, destination: e.target.value }))}
+                              placeholder="Kashmir"
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">State</label>
+                            <input
+                              type="text"
+                              value={currentStory.state}
+                              onChange={(e) => updateCurrentStory((s) => ({ ...s, state: e.target.value }))}
+                              placeholder="Jammu and Kashmir"
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Publication Date</label>
+                            <input
+                              type="text"
+                              value={currentStory.publishedAt}
+                              onChange={(e) => updateCurrentStory((s) => ({ ...s, publishedAt: e.target.value }))}
+                              placeholder="February 2026"
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Read Time</label>
+                            <input
+                              type="text"
+                              value={currentStory.readTime}
+                              onChange={(e) => updateCurrentStory((s) => ({ ...s, readTime: e.target.value }))}
+                              placeholder="8 min read"
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Year</label>
+                            <input
+                              type="text"
+                              value={currentStory.year}
+                              onChange={(e) => updateCurrentStory((s) => ({ ...s, year: e.target.value }))}
+                              placeholder="2026"
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 3. Cover Media & Excerpt */}
+                      <div className="space-y-3 p-4 rounded-2xl bg-[#080808] border border-white/10">
+                        <span className="text-[11px] uppercase tracking-wider text-white/50 font-bold block">
+                          3. Cover Imagery & Card Excerpt
+                        </span>
+                        <div>
+                          <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Cover Image URL</label>
+                          <input
+                            type="text"
+                            value={currentStory.coverImage}
+                            onChange={(e) => updateCurrentStory((s) => ({ ...s, coverImage: e.target.value }))}
+                            className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                          />
+                          <div className="mt-2">
+                            <ImageInspectorBadge
+                              src={currentStory.coverImage}
+                              suggestedSize="< 800 KB"
+                              suggestedDimensions="1920×1080 (16:9 Landscape)"
+                              expectedRatio="landscape"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Card Excerpt / Search Teaser</label>
+                          <textarea
+                            rows={2}
+                            value={currentStory.excerpt}
+                            onChange={(e) => updateCurrentStory((s) => ({ ...s, excerpt: e.target.value }))}
+                            placeholder="Brief summary displayed on homepage cards and search listings..."
+                            className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-base sm:text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">
+                              Tags (comma-separated)
+                            </label>
+                            <input
+                              type="text"
+                              value={Array.isArray(currentStory.tags) ? currentStory.tags.join(", ") : ""}
+                              onChange={(e) =>
+                                updateCurrentStory((s) => ({
+                                  ...s,
+                                  tags: e.target.value.split(",").map((t) => t.trim()).filter(Boolean),
+                                }))
+                              }
+                              placeholder="Mountains, Lakes, Himalayas"
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Accent Tag Color</label>
+                            <div className="flex items-center gap-2">
+                              {["#38bdf8", "#8b5cf6", "#f59e0b", "#10b981", "#ec4899"].map((c) => (
+                                <button
+                                  key={c}
+                                  type="button"
+                                  onClick={() => updateCurrentStory((s) => ({ ...s, tagColor: c }))}
+                                  className={`w-7 h-7 rounded-full border-2 transition-transform ${
+                                    currentStory.tagColor === c ? "scale-110 border-white" : "border-transparent"
+                                  }`}
+                                  style={{ backgroundColor: c }}
+                                  title={c}
+                                />
+                              ))}
+                              <input
+                                type="text"
+                                value={currentStory.tagColor || "#38bdf8"}
+                                onChange={(e) => updateCurrentStory((s) => ({ ...s, tagColor: e.target.value }))}
+                                className="w-24 bg-[#111113] border border-white/15 rounded-xl px-2.5 py-1.5 text-xs text-white font-mono outline-none"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 4. Author Attribution */}
+                      <div className="space-y-3 p-4 rounded-2xl bg-[#080808] border border-white/10">
+                        <span className="text-[11px] uppercase tracking-wider text-white/50 font-bold block">
+                          4. Author Attribution
+                        </span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Author Name</label>
+                            <input
+                              type="text"
+                              value={currentStory.author?.name || "Ashraf Siddiqui"}
+                              onChange={(e) =>
+                                updateCurrentStory((s) => ({
+                                  ...s,
+                                  author: { ...s.author, name: e.target.value },
+                                }))
+                              }
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Author Role</label>
+                            <input
+                              type="text"
+                              value={currentStory.author?.role || "Solo Explorer & Storyteller"}
+                              onChange={(e) =>
+                                updateCurrentStory((s) => ({
+                                  ...s,
+                                  author: { ...s.author, role: e.target.value },
+                                }))
+                              }
+                              className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Author Avatar URL</label>
+                          <input
+                            type="text"
+                            value={currentStory.author?.avatar || "/img/travel/kashmir_hero.jpg"}
+                            onChange={(e) =>
+                              updateCurrentStory((s) => ({
+                                ...s,
+                                author: { ...s.author, avatar: e.target.value },
+                              }))
+                            }
+                            className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                          />
+                          <div className="mt-2">
+                            <ImageInspectorBadge
+                              src={currentStory.author?.avatar || "/img/travel/kashmir_hero.jpg"}
+                              suggestedSize="< 150 KB"
+                              suggestedDimensions="400×400 (1:1 Square)"
+                              expectedRatio="square"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Author Bio</label>
+                          <textarea
+                            rows={2}
+                            value={currentStory.author?.bio || ""}
+                            onChange={(e) =>
+                              updateCurrentStory((s) => ({
+                                ...s,
+                                author: { ...s.author, bio: e.target.value },
+                              }))
+                            }
+                            placeholder="24 states explored across India. Documenting raw mountain passes, ancient trails, and local lives."
+                            className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-base sm:text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
+                          />
+                        </div>
+                      </div>
+
+                      {/* 5. Editorial Article Sections (Table of Contents & Story Text) */}
+                      <div className="space-y-4 p-4 rounded-2xl bg-[#080808] border border-white/10">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-[11px] uppercase tracking-wider text-white/50 font-bold block">
+                              5. Article Content Sections ({currentStory.sections?.length || 0})
+                            </span>
+                            <p className="text-[11px] text-white/40">
+                              Each section maps to an in-article Table of Contents milestone with paragraph copy, pull quotes, and field notes.
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newSection: StorySection = {
+                                id: `sec-${Date.now()}`,
+                                heading: `${(currentStory.sections?.length || 0) + 1}. Unfolding Horizons`,
+                                content: ["Write the detailed paragraph content for this section of your dispatch..."],
+                              };
+                              updateCurrentStory((s) => ({
+                                ...s,
+                                sections: [...(s.sections || []), newSection],
+                              }));
+                            }}
+                            className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs text-white font-bold flex items-center gap-1 cursor-pointer shrink-0"
+                          >
+                            <PlusIcon />
+                            <span>Add Section</span>
+                          </button>
+                        </div>
+
+                        <div className="space-y-4 pt-2">
+                          {(currentStory.sections || []).map((sec, sIdx) => (
+                            <div
+                              key={sec.id || sIdx}
+                              className="p-4 rounded-xl bg-[#111113] border border-white/10 space-y-3"
+                            >
+                              <div className="flex items-center justify-between pb-2 border-b border-white/5">
+                                <span className="text-xs font-bold text-white flex items-center gap-2">
+                                  <span className="w-5 h-5 rounded-full bg-white/10 text-[10px] flex items-center justify-center font-mono">
+                                    {sIdx + 1}
+                                  </span>
+                                  <span>{sec.heading || `Section ${sIdx + 1}`}</span>
+                                </span>
+
+                                <div className="flex items-center gap-1">
+                                  <button
+                                    type="button"
+                                    disabled={sIdx === 0}
+                                    onClick={() => {
+                                      const copy = [...currentStory.sections];
+                                      const temp = copy[sIdx];
+                                      copy[sIdx] = copy[sIdx - 1];
+                                      copy[sIdx - 1] = temp;
+                                      updateCurrentStory((s) => ({ ...s, sections: copy }));
+                                    }}
+                                    className="p-1 rounded text-white/40 hover:text-white disabled:opacity-20"
+                                    title="Move section up"
+                                  >
+                                    <ArrowUpIcon />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    disabled={sIdx === currentStory.sections.length - 1}
+                                    onClick={() => {
+                                      const copy = [...currentStory.sections];
+                                      const temp = copy[sIdx];
+                                      copy[sIdx] = copy[sIdx + 1];
+                                      copy[sIdx + 1] = temp;
+                                      updateCurrentStory((s) => ({ ...s, sections: copy }));
+                                    }}
+                                    className="p-1 rounded text-white/40 hover:text-white disabled:opacity-20"
+                                    title="Move section down"
+                                  >
+                                    <ArrowDownIcon />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      if (currentStory.sections.length <= 1) {
+                                        alert("An article must contain at least one section.");
+                                        return;
+                                      }
+                                      updateCurrentStory((s) => ({
+                                        ...s,
+                                        sections: s.sections.filter((_, i) => i !== sIdx),
+                                      }));
+                                    }}
+                                    className="p-1 rounded text-white/30 hover:text-red-400"
+                                    title="Delete section"
+                                  >
+                                    <TrashIcon />
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                  <label className="block text-[10px] text-[#f5f5f5]/50 mb-1">Section Heading</label>
+                                  <input
+                                    type="text"
+                                    value={sec.heading}
+                                    onChange={(e) => {
+                                      const copy = [...currentStory.sections];
+                                      copy[sIdx].heading = e.target.value;
+                                      updateCurrentStory((s) => ({ ...s, sections: copy }));
+                                    }}
+                                    placeholder="e.g. 1. The Cold Whispers of Dal Lake"
+                                    className="w-full bg-[#080808] border border-white/10 rounded-xl px-3 py-2 text-base sm:text-xs text-white outline-none focus:border-white/30"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="block text-[10px] text-[#f5f5f5]/50 mb-1">Anchor ID (for TOC)</label>
+                                  <input
+                                    type="text"
+                                    value={sec.id}
+                                    onChange={(e) => {
+                                      const copy = [...currentStory.sections];
+                                      copy[sIdx].id = e.target.value;
+                                      updateCurrentStory((s) => ({ ...s, sections: copy }));
+                                    }}
+                                    placeholder="first-light"
+                                    className="w-full bg-[#080808] border border-white/10 rounded-xl px-3 py-2 text-base sm:text-xs text-white font-mono outline-none focus:border-white/30"
+                                  />
+                                </div>
+                              </div>
+
+                              <div>
+                                <label className="block text-[10px] text-[#f5f5f5]/50 mb-1">
+                                  Section Paragraphs (separate paragraphs with a double Enter / empty line)
+                                </label>
+                                <textarea
+                                  rows={5}
+                                  value={Array.isArray(sec.content) ? sec.content.join("\n\n") : String(sec.content || "")}
+                                  onChange={(e) => {
+                                    const copy = [...currentStory.sections];
+                                    copy[sIdx].content = e.target.value.split(/\n\n+/).filter(Boolean);
+                                    updateCurrentStory((s) => ({ ...s, sections: copy }));
+                                  }}
+                                  placeholder="Describe the atmosphere, conversations, scents, and mountain vistas in detail..."
+                                  className="w-full bg-[#080808] border border-white/10 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/30 font-sans resize-none leading-relaxed"
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-[10px] text-[#f5f5f5]/50 mb-1">Optional Pull Quote (Italic callout)</label>
+                                <input
+                                  type="text"
+                                  value={sec.quote || ""}
+                                  onChange={(e) => {
+                                    const copy = [...currentStory.sections];
+                                    copy[sIdx].quote = e.target.value;
+                                    updateCurrentStory((s) => ({ ...s, sections: copy }));
+                                  }}
+                                  placeholder="You do not visit Kashmir to escape reality; you visit to discover what reality feels like..."
+                                  className="w-full bg-[#080808] border border-white/10 rounded-xl px-3 py-2 text-base sm:text-xs text-white italic outline-none focus:border-white/30"
+                                />
+                              </div>
+
+                              {/* Optional Field Note Box */}
+                              <div className="p-3 rounded-lg bg-black/40 border border-white/5 space-y-2">
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-white/40 block">
+                                  Practical Field Note (Optional)
+                                </span>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                  <input
+                                    type="text"
+                                    value={sec.fieldNote?.title || ""}
+                                    onChange={(e) => {
+                                      const copy = [...currentStory.sections];
+                                      copy[sIdx].fieldNote = {
+                                        title: e.target.value,
+                                        text: copy[sIdx].fieldNote?.text || "",
+                                      };
+                                      updateCurrentStory((s) => ({ ...s, sections: copy }));
+                                    }}
+                                    placeholder="Note Title (e.g. Field Note: Shikara Etiquette)"
+                                    className="w-full bg-[#080808] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none"
+                                  />
+                                  <input
+                                    type="text"
+                                    value={sec.fieldNote?.text || ""}
+                                    onChange={(e) => {
+                                      const copy = [...currentStory.sections];
+                                      copy[sIdx].fieldNote = {
+                                        title: copy[sIdx].fieldNote?.title || "Field Note",
+                                        text: e.target.value,
+                                      };
+                                      updateCurrentStory((s) => ({ ...s, sections: copy }));
+                                    }}
+                                    placeholder="Field Advice (e.g. Dress in at least three layers with windproof gloves...)"
+                                    className="w-full bg-[#080808] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* 6. Live Reader Preview Card */}
+                      <div className="p-5 rounded-2xl bg-[#080808] border border-white/10 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] uppercase tracking-wider text-white/50 font-bold block">
+                            6. Live Article Header Preview (As rendered in Reader)
+                          </span>
+                          <span className="text-[10px] text-emerald-400 font-mono">Updates As You Type</span>
+                        </div>
+
+                        <div className="p-6 rounded-2xl bg-[#0c0c0e] border border-white/5 space-y-4">
+                          <div className="flex items-center gap-2 text-[10px] text-white/40 font-mono">
+                            <span>Travel</span>
+                            <span>/</span>
+                            <span>Stories</span>
+                            <span>/</span>
+                            <span className="text-white/70">{currentStory.destination || "Destination"}</span>
+                          </div>
+
+                          <div className="flex items-center gap-2 text-xs">
+                            <span
+                              className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                              style={{
+                                backgroundColor: `${currentStory.tagColor || "#38bdf8"}20`,
+                                color: currentStory.tagColor || "#38bdf8",
+                              }}
+                            >
+                              {currentStory.category}
+                            </span>
+                            <span className="text-white/40 text-[11px]">· {currentStory.readTime || "5 min read"}</span>
+                            <span className="text-white/40 text-[11px]">· {currentStory.publishedAt || "2026"}</span>
+                          </div>
+
+                          <h2
+                            className="text-2xl sm:text-3xl font-bold text-white leading-tight"
+                            style={{ fontFamily: "var(--font-fredoka)" }}
+                          >
+                            {currentStory.title}
+                          </h2>
+
+                          <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
+                            {currentStory.subtitle}
+                          </p>
+
+                          {/* Author Mini Card Preview */}
+                          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-full overflow-hidden bg-black shrink-0 border border-white/10">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={currentStory.author?.avatar || "/img/travel/kashmir_hero.jpg"}
+                                  alt=""
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <div>
+                                <p className="text-xs font-bold text-white">{currentStory.author?.name || "Ashraf Siddiqui"}</p>
+                                <p className="text-[10px] text-white/50">{currentStory.author?.role || "Solo Explorer"}</p>
+                              </div>
+                            </div>
+                            <span className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70">
+                              Author Verified
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-12 text-center text-white/40 bg-[#111113] rounded-3xl border border-white/5">
+                      Select a story from the left list to begin editing.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ══════════════════════════════════════════════════════════════════════
+              TAB 6: BOOKING ENQUIRIES & LEADS INBOX
               ══════════════════════════════════════════════════════════════════════ */}
           {activeTab === "enquiries" && (
             <div className="max-w-6xl mx-auto space-y-6">
@@ -2667,6 +3545,16 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
           >
             <CheckIcon />
             <span>{isSaving ? "Saving..." : "Publish Trips"}</span>
+          </button>
+        )}
+        {activeTab === "stories" && (
+          <button
+            onClick={handleSaveStories}
+            disabled={isSaving}
+            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
+          >
+            <CheckIcon />
+            <span>{isSaving ? "Saving..." : "Publish Stories"}</span>
           </button>
         )}
       </div>

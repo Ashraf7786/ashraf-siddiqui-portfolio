@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Fredoka } from "next/font/google";
 import "./tw-animate.css";
 import "./globals.css";
 import Providers from "@/components/layout/Providers";
@@ -8,6 +8,12 @@ import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+const fredoka = Fredoka({
+  subsets: ["latin"],
+  variable: "--font-fredoka",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -74,6 +80,7 @@ export default function RootLayout({
         className={cn(
           inter.variable,
           outfit.variable,
+          fredoka.variable,
           "antialiased bg-[#0a0a0a] text-[#f5f5f5] selection:bg-[#f5f5f5] selection:text-[#0a0a0a] cursor-none"
         )}
         suppressHydrationWarning
