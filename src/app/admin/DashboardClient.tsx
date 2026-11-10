@@ -439,10 +439,10 @@ function ImageInspectorBadge({
             <span className="text-white/60">
               Current File: <strong className="text-white">{dim.width}×{dim.height} px</strong>
               {expectedRatio === "landscape" && dim.width! < dim.height! && (
-                <span className="text-amber-400 ml-1.5 font-semibold">(⚠️ Image is vertical but category is Landscape)</span>
+                <span className="text-amber-400 ml-1.5 font-semibold">(Notice: Image is vertical but category is Landscape)</span>
               )}
               {expectedRatio === "portrait" && dim.width! > dim.height! && (
-                <span className="text-amber-400 ml-1.5 font-semibold">(⚠️ Image is horizontal but category is Portrait)</span>
+                <span className="text-amber-400 ml-1.5 font-semibold">(Notice: Image is horizontal but category is Portrait)</span>
               )}
             </span>
           )}
@@ -2668,8 +2668,12 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-bold truncate text-white flex items-center gap-1.5">
                             {isUpcoming && (
-                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono font-bold shrink-0">
-                                🔒 UPCOMING
+                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/10 text-white font-mono font-bold shrink-0 flex items-center gap-1">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                                <span>UPCOMING</span>
                               </span>
                             )}
                             <span className="truncate">{t.title}</span>

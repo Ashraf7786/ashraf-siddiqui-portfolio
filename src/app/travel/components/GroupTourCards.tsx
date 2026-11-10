@@ -42,30 +42,30 @@ export default function GroupTourCards() {
   }, [tripsList]);
 
   return (
-    <section id="group-tours" ref={sectionRef} className="py-20 sm:py-24 px-4 sm:px-6 md:px-16 border-t border-[#f5f5f5]/5 bg-[#080808]">
-      <div className="max-w-6xl mx-auto">
-        <div className="group-header mb-10 sm:mb-16">
-          <div className="flex items-center gap-2 mb-2 sm:mb-3">
+    <section id="group-tours" ref={sectionRef} className="py-12 sm:py-16 px-4 sm:px-6 md:px-12 border-t border-[#f5f5f5]/5 bg-[#080808]">
+      <div className="max-w-5xl mx-auto">
+        <div className="group-header mb-8 sm:mb-12">
+          <div className="flex items-center gap-2 mb-2">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/60">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
               <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
               <path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
-            <p className="text-[11px] sm:text-xs tracking-[0.25em] uppercase text-[#f5f5f5]/30">Join the Journey</p>
+            <p className="text-[11px] sm:text-xs tracking-[0.25em] uppercase text-[#f5f5f5]/40 font-semibold">Join the Journey</p>
           </div>
           <h2
-            className="text-4xl sm:text-5xl md:text-7xl font-bold text-[#f5f5f5]"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f5f5f5]"
             style={{ fontFamily: "var(--font-fredoka)" }}
           >
             Group Expeditions
           </h2>
-          <p className="mt-3 sm:mt-4 text-[#f5f5f5]/40 max-w-lg text-xs sm:text-sm leading-relaxed">
+          <p className="mt-2 text-[#f5f5f5]/50 max-w-lg text-xs sm:text-sm leading-relaxed">
             Travel slowly with a close-knit group of 10 to 12 explorers. Personally led by Ashraf Siddiqui across India’s wildest routes.
           </p>
         </div>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-6">
           {tripsList.map((tour) => {
             const isUpcoming = Boolean(tour.isUpcoming || tour.status === "Upcoming" || tour.status === "Draft Sample");
             const seatsPercent = ((tour.totalSeats - tour.availableSeats) / tour.totalSeats) * 100;
@@ -73,30 +73,28 @@ export default function GroupTourCards() {
             return (
               <div
                 key={tour.id}
-                className={`group-card group relative rounded-3xl overflow-hidden border transition-all duration-300 ${
-                  isUpcoming
-                    ? "border-amber-500/30 bg-[#111113] hover:border-amber-500/50 shadow-[0_4px_30px_rgba(245,158,11,0.06)]"
-                    : "border-[#f5f5f5]/10 bg-[#111113] hover:border-[#f5f5f5]/25 shadow-xl"
-                }`}
+                className="group-card group relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 bg-[#111113] hover:border-white/20 transition-all duration-300 shadow-xl"
               >
-                <div className="md:grid md:grid-cols-2">
+                <div className="grid grid-cols-1 md:grid-cols-12">
                   {/* Left: Cover Image */}
-                  <div className="relative h-64 sm:h-80 md:h-auto min-h-[280px] overflow-hidden">
+                  <div className="md:col-span-5 relative h-52 sm:h-64 md:h-auto min-h-[220px] overflow-hidden">
                     <Image
                       src={tour.coverImage}
                       alt={tour.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className={`object-cover transition-transform duration-700 group-hover:scale-105 ${
+                        isUpcoming ? "brightness-90 contrast-100" : ""
+                      }`}
+                      sizes="(max-width: 768px) 100vw, 42vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111113]/25 to-[#111113] hidden md:block" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111113]/30 to-[#111113] hidden md:block" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#111113] via-transparent to-transparent md:hidden" />
 
                     {/* Lock Icon Center Overlay for Upcoming Trips */}
                     {isUpcoming && (
-                      <div className="absolute inset-0 bg-black/25 backdrop-blur-[1px] flex items-center justify-center pointer-events-none">
-                        <div className="w-14 h-14 rounded-full bg-black/85 backdrop-blur-md border border-amber-400/50 text-amber-300 flex items-center justify-center shadow-2xl">
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <div className="absolute inset-0 bg-black/35 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
+                        <div className="w-12 h-12 rounded-full bg-black/80 backdrop-blur-md border border-white/25 text-white flex items-center justify-center shadow-2xl">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                           </svg>
@@ -104,10 +102,10 @@ export default function GroupTourCards() {
                       </div>
                     )}
 
-                    {/* Status Badge */}
-                    <div className="absolute top-4 left-4">
+                    {/* Status Badge (Liquid Glass, No Yellow) */}
+                    <div className="absolute top-3.5 left-3.5">
                       {isUpcoming ? (
-                        <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
+                        <span className="text-[10px] sm:text-[11px] font-semibold px-3 py-1 rounded-full bg-black/70 text-white/90 border border-white/20 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
                           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -115,95 +113,76 @@ export default function GroupTourCards() {
                           <span>Upcoming Expedition</span>
                         </span>
                       ) : (
-                        <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2c1.5 3 4 5.5 4 8.5 0 3.5-2.5 6.5-6 6.5s-6-3-6-6.5C4 7.5 6.5 5 8 2c.5 2 1.5 3.5 2 4.5.5-1 1.5-2.5 2-4.5z" />
-                          </svg>
-                          {tour.status}
+                        <span className="text-[10px] sm:text-[11px] font-semibold px-3 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                          <span>{tour.status}</span>
                         </span>
                       )}
                     </div>
                   </div>
 
                   {/* Right: Content */}
-                  <div className="p-6 sm:p-8 md:p-10 flex flex-col justify-between">
+                  <div className="md:col-span-7 p-5 sm:p-6 md:p-7 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center gap-2 mb-2 sm:mb-3">
-                        <span className={`w-2 h-2 rounded-full ${isUpcoming ? "bg-amber-400" : "bg-white/60"}`} />
-                        <span className="text-xs tracking-widest uppercase text-[#f5f5f5]/50">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
+                        <span className="text-[11px] tracking-widest uppercase text-[#f5f5f5]/50 font-medium">
                           {tour.destination}, {tour.state}
                         </span>
                       </div>
 
                       <h3
-                        className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#f5f5f5] mb-2 leading-tight"
+                        className="text-xl sm:text-2xl md:text-3xl font-bold text-[#f5f5f5] mb-2 leading-snug"
                         style={{ fontFamily: "var(--font-fredoka)" }}
                       >
                         {tour.title}
                       </h3>
 
                       {isUpcoming ? (
-                        /* ─── UPCOMING TRIP: RICH TEASER & TAGLINE (NO EMPTY SPACES) ─── */
-                        <div className="space-y-3.5 my-4">
-                          {/* Tagline Announcement Box */}
-                          <div className="p-4 rounded-2xl bg-amber-500/[0.06] border border-amber-500/20 space-y-1.5">
-                            <span className="text-[10px] uppercase tracking-wider text-amber-400 font-bold flex items-center gap-1.5">
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        /* ─── UPCOMING TRIP: DETAILS BLURRED, ONLY TAGLINE HIGHLIGHTED ─── */
+                        <div className="relative my-3 rounded-2xl overflow-hidden border border-white/10 bg-black/40">
+                          {/* Blurred Details Layer in Background */}
+                          <div className="absolute inset-0 p-4 filter blur-[6px] opacity-20 pointer-events-none select-none space-y-2">
+                            <div className="h-3 bg-white/40 rounded w-3/4" />
+                            <div className="flex gap-2">
+                              <span className="h-5 bg-white/20 rounded-full w-20" />
+                              <span className="h-5 bg-white/20 rounded-full w-24" />
+                              <span className="h-5 bg-white/20 rounded-full w-16" />
+                            </div>
+                            <div className="h-2 bg-white/20 rounded-full w-full" />
+                            <div className="h-3 bg-white/30 rounded w-1/2" />
+                          </div>
+
+                          {/* Foreground: Crystal-Clear Highlighted Tagline Hero */}
+                          <div className="relative z-10 p-5 sm:p-6 text-center flex flex-col items-center justify-center space-y-2.5">
+                            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 border border-white/15 text-white/90 text-[10px] uppercase font-bold tracking-wider">
+                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                               </svg>
-                              <span>Expedition Announcement</span>
-                            </span>
-                            <p className="text-xs sm:text-sm text-[#f5f5f5]/90 italic leading-relaxed border-l-2 border-amber-400/60 pl-3">
+                              <span>Official Expedition Vision</span>
+                            </div>
+
+                            {/* Highlighted Tagline */}
+                            <blockquote className="text-sm sm:text-base font-medium text-white italic leading-relaxed max-w-md drop-shadow px-2">
                               &ldquo;{tour.tagline}&rdquo;
+                            </blockquote>
+
+                            <p className="text-[11px] text-[#f5f5f5]/40 font-mono pt-1">
+                              Itinerary &amp; confirmed seats dropping soon
                             </p>
-                          </div>
-
-                          {/* Key Highlights Teaser (Eliminates Empty Space) */}
-                          {tour.highlights && tour.highlights.length > 0 && (
-                            <div>
-                              <span className="text-[10px] uppercase tracking-wider text-white/40 font-bold block mb-2">
-                                Route Highlights in Scouting
-                              </span>
-                              <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                                {tour.highlights.slice(0, 3).map((h) => (
-                                  <span
-                                    key={h}
-                                    className="text-[11px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full bg-white/5 text-[#f5f5f5]/70 border border-white/10 flex items-center gap-1.5"
-                                  >
-                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                                    <span>{h}</span>
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-
-                          {/* Reconnaissance Progress Indicator */}
-                          <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
-                            <div className="flex items-center justify-between text-xs text-[#f5f5f5]/60">
-                              <span className="flex items-center gap-1.5 text-amber-400 font-medium">
-                                <span className="relative flex h-2 w-2">
-                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400" />
-                                </span>
-                                Scouting in Progress
-                              </span>
-                              <span className="text-white/40 text-[11px]">Dates & Pricing Dropping Soon</span>
-                            </div>
-                            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                              <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-300 w-4/5 animate-pulse" />
-                            </div>
                           </div>
                         </div>
                       ) : (
                         /* ─── LIVE TRIP: FULL DATES, HIGHLIGHTS & SEATS REMAINING ─── */
                         <>
-                          <p className="text-xs sm:text-sm text-[#f5f5f5]/50 mb-5 sm:mb-6">{tour.departureDate} &rarr; {tour.returnDate} &nbsp;·&nbsp; {tour.durationLabel}</p>
+                          <p className="text-xs text-[#f5f5f5]/50 mb-3 sm:mb-4">
+                            {tour.departureDate} &rarr; {tour.returnDate} &nbsp;·&nbsp; {tour.durationLabel}
+                          </p>
 
-                          <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-6">
-                            {tour.highlights.slice(0, 4).map((h) => (
-                              <span key={h} className="text-[11px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full bg-[#f5f5f5]/5 text-[#f5f5f5]/60 border border-[#f5f5f5]/10 flex items-center gap-1.5">
+                          <div className="flex flex-wrap gap-1.5 mb-4">
+                            {tour.highlights.slice(0, 3).map((h) => (
+                              <span key={h} className="text-[11px] px-2.5 py-1 rounded-full bg-[#f5f5f5]/5 text-[#f5f5f5]/70 border border-[#f5f5f5]/10 flex items-center gap-1.5">
                                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-emerald-400">
                                   <polyline points="20 6 9 17 4 12" />
                                 </svg>
@@ -212,12 +191,12 @@ export default function GroupTourCards() {
                             ))}
                           </div>
 
-                          <div className="mb-5 sm:mb-6">
-                            <div className="flex items-center justify-between text-xs text-[#f5f5f5]/40 mb-2">
+                          <div className="mb-4">
+                            <div className="flex items-center justify-between text-[11px] text-[#f5f5f5]/40 mb-1.5">
                               <span>Seats Available</span>
                               <span className="text-white font-medium">{tour.availableSeats} / {tour.totalSeats} seats left</span>
                             </div>
-                            <div className="h-1.5 bg-[#f5f5f5]/10 rounded-full overflow-hidden">
+                            <div className="h-1 bg-[#f5f5f5]/10 rounded-full overflow-hidden">
                               <div
                                 className="h-full rounded-full bg-white transition-all duration-300"
                                 style={{ width: `${seatsPercent}%` }}
@@ -228,17 +207,14 @@ export default function GroupTourCards() {
                       )}
                     </div>
 
-                    {/* Bottom CTA Row */}
-                    <div className="flex items-center justify-between gap-4 flex-wrap pt-4 border-t border-[#f5f5f5]/5">
+                    {/* Bottom Action Row (Compact) */}
+                    <div className="flex items-center justify-between gap-3 flex-wrap pt-3 border-t border-[#f5f5f5]/5">
                       {isUpcoming ? (
                         <>
-                          <div className="flex items-center gap-2 text-white/50 text-xs">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-400 shrink-0">
-                              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                            </svg>
-                            <span className="text-xs uppercase tracking-wider text-white/60 font-medium">
-                              Estimated Window: {tour.departureDate || "Autumn 2026"} · {tour.durationLabel || "Multi-day"}
+                          <div className="flex items-center gap-1.5 text-white/40 text-xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                            <span className="text-[11px] uppercase tracking-wider font-mono">
+                              Small Group: 10–12 Travellers
                             </span>
                           </div>
                           <button
@@ -246,7 +222,7 @@ export default function GroupTourCards() {
                               setActiveModalTrip(tour);
                               setIsModalOpen(true);
                             }}
-                            className="px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm font-bold bg-white text-black hover:bg-[#eaeaea] transition-all flex items-center gap-2 cursor-pointer shadow-lg"
+                            className="px-5 py-2.5 rounded-full text-xs font-bold bg-white text-black hover:bg-[#eaeaea] transition-all flex items-center gap-2 cursor-pointer shadow-md"
                           >
                             <span>Notify When Dates Drop</span>
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -258,9 +234,9 @@ export default function GroupTourCards() {
                       ) : (
                         <>
                           <div>
-                            <p className="text-[10px] text-[#f5f5f5]/30 uppercase tracking-widest">Starting from</p>
+                            <p className="text-[9px] text-[#f5f5f5]/30 uppercase tracking-widest">Starting from</p>
                             <p
-                              className="text-2xl sm:text-3xl font-bold text-[#f5f5f5]"
+                              className="text-xl sm:text-2xl font-bold text-[#f5f5f5]"
                               style={{ fontFamily: "var(--font-fredoka)" }}
                             >
                               ₹{tour.pricePerPerson.toLocaleString()}
@@ -270,7 +246,7 @@ export default function GroupTourCards() {
                           <div className="flex items-center gap-2">
                             <Link
                               href={`/travel/trips/${tour.slug}`}
-                              className="px-5 py-2.5 rounded-full text-xs font-semibold text-white/70 hover:text-white border border-white/15 hover:border-white/40 transition-all"
+                              className="px-4 py-2 rounded-full text-xs font-semibold text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-all"
                             >
                               View Details
                             </Link>
@@ -279,10 +255,10 @@ export default function GroupTourCards() {
                                 setActiveModalTrip(tour);
                                 setIsModalOpen(true);
                               }}
-                              className="px-6 sm:px-7 py-2.5 rounded-full text-xs font-bold text-black bg-white hover:bg-[#eaeaea] transition-all flex items-center gap-2 shadow-lg cursor-pointer"
+                              className="px-5 py-2 rounded-full text-xs font-bold text-black bg-white hover:bg-[#eaeaea] transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
                             >
                               <span>Reserve Seat</span>
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                 <line x1="5" y1="12" x2="19" y2="12" />
                                 <polyline points="12 5 19 12 12 19" />
                               </svg>
