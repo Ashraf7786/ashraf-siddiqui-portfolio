@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import gsap from "gsap";
 import { GROUP_TRIPS, GroupTrip } from "../data/trips";
 import TripBookingModal from "./TripBookingModal";
@@ -124,11 +123,6 @@ export default function TravelHero() {
     setSlideProgress(0);
   }, []);
 
-  const goToSlide = (idx: number) => {
-    setCurrentSlideIndex(idx);
-    setSlideProgress(0);
-  };
-
   // GSAP animation on slide change
   useEffect(() => {
     if (prefersReducedMotion || !contentStageRef.current) return;
@@ -136,22 +130,22 @@ export default function TravelHero() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".hero-anim-eyebrow",
-        { y: -12, opacity: 0 },
+        { y: -10, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
       );
       gsap.fromTo(
         ".hero-anim-title-solid",
-        { y: 24, opacity: 0 },
+        { y: 22, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.65, ease: "power3.out", delay: 0.05 }
       );
       gsap.fromTo(
         ".hero-anim-title-outline",
-        { y: 24, opacity: 0 },
+        { y: 22, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.65, ease: "power3.out", delay: 0.12 }
       );
       gsap.fromTo(
         ".hero-anim-desc",
-        { y: 16, opacity: 0 },
+        { y: 14, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, ease: "power2.out", delay: 0.18 }
       );
       gsap.fromTo(
@@ -214,7 +208,6 @@ export default function TravelHero() {
       if (e.key === "ArrowRight") goToNextSlide();
       if (e.key === "ArrowLeft") goToPrevSlide();
       if (e.key === " ") {
-        // Spacebar toggles pause
         e.preventDefault();
         togglePlayPause();
       }
@@ -279,7 +272,7 @@ export default function TravelHero() {
     <section
       id="hero"
       ref={heroRef}
-      className="relative w-full overflow-hidden bg-[#101D2A] select-none text-[#F7F3EA]"
+      className="relative w-full overflow-hidden bg-[#080808] select-none text-[#f5f5f5]"
       style={{ height: "100svh", minHeight: "680px" }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
@@ -325,18 +318,18 @@ export default function TravelHero() {
                 alt={slide.imageAlt}
                 fill
                 priority={idx === 0}
-                className={`object-cover object-center ${slide.videoUrl ? "opacity-30" : "opacity-75"}`}
+                className={`object-cover object-center ${slide.videoUrl ? "opacity-35" : "opacity-80"}`}
                 sizes="100vw"
               />
             </div>
 
-            {/* Layered dark gradient overlay for optimal text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#101D2A] via-[#101D2A]/60 to-[#101D2A]/85" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#101D2A]/90 via-[#101D2A]/40 to-[#101D2A]/90" />
+            {/* Layered dark gradient overlay in strict Phase 1 palette */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/60 to-[#080808]/85" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#080808]/90 via-[#080808]/40 to-[#080808]/90" />
             <div
               className="absolute inset-0"
               style={{
-                background: "radial-gradient(ellipse at center, transparent 15%, rgba(16,29,42,0.85) 100%)",
+                background: "radial-gradient(ellipse at center, transparent 15%, rgba(8,8,8,0.85) 100%)",
               }}
             />
           </div>
@@ -345,16 +338,16 @@ export default function TravelHero() {
 
       {/* ─── 2. TOP EXPEDITION BADGE ─────────────────────────────────── */}
       <div className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-4 flex justify-center pointer-events-none">
-        <div className="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#172B3C]/80 backdrop-blur-md border border-[#E8B65C]/30 shadow-2xl transition-all hover:border-[#E8B65C]/60">
+        <div className="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111113]/85 backdrop-blur-md border border-[#f5f5f5]/15 shadow-2xl transition-all hover:border-[#f5f5f5]/35">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E8B65C] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E8B65C]" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
           </span>
-          <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#F7F3EA]">
+          <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#f5f5f5]">
             {currentSlide.badgeLabel}
           </span>
-          <span className="hidden sm:inline text-[#AAB5C0]/40">·</span>
-          <span className="hidden sm:inline text-[10px] sm:text-[11px] text-[#AAB5C0] font-medium">
+          <span className="hidden sm:inline text-[#f5f5f5]/30">·</span>
+          <span className="hidden sm:inline text-[10px] sm:text-[11px] text-[#f5f5f5]/60 font-medium">
             Expedition {currentSlideIndex + 1} of {EXPEDITION_SLIDES.length}
           </span>
         </div>
@@ -367,14 +360,14 @@ export default function TravelHero() {
       >
         <div className="w-full flex flex-col items-center">
           {/* Eyebrow Label */}
-          <p className="hero-anim-eyebrow text-[10px] sm:text-xs md:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#E8B65C] mb-2 sm:mb-3 font-semibold">
+          <p className="hero-anim-eyebrow text-[10px] sm:text-xs md:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#f5f5f5]/50 mb-2 sm:mb-3 font-semibold">
             ASHRAF SIDDIQUI &nbsp;·&nbsp; SOLO TRAVELLER &nbsp;·&nbsp; JAIPUR, INDIA
           </p>
 
           {/* Solid Dominant Heading */}
           <div className="overflow-hidden">
             <h1
-              className="hero-anim-title-solid leading-[0.92] font-bold tracking-tight text-[#F7F3EA]"
+              className="hero-anim-title-solid leading-[0.92] font-bold tracking-tight text-[#f5f5f5]"
               style={{
                 fontFamily: "var(--font-fredoka)",
                 fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
@@ -391,7 +384,7 @@ export default function TravelHero() {
               style={{
                 fontFamily: "var(--font-fredoka)",
                 fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
-                WebkitTextStroke: "1.5px rgba(247, 243, 234, 0.75)",
+                WebkitTextStroke: "1.5px rgba(245, 245, 245, 0.75)",
               }}
             >
               {currentSlide.titleLine2}
@@ -399,7 +392,7 @@ export default function TravelHero() {
           </div>
 
           {/* Concise Supporting Description */}
-          <p className="hero-anim-desc text-xs sm:text-sm md:text-base text-[#AAB5C0] max-w-2xl leading-relaxed mb-5 sm:mb-7 font-normal px-2">
+          <p className="hero-anim-desc text-xs sm:text-sm md:text-base text-[#f5f5f5]/70 max-w-2xl leading-relaxed mb-5 sm:mb-7 font-normal px-2">
             {currentSlide.subtitle}
           </p>
 
@@ -410,15 +403,15 @@ export default function TravelHero() {
                 key={pIdx}
                 className={`hero-anim-pill px-3 sm:px-3.5 py-1.5 rounded-full backdrop-blur-md border text-center flex items-center gap-1.5 shadow-sm transition-all ${
                   pill.highlight
-                    ? "bg-[#E8B65C]/15 border-[#E8B65C]/50 text-[#F7F3EA]"
-                    : "bg-[#172B3C]/85 border-[#E8B65C]/20 text-[#AAB5C0]"
+                    ? "bg-white/10 border-white/25 text-[#f5f5f5]"
+                    : "bg-[#111113]/85 border-[#f5f5f5]/10 text-[#f5f5f5]/60"
                 }`}
               >
-                <span className="text-[10px] uppercase tracking-wider text-[#AAB5C0] font-medium">
+                <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 font-medium">
                   {pill.label}:
                 </span>
                 <span
-                  className="text-xs sm:text-xs font-bold text-[#F7F3EA]"
+                  className="text-xs sm:text-xs font-bold text-[#f5f5f5]"
                   style={{ fontFamily: "var(--font-fredoka)" }}
                 >
                   {pill.value}
@@ -432,7 +425,7 @@ export default function TravelHero() {
             {/* Primary Action: View Expedition / Reserve */}
             <button
               onClick={handleOpenBookingModal}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-[#E8B65C] text-[#101D2A] hover:bg-[#f1c36d] hover:shadow-[0_0_25px_rgba(232,182,92,0.35)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-[#f5f5f5] text-[#080808] hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
               aria-label={`View details and enquire for ${currentSlide.titleLine1}`}
             >
               <span>View Trip Details & Reserve</span>
@@ -445,7 +438,7 @@ export default function TravelHero() {
             {/* Secondary Action: Explore All Group Expeditions */}
             <button
               onClick={() => scrollToSection("#group-tours")}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold border border-[#E8B65C]/30 text-[#F7F3EA] hover:border-[#E8B65C] hover:bg-[#172B3C]/60 backdrop-blur-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold border border-[#f5f5f5]/20 text-[#f5f5f5] hover:border-[#f5f5f5]/60 hover:bg-white/5 backdrop-blur-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
               aria-label="Explore all group expeditions section"
             >
               <span>Explore All Expeditions</span>
@@ -458,10 +451,9 @@ export default function TravelHero() {
       </div>
 
       {/* ─── 4. CAROUSEL CONTROLS (Desktop Side Arrows + Floating Bar) ─ */}
-      {/* Desktop Left / Right Navigation Arrows */}
       <button
         onClick={goToPrevSlide}
-        className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#172B3C]/80 backdrop-blur-md border border-[#E8B65C]/20 text-[#F7F3EA] hover:border-[#E8B65C] hover:scale-105 transition-all items-center justify-center cursor-pointer shadow-lg"
+        className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#111113]/80 backdrop-blur-md border border-[#f5f5f5]/15 text-[#f5f5f5]/70 hover:text-white hover:border-[#f5f5f5]/50 hover:scale-105 transition-all items-center justify-center cursor-pointer shadow-lg"
         aria-label="Previous Expedition Slide"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -471,7 +463,7 @@ export default function TravelHero() {
 
       <button
         onClick={goToNextSlide}
-        className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#172B3C]/80 backdrop-blur-md border border-[#E8B65C]/20 text-[#F7F3EA] hover:border-[#E8B65C] hover:scale-105 transition-all items-center justify-center cursor-pointer shadow-lg"
+        className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#111113]/80 backdrop-blur-md border border-[#f5f5f5]/15 text-[#f5f5f5]/70 hover:text-white hover:border-[#f5f5f5]/50 hover:scale-105 transition-all items-center justify-center cursor-pointer shadow-lg"
         aria-label="Next Expedition Slide"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -481,20 +473,20 @@ export default function TravelHero() {
 
       {/* ─── 5. FLOATING CAROUSEL CONTROLLER (Count, Progress & Pause/Play) ─ */}
       <div className="absolute bottom-16 sm:bottom-16 left-0 right-0 z-20 px-4 flex justify-center pointer-events-none">
-        <div className="pointer-events-auto flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#172B3C]/90 backdrop-blur-md border border-[#E8B65C]/20 shadow-xl">
+        <div className="pointer-events-auto flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#111113]/90 backdrop-blur-md border border-[#f5f5f5]/15 shadow-xl">
           {/* Slide Indicator (01 / 04) */}
           <span
-            className="text-xs font-bold text-[#E8B65C] tabular-nums"
+            className="text-xs font-bold text-white tabular-nums"
             style={{ fontFamily: "var(--font-fredoka)" }}
           >
             0{currentSlideIndex + 1}
-            <span className="text-[#AAB5C0]/40 font-normal"> / 0{EXPEDITION_SLIDES.length}</span>
+            <span className="text-[#f5f5f5]/40 font-normal"> / 0{EXPEDITION_SLIDES.length}</span>
           </span>
 
           {/* Animated Progress Bar */}
-          <div className="w-20 sm:w-28 h-1 bg-[#101D2A] rounded-full overflow-hidden">
+          <div className="w-20 sm:w-28 h-1 bg-white/10 rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#E8B65C] rounded-full transition-all duration-75 ease-linear"
+              className="h-full bg-white rounded-full transition-all duration-75 ease-linear"
               style={{ width: `${slideProgress}%` }}
             />
           </div>
@@ -502,7 +494,7 @@ export default function TravelHero() {
           {/* Pause / Resume Button */}
           <button
             onClick={togglePlayPause}
-            className="w-6 h-6 rounded-full bg-[#101D2A]/80 hover:bg-[#E8B65C]/20 flex items-center justify-center text-[#F7F3EA] transition-colors cursor-pointer"
+            className="w-6 h-6 rounded-full bg-[#080808]/80 hover:bg-white/10 flex items-center justify-center text-[#f5f5f5] transition-colors cursor-pointer"
             aria-label={isVideoPlaying ? "Pause slideshow and background footage" : "Resume slideshow"}
             title={isVideoPlaying ? "Pause slideshow" : "Play slideshow"}
           >
@@ -527,7 +519,7 @@ export default function TravelHero() {
             <button
               key={chip.label}
               onClick={() => scrollToSection(chip.href)}
-              className="px-3 sm:px-4 py-1 rounded-full text-[11px] font-semibold whitespace-nowrap bg-[#101D2A]/80 hover:bg-[#172B3C] text-[#AAB5C0] hover:text-[#F7F3EA] border border-[#E8B65C]/15 hover:border-[#E8B65C]/50 backdrop-blur-md transition-all cursor-pointer shadow-sm focus:outline-none focus:ring-1 focus:ring-[#E8B65C]"
+              className="px-3 sm:px-4 py-1 rounded-full text-[11px] font-semibold whitespace-nowrap bg-[#111113]/85 hover:bg-[#161619] text-[#f5f5f5]/60 hover:text-[#f5f5f5] border border-[#f5f5f5]/10 hover:border-[#f5f5f5]/30 backdrop-blur-md transition-all cursor-pointer shadow-sm focus:outline-none focus:ring-1 focus:ring-white/40"
             >
               {chip.label}
             </button>

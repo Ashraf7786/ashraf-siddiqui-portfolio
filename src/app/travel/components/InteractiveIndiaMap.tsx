@@ -128,6 +128,7 @@ export default function InteractiveIndiaMap() {
       ref={sectionRef}
       className="py-16 sm:py-24 md:py-32 bg-[#080808] border-t border-b border-[#f5f5f5]/5 relative overflow-hidden"
     >
+      <div id="interactive-map" className="relative -top-28 pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
         {/* Header */}
         <div className="map-header mb-8 sm:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
