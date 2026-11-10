@@ -8,6 +8,7 @@ const QUICK_LINKS = [
   { label: "My India Journey", href: "/travel#journey" },
   { label: "Destinations Hub", href: "/travel/destinations" },
   { label: "Travel Guides & Itineraries", href: "/travel/guides" },
+  { label: "Field Tools & Utilities", href: "/travel/tools" },
   { label: "Travel Stories", href: "/travel/stories" },
   { label: "Reels Platform", href: "/travel/reels" },
   { label: "Group Tours", href: "/travel#group-tours" },
@@ -18,7 +19,7 @@ const QUICK_LINKS = [
 const SOCIAL_LINKS: { label: string; href: string; icon: React.ReactNode }[] = [
   {
     label: "Instagram",
-    href: "#",
+    href: "https://instagram.com/ashraf._siddiqui",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <rect x="2" y="2" width="20" height="20" rx="5"/>

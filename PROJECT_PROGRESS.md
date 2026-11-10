@@ -15,8 +15,8 @@
 | **Phase 5** | Travel Guides, Itineraries & PDF Print Blueprint | ✅ **Complete** |
 | **Phase 6** | Group Trips, Expedition Announcements & Modal Booking | ✅ **Complete** |
 | **Hero Upgrade** | Modern Interactive 4-Slide Announcement Banner | ✅ **Complete** |
-| Phase 7 | Interactive Mountain Altitude & Gear Utilities | ⏳ Ready for next sprint |
-| Phase 8 | Advanced SEO, Structured Data & Analytics | ⏳ Ready for next sprint |
+| **Phase 7** | Interactive Mountain Altitude & Gear Utilities | ✅ **Complete** |
+| Phase 8 | Advanced SEO, Structured Data (JSON-LD) & Performance Optimization | ⏳ Next Sprint |
 
 ---
 
@@ -46,7 +46,12 @@
    - Kashmir, Ladakh, Rajasthan day-wise itineraries with altitude profiles & print-to-PDF layout
    - Small-group expeditions with date/seat counters and enquiry modal
 
-5. **Strict Styling & Branding:**
+5. **Interactive Travel Utility Tools (`/travel#tools` & `/travel/tools`) — Phase 7:**
+   - **Himalayan Mountain Altitude & AMS Calculator:** Real-time atmospheric oxygen levels (% of sea level) for 8 high-altitude passes (Khardung La, Chang La, Pangong Tso, Chicham, Kaza, Leh, Apharwat, Sela Pass), risk levels, symptom checklist, and emergency descent protocol.
+   - **Custom Terrain Packing Checklist Generator:** Interactive checkable items across 3 presets (Himalayan Winter, Indian Railways Backpacking, Thar Desert) with live progress bar and print/save to PDF.
+   - **Transparent India Route Cost Estimator:** Sliders for days & travelers, customizable transport/stay/food modes, and itemized transparent cost breakdown with clipboard export.
+
+6. **Strict Styling & Branding:**
    - Unified `#080808` canvas, `#111113` surface, `#f5f5f5` white typography
    - Fredoka display font (`var(--font-fredoka)`)
    - Zero yellow/amber accents; pure high-contrast monochrome

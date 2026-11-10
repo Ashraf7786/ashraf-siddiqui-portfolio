@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { label: "Stories", href: "#stories" },
   { label: "Reels", href: "#reels" },
   { label: "Group Tours", href: "#group-tours" },
+  { label: "Tools", href: "#tools" },
   { label: "About", href: "#about" },
 ];
 

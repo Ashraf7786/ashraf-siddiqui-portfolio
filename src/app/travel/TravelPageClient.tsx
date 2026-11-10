@@ -8,6 +8,7 @@ import FeaturedDestinations from "./components/FeaturedDestinations";
 import TravelStories from "./components/TravelStories";
 import TravelReels from "./components/TravelReels";
 import GroupTourCards from "./components/GroupTourCards";
+import TravelTools from "./components/TravelTools";
 import AboutTraveller from "./components/AboutTraveller";
 import TravelCTA from "./components/TravelCTA";
 import NewsletterPreview from "./components/NewsletterPreview";
@@ -28,6 +29,7 @@ export default function TravelPageClient() {
         <TravelStories />
         <TravelReels />
         <GroupTourCards />
+        <TravelTools />
         <AboutTraveller />
         <TravelCTA />
         <NewsletterPreview />
