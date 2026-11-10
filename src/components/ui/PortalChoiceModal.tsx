@@ -100,42 +100,26 @@ export default function PortalChoiceModal() {
 
   return (
     <>
-      {/* ─── Floating Persistent Switcher Button (Bottom Left) ─── */}
+      {/* ─── Compact Floating Switcher Button (Bottom Left) ─── */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-5 left-5 z-[8000] px-3.5 py-2 rounded-full bg-[#111114]/85 hover:bg-[#18181e] border border-white/15 hover:border-white/30 backdrop-blur-xl text-xs text-[#f5f5f5] shadow-[0_10px_30px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.2)] flex items-center gap-2.5 transition-all duration-300 hover:scale-105 group cursor-pointer"
-          title="Switch between Developer Portfolio and Travel Expeditions"
-          aria-label="Switch between Developer Portfolio and Travel Expeditions"
+          className="fixed bottom-5 left-5 z-[8000] px-3 py-1.5 rounded-full bg-[#111114]/85 hover:bg-[#1a1a20] border border-white/15 hover:border-white/30 backdrop-blur-xl text-xs text-[#f5f5f5] shadow-[0_8px_24px_rgba(0,0,0,0.6)] flex items-center gap-2 transition-all duration-300 hover:scale-105 group cursor-pointer"
+          title="Switch between Portfolio & Travel"
+          aria-label="Switch between Portfolio & Travel"
         >
-          <div className="flex items-center -space-x-1">
-            <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center border border-white/10 text-white/70 group-hover:text-white">
-              {/* Code Icon */}
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polyline points="16 18 22 12 16 6" />
-                <polyline points="8 6 2 12 8 18" />
-              </svg>
-            </span>
-            <span className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center border border-white/10 text-white/70 group-hover:text-white">
-              {/* Mountain/Compass Icon */}
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polygon points="12 2 2 22 22 22" />
-              </svg>
-            </span>
-          </div>
-          <span className="font-medium text-[11px] sm:text-xs tracking-wide">
-            {pathname?.startsWith("/travel") ? "Go to Portfolio" : "Explore Travel"}
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-[11px] font-medium text-white/80 group-hover:text-white">
+            {pathname?.startsWith("/travel") ? "Work Portfolio" : "Travel Diaries"}
           </span>
-          <span className="text-[10px] text-white/40 group-hover:text-white/70 uppercase tracking-widest font-mono">
-            Switch
-          </span>
+          <span className="text-[10px] text-white/40 uppercase font-mono">&bull; Switch</span>
         </button>
       )}
 
-      {/* ─── Modal Backdrop & Dialogue Box ─── */}
+      {/* ─── Minimal, Small Dialog Box ─── */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[9500] bg-black/85 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6 animate-fade-in"
+          className="fixed inset-0 z-[9500] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
           onClick={(e) => {
             if (e.target === e.currentTarget) handleDismiss();
           }}
@@ -143,159 +127,134 @@ export default function PortalChoiceModal() {
           aria-modal="true"
           aria-labelledby="portal-dialog-title"
         >
-          <div className="relative w-full max-w-2xl bg-[#0d0d10] border border-white/15 rounded-3xl p-6 sm:p-8 md:p-10 shadow-[0_30px_90px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(255,255,255,0.22)] text-white overflow-hidden animate-in fade-in zoom-in-95 duration-300">
-            {/* Ambient Background Glows */}
-            <div className="absolute -top-24 -left-24 w-60 h-60 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -right-24 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-
+          <div className="relative w-full max-w-sm bg-[#111114] border border-white/15 rounded-2xl p-5 sm:p-6 shadow-[0_24px_70px_rgba(0,0,0,0.9),inset_0_1px_1px_rgba(255,255,255,0.18)] text-white overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Close Button */}
             <button
               onClick={handleDismiss}
-              className="absolute top-5 right-5 sm:top-6 sm:right-6 w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/25 flex items-center justify-center text-white/60 hover:text-white transition-all cursor-pointer z-10"
-              title="Stay on current page"
-              aria-label="Close dialog"
+              className="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white/50 hover:text-white flex items-center justify-center transition-all cursor-pointer"
+              title="Close"
+              aria-label="Close"
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
 
-            {/* Header Content */}
-            <div className="text-center max-w-lg mx-auto mb-8 sm:mb-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-white/70 mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Ashraf Siddiqui · Choose Destination
-              </div>
-              <h2
+            {/* Header */}
+            <div className="text-center mb-5 pt-1">
+              <span className="inline-block text-[10px] font-mono uppercase tracking-widest text-white/50 mb-1">
+                Ashraf Siddiqui
+              </span>
+              <h3
                 id="portal-dialog-title"
-                className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-3"
+                className="text-lg sm:text-xl font-bold tracking-tight text-white"
                 style={{ fontFamily: "var(--font-fredoka)" }}
               >
-                Where would you like to explore?
-              </h2>
-              <p className="text-xs sm:text-sm text-[#f5f5f5]/65 leading-relaxed">
-                I build digital products as a Full Stack Web Developer and traverse high-altitude frontiers as a Solo Traveller. Choose where to go:
+                Where to?
+              </h3>
+              <p className="text-xs text-white/50 mt-1">
+                Choose where you would like to go:
               </p>
             </div>
 
-            {/* The Two Choice Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-6">
-              {/* Option A: Work Portfolio */}
-              <div
+            {/* Options */}
+            <div className="flex flex-col gap-2.5 mb-4">
+              {/* Option 1: Work Portfolio */}
+              <button
                 onClick={handleChoosePortfolio}
-                className={`group relative flex flex-col justify-between p-5 sm:p-6 rounded-2xl border transition-all duration-300 text-left cursor-pointer hover:scale-[1.02] ${
+                className={`w-full flex items-center justify-between p-3.5 rounded-xl border transition-all duration-200 text-left group cursor-pointer ${
                   pathname === "/"
-                    ? "bg-white/[0.07] border-white/30 shadow-[0_8px_30px_rgba(255,255,255,0.08)]"
-                    : "bg-white/[0.03] hover:bg-white/[0.07] border-white/10 hover:border-white/25"
+                    ? "bg-white/[0.09] border-white/30"
+                    : "bg-white/[0.04] hover:bg-white/[0.09] border-white/10 hover:border-white/20"
                 }`}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                      {/* Code SVG */}
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="16 18 22 12 16 6" />
-                        <polyline points="8 6 2 12 8 18" />
-                      </svg>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center text-white shrink-0 group-hover:scale-105 transition-transform">
+                    {/* Code SVG */}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polyline points="16 18 22 12 16 6" />
+                      <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors">
+                      Work Portfolio
                     </div>
-                    <span className="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-full bg-white/10 text-white/60">
+                    <div className="text-[11px] text-white/40">
                       iamashraf.in
-                    </span>
-                  </div>
-
-                  <h3
-                    className="text-lg sm:text-xl font-bold text-white mb-1.5 group-hover:text-emerald-300 transition-colors"
-                    style={{ fontFamily: "var(--font-fredoka)" }}
-                  >
-                    Work Portfolio
-                  </h3>
-                  <p className="text-xs text-[#f5f5f5]/65 leading-relaxed mb-4">
-                    Full Stack Web Developer. Modern web applications, Next.js architecture, interactive physics, case studies &amp; developer contact.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/50">Next.js</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/50">React</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/50">Full Stack</span>
-                  </div>
-                  <div className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-center bg-white/10 group-hover:bg-white group-hover:text-black border border-white/15 group-hover:border-white text-white transition-all flex items-center justify-center gap-1.5">
-                    <span>Enter Portfolio</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
+                    </div>
                   </div>
                 </div>
-              </div>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  className="text-white/40 group-hover:text-white group-hover:translate-x-0.5 transition-all"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
 
-              {/* Option B: Travel Diaries */}
-              <div
+              {/* Option 2: Travel Diaries */}
+              <button
                 onClick={handleChooseTravel}
-                className={`group relative flex flex-col justify-between p-5 sm:p-6 rounded-2xl border transition-all duration-300 text-left cursor-pointer hover:scale-[1.02] ${
+                className={`w-full flex items-center justify-between p-3.5 rounded-xl border transition-all duration-200 text-left group cursor-pointer ${
                   pathname?.startsWith("/travel")
-                    ? "bg-white/[0.07] border-white/30 shadow-[0_8px_30px_rgba(255,255,255,0.08)]"
-                    : "bg-white/[0.03] hover:bg-white/[0.07] border-white/10 hover:border-white/25"
+                    ? "bg-white/[0.09] border-white/30"
+                    : "bg-white/[0.04] hover:bg-white/[0.09] border-white/10 hover:border-white/20"
                 }`}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
-                      {/* Mountain Compass SVG */}
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polygon points="12 2 2 22 22 22" />
-                      </svg>
-                    </div>
-                    <span className="text-[10px] font-mono tracking-widest uppercase px-2 py-0.5 rounded-full bg-white/10 text-white/60">
-                      /travel
-                    </span>
-                  </div>
-
-                  <h3
-                    className="text-lg sm:text-xl font-bold text-white mb-1.5 group-hover:text-cyan-300 transition-colors"
-                    style={{ fontFamily: "var(--font-fredoka)" }}
-                  >
-                    Travel Diaries
-                  </h3>
-                  <p className="text-xs text-[#f5f5f5]/65 leading-relaxed mb-4">
-                    Solo traveller across 24 Indian states. High-altitude 4×4 mountain expeditions, upcoming group tours, field guides &amp; cinematic reels.
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/50">24 States</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/50">Group Tours</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 border border-white/10 text-white/50">Expeditions</span>
-                  </div>
-                  <div className="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-center bg-white/10 group-hover:bg-white group-hover:text-black border border-white/15 group-hover:border-white text-white transition-all flex items-center justify-center gap-1.5">
-                    <span>Explore Travel</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center text-white shrink-0 group-hover:scale-105 transition-transform">
+                    {/* Mountain SVG */}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <polygon points="12 2 2 22 22 22" />
                     </svg>
                   </div>
+                  <div>
+                    <div className="text-sm font-semibold text-white group-hover:text-cyan-300 transition-colors">
+                      Travel Diaries
+                    </div>
+                    <div className="text-[11px] text-white/40">
+                      iamashraf.in/travel
+                    </div>
+                  </div>
                 </div>
-              </div>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  className="text-white/40 group-hover:text-white group-hover:translate-x-0.5 transition-all"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
 
-            {/* Bottom Footer Options */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-white/10 text-xs text-[#f5f5f5]/55">
-              <label className="flex items-center gap-2 cursor-pointer select-none hover:text-white/80 transition-colors">
+            {/* Subtle Footer */}
+            <div className="flex items-center justify-between pt-3 border-t border-white/10 text-[11px] text-white/50">
+              <label className="flex items-center gap-1.5 cursor-pointer select-none hover:text-white/80 transition-colors">
                 <input
                   type="checkbox"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
-                  className="rounded border-white/20 bg-white/5 text-emerald-500 focus:ring-0 focus:outline-none cursor-pointer"
+                  className="w-3.5 h-3.5 rounded border-white/20 bg-white/5 text-emerald-500 focus:ring-0 focus:outline-none cursor-pointer"
                 />
-                <span>Remember my choice on this browser</span>
+                <span>Remember choice</span>
               </label>
 
               <button
                 onClick={handleDismiss}
-                className="hover:text-white underline underline-offset-4 transition-colors cursor-pointer"
+                className="hover:text-white transition-colors cursor-pointer"
               >
-                Continue to {pathname?.startsWith("/travel") ? "Travel Diaries" : "Portfolio"} →
+                Skip &rarr;
               </button>
             </div>
           </div>
