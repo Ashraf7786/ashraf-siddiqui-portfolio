@@ -1,0 +1,49 @@
+[
+  {
+    "id": "enq-1794294179674-33397",
+    "createdAt": "2026-11-10T07:02:59.674Z",
+    "fullName": "Aarav Sharma",
+    "email": "aarav@gmail.com",
+    "whatsapp": "+919876543210",
+    "travelersCount": 2,
+    "cityOfOrigin": "Jaipur",
+    "dietPreference": "Vegetarian",
+    "emergencyContact": "",
+    "message": "",
+    "tripTitle": "Kashmir Winter Expedition",
+    "tripSlug": "",
+    "status": "New"
+  },
+  {
+    "id": "enq-sample-1",
+    "createdAt": "2026-02-18T14:32:00.000Z",
+    "fullName": "Rohit Sharma",
+    "email": "rohit.travels@gmail.com",
+    "whatsapp": "+919876543210",
+    "travelersCount": 2,
+    "cityOfOrigin": "Delhi",
+    "dietPreference": "Vegetarian",
+    "emergencyContact": "+919876500000",
+    "message": "Looking forward to joining the Spiti 4x4 winter circuit! Can we carry photography equipment?",
+    "tripTitle": "Spiti Valley Middle Land 4x4 Circuit",
+    "tripSlug": "spiti-valley-circuit-2026",
+    "pricePerPerson": 34000,
+    "status": "New"
+  },
+  {
+    "id": "enq-sample-2",
+    "createdAt": "2026-02-17T09:15:00.000Z",
+    "fullName": "Priya Verma",
+    "email": "priya.verma@outlook.com",
+    "whatsapp": "+919811223344",
+    "travelersCount": 1,
+    "cityOfOrigin": "Mumbai",
+    "dietPreference": "Vegan",
+    "emergencyContact": "+919811220000",
+    "message": "Interested in Kashmir snow trail. Is prior winter trekking experience required?",
+    "tripTitle": "Kashmir Winter & Alpine Powder Expedition",
+    "tripSlug": "kashmir-winter-expedition-2026",
+    "pricePerPerson": 28500,
+    "status": "Contacted"
+  }
+]

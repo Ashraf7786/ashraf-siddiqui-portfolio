@@ -42,7 +42,7 @@ export default function TripBookingModal({
     return errs;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
@@ -53,11 +53,29 @@ export default function TripBookingModal({
     setErrors({});
     setIsSubmitting(true);
 
-    // Simulate registration submission (no payment charged in Phase 6)
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/travel/enquire", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          tripTitle: trip.title,
+          tripSlug: trip.slug,
+          pricePerPerson: trip.pricePerPerson,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setIsSubmitted(true);
+      } else {
+        setErrors({ submit: data.error || "Failed to submit booking inquiry." });
+      }
+    } catch (err) {
+      setErrors({ submit: "Network error. Please try again or WhatsApp Ashraf directly." });
+    } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 800);
+    }
   };
 
   const handleResetAndClose = () => {
@@ -248,6 +266,12 @@ export default function TripBookingModal({
                   className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-2 text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40 resize-none"
                 />
               </div>
+
+              {errors.submit && (
+                <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+                  {errors.submit}
+                </div>
+              )}
 
               {/* Submit Button */}
               <div className="pt-2">

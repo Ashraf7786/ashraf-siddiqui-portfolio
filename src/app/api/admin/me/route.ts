@@ -13,3 +13,4 @@ export async function GET() {
     username: session.username,
   });
 }
+

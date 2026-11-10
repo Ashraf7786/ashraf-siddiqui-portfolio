@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
@@ -14,8 +14,20 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function TravelReels() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [reelsList, setReelsList] = useState(TRAVEL_REELS);
   const [selectedReelId, setSelectedReelId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/travel/reels")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.reels && Array.isArray(d.reels) && d.reels.length > 0) {
+          setReelsList(d.reels);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -209,7 +221,7 @@ export default function TravelReels() {
 
         {/* ─── REAL IPHONE SHOWCASE: EXACTLY 3 PHONES AT A TIME ──────── */}
         <div className="reels-showcase grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-10 max-w-5xl mx-auto justify-items-center">
-          {TRAVEL_REELS.slice(0, 3).map((reel) => (
+          {reelsList.slice(0, 3).map((reel) => (
             <div key={reel.id} className="iphone-reel-item w-full flex justify-center">
               <IPhoneReelCard
                 reel={reel}
@@ -244,7 +256,7 @@ export default function TravelReels() {
       {/* Full-Screen Comments & Details Modal */}
       {selectedReelId && (
         <ReelsViewerModal
-          reels={TRAVEL_REELS}
+          reels={reelsList}
           isOpen={isModalOpen}
           initialReelId={selectedReelId}
           onClose={() => setIsModalOpen(false)}

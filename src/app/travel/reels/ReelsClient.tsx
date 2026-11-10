@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -31,20 +31,32 @@ export default function ReelsClient() {
   const searchParams = useSearchParams();
   const initialId = searchParams.get("id");
 
+  const [reelsList, setReelsList] = useState(TRAVEL_REELS);
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
   const [selectedDestination, setSelectedDestination] = useState("All Destinations");
   const [activeModalReelId, setActiveModalReelId] = useState<string | null>(initialId || null);
   const [isModalOpen, setIsModalOpen] = useState(Boolean(initialId));
 
+  useEffect(() => {
+    fetch("/api/travel/reels")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.reels && Array.isArray(d.reels) && d.reels.length > 0) {
+          setReelsList(d.reels);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const filteredReels = useMemo(() => {
-    return TRAVEL_REELS.filter((reel) => {
+    return reelsList.filter((reel) => {
       const matchCat =
         selectedCategory === "All Categories" || reel.category === selectedCategory;
       const matchDest =
         selectedDestination === "All Destinations" || reel.destination === selectedDestination;
       return matchCat && matchDest;
     });
-  }, [selectedCategory, selectedDestination]);
+  }, [reelsList, selectedCategory, selectedDestination]);
 
   const handleOpenReel = (reelId: string) => {
     setActiveModalReelId(reelId);
@@ -284,7 +296,7 @@ export default function ReelsClient() {
 
       {/* Accessible Video Player Modal */}
       <ReelsViewerModal
-        reels={filteredReels.length > 0 ? filteredReels : TRAVEL_REELS}
+        reels={filteredReels.length > 0 ? filteredReels : reelsList}
         initialReelId={activeModalReelId}
         isOpen={isModalOpen}
         onClose={handleCloseModal}

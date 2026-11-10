@@ -129,6 +129,11 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: LightboxProps) {
               </span>
             ))}
           </div>
+          {photo.notes && (
+            <p className="mt-2.5 text-xs text-[#e8e8e8]/80 italic max-w-2xl bg-white/5 p-2 rounded-lg border-l-2 border-white/30">
+              &ldquo;{photo.notes}&rdquo;
+            </p>
+          )}
           <p className="mt-3 text-[#e8e8e8]/50 text-xs">{index + 1} / {photos.length}</p>
         </div>
       </div>
@@ -137,14 +142,26 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: LightboxProps) {
 }
 
 export default function GalleryClient() {
+  const [photosList, setPhotosList] = useState<GalleryPhoto[]>(TRAVEL_PHOTOS);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    fetch("/api/travel/gallery")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.photos && Array.isArray(d.photos) && d.photos.length > 0) {
+          setPhotosList(d.photos);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const filtered = useMemo(() => {
     let photos = activeCategory === 'All'
-      ? TRAVEL_PHOTOS
-      : TRAVEL_PHOTOS.filter(p => p.category === activeCategory);
+      ? photosList
+      : photosList.filter(p => p.category === activeCategory);
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
@@ -152,11 +169,12 @@ export default function GalleryClient() {
         p.title.toLowerCase().includes(q) ||
         p.location.toLowerCase().includes(q) ||
         p.state.toLowerCase().includes(q) ||
+        (p.notes && p.notes.toLowerCase().includes(q)) ||
         p.tags.some(t => t.toLowerCase().includes(q))
       );
     }
     return photos;
-  }, [activeCategory, searchQuery]);
+  }, [photosList, activeCategory, searchQuery]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (lightboxIndex === null) return;
@@ -191,7 +209,7 @@ export default function GalleryClient() {
           Frames from the Road
         </h1>
         <p className="text-[#e8e8e8]/60 max-w-2xl text-lg">
-          A visual diary of India — {TRAVEL_PHOTOS.length} photos spanning mountains, cultures, cities and coastlines.
+          A visual diary of India — {photosList.length} photos spanning mountains, cultures, cities and coastlines.
         </p>
       </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { GROUP_TRIPS, GroupTrip } from "../data/trips";
@@ -14,13 +14,25 @@ const FILTERS = [
 ];
 
 export default function TripsClient() {
+  const [tripsList, setTripsList] = useState<GroupTrip[]>(GROUP_TRIPS);
   const [selectedFilter, setSelectedFilter] = useState("All Expeditions");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeModalTrip, setActiveModalTrip] = useState<GroupTrip | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    fetch("/api/travel/trips")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.trips && Array.isArray(d.trips) && d.trips.length > 0) {
+          setTripsList(d.trips);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const filteredTrips = useMemo(() => {
-    return GROUP_TRIPS.filter((trip) => {
+    return tripsList.filter((trip) => {
       let matchFilter = true;
       if (selectedFilter === "Confirmed Expeditions") matchFilter = trip.isConfirmed;
       if (selectedFilter === "High Altitude") matchFilter = trip.difficulty !== "Easy to Moderate";

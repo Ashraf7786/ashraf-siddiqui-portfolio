@@ -129,6 +129,11 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: LightboxProps) {
               </span>
             ))}
           </div>
+          {photo.notes && (
+            <p className="mt-2.5 text-xs text-[#e8e8e8]/80 italic max-w-2xl bg-white/5 p-2 rounded-lg border-l-2 border-white/30">
+              &ldquo;{photo.notes}&rdquo;
+            </p>
+          )}
           <p className="mt-3 text-[#e8e8e8]/50 text-xs">
             {index + 1} / {photos.length}
           </p>
@@ -139,12 +144,24 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: LightboxProps) {
 }
 
 export default function TravelGallery() {
+  const [photos, setPhotos] = useState<GalleryPhoto[]>(TRAVEL_PHOTOS);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    fetch("/api/travel/gallery")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.photos && Array.isArray(d.photos) && d.photos.length > 0) {
+          setPhotos(d.photos);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const filtered = activeCategory === 'All'
-    ? TRAVEL_PHOTOS
-    : TRAVEL_PHOTOS.filter(p => p.category === activeCategory);
+    ? photos
+    : photos.filter(p => p.category === activeCategory);
 
   const preview = filtered.slice(0, 9);
 

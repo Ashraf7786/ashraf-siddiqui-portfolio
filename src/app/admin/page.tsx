@@ -11,3 +11,4 @@ export default async function AdminDashboardPage() {
 
   return <DashboardClient adminUsername={session.username || "ashraf"} />;
 }
+

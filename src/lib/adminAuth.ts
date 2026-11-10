@@ -161,3 +161,4 @@ export function extractClientIp(req: NextRequest): string {
 
 export const ADMIN_COOKIE_NAME = COOKIE_NAME;
 export const ADMIN_COOKIE_MAX_AGE = SESSION_DURATION_SECONDS;
+

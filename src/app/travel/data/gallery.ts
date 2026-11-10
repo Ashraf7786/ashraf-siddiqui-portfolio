@@ -9,6 +9,7 @@ export interface GalleryPhoto {
   category: 'Mountains' | 'Roads' | 'Cultures' | 'Cities' | 'Nature' | 'People';
   orientation: 'portrait' | 'landscape' | 'square';
   tags: string[];
+  notes?: string;
 }
 
 export const GALLERY_CATEGORIES = ['All', 'Mountains', 'Roads', 'Cultures', 'Cities', 'Nature', 'People'] as const;
