@@ -26,6 +26,7 @@
     "difficulty": "Moderate",
     "status": "Almost Full",
     "isConfirmed": true,
+    "isUpcoming": false,
     "overview": "A meticulously designed 8-day winter journey across Kashmir. Hosted personally by Ashraf Siddiqui, this expedition combines high-altitude snow experiences at Apharwat Peak with intimate heritage walks through downtown Srinagar and cozy homestay evenings in Pahalgam.",
     "highlights": [
       "2 nights aboard a traditional cedarwood heritage houseboat on peaceful Nigeen Lake",
@@ -159,8 +160,9 @@
     "availableSeats": 7,
     "totalSeats": 10,
     "difficulty": "Challenging",
-    "status": "Confirmed",
+    "status": "Upcoming",
     "isConfirmed": true,
+    "isUpcoming": true,
     "overview": "A rugged overland journey through the Middle Land connecting Tibet and India. Crossing Kunzum Pass, staying in ancient village homestays like Langza, and gazing into the starlit void at 14,000 feet.",
     "highlights": [
       "Send a postcard from the World's Highest Post Office in Hikkim (14,567 ft)",
@@ -296,8 +298,9 @@
     "availableSeats": 6,
     "totalSeats": 12,
     "difficulty": "Moderate",
-    "status": "Confirmed",
+    "status": "Upcoming",
     "isConfirmed": true,
+    "isUpcoming": true,
     "overview": "A bucket-list overland Himalayan crossing across the highest motorable roads on planet Earth. Built with mandatory 48-hour acclimatization in Leh, double-humped camel safaris in Hunder, and starlit camps along the Tibetan border.",
     "highlights": [
       "Khardung La Pass crossing at 17,982 ft",
@@ -434,8 +437,8 @@
     "totalSeats": 12,
     "difficulty": "Moderate",
     "status": "Upcoming",
-    "isUpcoming": true,
     "isConfirmed": false,
+    "isUpcoming": true,
     "overview": "A preliminary draft itinerary for our autumn 2026 Northeast expedition. Registration is open for early interest; confirmed dates will be announced in mid-2026.",
     "highlights": [
       "Hike to the Double Decker Living Root Bridge in Nongriat",
