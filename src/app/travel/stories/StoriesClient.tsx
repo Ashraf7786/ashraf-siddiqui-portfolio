@@ -3,6 +3,8 @@
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import TravelNav from "../components/TravelNav";
+import TravelFooter from "../components/TravelFooter";
 import { TRAVEL_STORIES } from "../data/stories";
 
 const CATEGORIES = [
@@ -34,8 +36,10 @@ export default function StoriesClient() {
   const featuredStory = TRAVEL_STORIES[0];
 
   return (
-    <div className="min-h-screen bg-[#080808] text-[#f5f5f5] pt-24 sm:pt-28 pb-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
+    <div className="min-h-screen bg-[#080808] text-[#f5f5f5]">
+      <TravelNav />
+      <div className="pt-24 sm:pt-28 pb-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
         {/* Navigation Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-[#f5f5f5]/40 mb-6">
           <Link href="/travel" className="hover:text-white transition-colors flex items-center gap-1.5">
@@ -269,7 +273,9 @@ export default function StoriesClient() {
             </button>
           </div>
         )}
+        </div>
       </div>
+      <TravelFooter />
     </div>
   );
 }

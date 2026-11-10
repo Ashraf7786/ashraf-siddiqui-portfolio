@@ -6,12 +6,14 @@ import Link from "next/link";
 const QUICK_LINKS = [
   { label: "Home", href: "/travel" },
   { label: "My India Journey", href: "/travel#journey" },
+  { label: "Visual Gallery", href: "/travel/gallery" },
   { label: "Destinations Hub", href: "/travel/destinations" },
   { label: "Travel Guides & Itineraries", href: "/travel/guides" },
   { label: "Field Tools & Utilities", href: "/travel/tools" },
   { label: "Travel Stories", href: "/travel/stories" },
   { label: "Reels Platform", href: "/travel/reels" },
-  { label: "Group Tours", href: "/travel#group-tours" },
+  { label: "Group Tours", href: "/travel/trips" },
+  { label: "Collaborate & Contact", href: "/travel/contact" },
   { label: "About Ashraf", href: "/travel#about" },
 ];
 

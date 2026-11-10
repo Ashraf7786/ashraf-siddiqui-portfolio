@@ -9,14 +9,14 @@ interface GuidePageProps {
 }
 
 export async function generateStaticParams() {
-  return TRAVEL_GUIDES.map((g) => ({
-    slug: g.slug,
-  }));
+  const fullSlugs = TRAVEL_GUIDES.map((g) => ({ slug: g.slug }));
+  const shortSlugs = TRAVEL_GUIDES.filter((g) => g.destinationSlug).map((g) => ({ slug: g.destinationSlug! }));
+  return [...fullSlugs, ...shortSlugs];
 }
 
 export async function generateMetadata({ params }: GuidePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const guide = TRAVEL_GUIDES.find((g) => g.slug === slug);
+  const guide = TRAVEL_GUIDES.find((g) => g.slug === slug || g.destinationSlug === slug);
 
   if (!guide) {
     return {
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
 
 export default async function GuidePage({ params }: GuidePageProps) {
   const { slug } = await params;
-  const guide = TRAVEL_GUIDES.find((g) => g.slug === slug);
+  const guide = TRAVEL_GUIDES.find((g) => g.slug === slug || g.destinationSlug === slug);
 
   if (!guide) {
     notFound();

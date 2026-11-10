@@ -6,14 +6,15 @@ import gsap from "gsap";
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
 
 const NAV_LINKS = [
-  { label: "Home", href: "#hero" },
-  { label: "Journey", href: "#journey" },
-  { label: "India Map", href: "#interactive-map" },
-  { label: "Stories", href: "#stories" },
-  { label: "Reels", href: "#reels" },
-  { label: "Group Tours", href: "#group-tours" },
-  { label: "Tools", href: "#tools" },
-  { label: "About", href: "#about" },
+  { label: "Home", href: "/travel" },
+  { label: "Journey", href: "/travel#journey" },
+  { label: "India Map", href: "/travel#interactive-map" },
+  { label: "Stories", href: "/travel/stories" },
+  { label: "Gallery", href: "/travel/gallery" },
+  { label: "Reels", href: "/travel/reels" },
+  { label: "Group Tours", href: "/travel/trips" },
+  { label: "Tools", href: "/travel/tools" },
+  { label: "Contact", href: "/travel/contact" },
 ];
 
 export default function TravelNav() {
@@ -40,10 +41,23 @@ export default function TravelNav() {
     return () => ctx.revert();
   }, []);
 
-  const scrollTo = (href: string) => {
+  const handleNav = (href: string) => {
     setMenuOpen(false);
-    if (href === "#hero") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (href.startsWith("/travel#")) {
+      const hash = href.replace("/travel", "");
+      if (typeof window !== "undefined" && window.location.pathname === "/travel") {
+        document.querySelector(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    } else if (href === "/travel") {
+      if (typeof window !== "undefined" && window.location.pathname === "/travel") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+    }
+    if (typeof window !== "undefined") {
+      window.location.href = href;
+    }
   };
 
   return (
@@ -70,7 +84,7 @@ export default function TravelNav() {
           {NAV_LINKS.map((link) => (
             <button
               key={link.label}
-              onClick={() => scrollTo(link.href)}
+              onClick={() => handleNav(link.href)}
               className="hover:text-[#f5f5f5] transition-colors bg-transparent border-none cursor-pointer"
             >
               {link.label}
@@ -81,8 +95,8 @@ export default function TravelNav() {
         {/* CTA + Hamburger */}
         <div className="flex items-center gap-4">
           <button
-            onClick={() => scrollTo("#group-tours")}
-            className="hidden md:block px-5 py-2 rounded-full text-sm font-medium text-[#f5f5f5] border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 hover:bg-white/5 transition-all backdrop-blur-sm"
+            onClick={() => handleNav("/travel/trips")}
+            className="hidden md:block px-5 py-2 rounded-full text-sm font-medium text-[#f5f5f5] border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 hover:bg-white/5 transition-all backdrop-blur-sm cursor-pointer"
           >
             Plan a Trip
           </button>
@@ -115,7 +129,7 @@ export default function TravelNav() {
           {NAV_LINKS.map((link) => (
             <button
               key={link.label}
-              onClick={() => scrollTo(link.href)}
+              onClick={() => handleNav(link.href)}
               className="text-left text-4xl font-bold text-[#f5f5f5]/80 hover:text-[#f5f5f5] transition-colors bg-transparent border-none cursor-pointer"
               style={{ fontFamily: "var(--font-fredoka)" }}
             >
@@ -123,8 +137,8 @@ export default function TravelNav() {
             </button>
           ))}
           <button
-            onClick={() => scrollTo("#group-tours")}
-            className="mt-4 self-start px-8 py-3 rounded-full text-sm font-medium text-[#f5f5f5] border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 transition-all"
+            onClick={() => handleNav("/travel/trips")}
+            className="mt-4 self-start px-8 py-3 rounded-full text-sm font-medium text-[#f5f5f5] border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 transition-all cursor-pointer"
           >
             Plan a Trip
           </button>

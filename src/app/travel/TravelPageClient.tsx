@@ -5,6 +5,7 @@ import TravelHero from "./components/TravelHero";
 import TravelStats from "./components/TravelStats";
 import InteractiveIndiaMap from "./components/InteractiveIndiaMap";
 import FeaturedDestinations from "./components/FeaturedDestinations";
+import TravelGallery from "./components/TravelGallery";
 import TravelStories from "./components/TravelStories";
 import TravelReels from "./components/TravelReels";
 import GroupTourCards from "./components/GroupTourCards";
@@ -26,6 +27,7 @@ export default function TravelPageClient() {
         <TravelStats />
         <InteractiveIndiaMap />
         <FeaturedDestinations />
+        <TravelGallery />
         <TravelStories />
         <TravelReels />
         <GroupTourCards />

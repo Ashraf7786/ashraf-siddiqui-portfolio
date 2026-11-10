@@ -16,3 +16,4 @@ export const metadata: Metadata = {
 export default function TravelToolsPage() {
   return <ToolsClient />;
 }
+

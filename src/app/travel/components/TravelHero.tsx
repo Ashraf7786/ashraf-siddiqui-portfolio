@@ -56,7 +56,7 @@ const HERO_SLIDES: HeroSlide[] = [
       action: "link",
       target: "/travel/trips",
     },
-    tripData: GROUP_TRIPS.find((t) => t.slug === "spiti-winter-white-spiti-2026") || GROUP_TRIPS[0],
+    tripData: GROUP_TRIPS.find((t) => t.slug === "spiti-valley-circuit-2026") || GROUP_TRIPS[0],
   },
   {
     id: "solo-odyssey-milestone",

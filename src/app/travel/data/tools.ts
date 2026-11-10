@@ -305,3 +305,4 @@ export const ESTIMATOR_RATES: CostEstimatorRates = {
   },
   activityMiscDaily: 250, // Entry tickets, monument passes, guide tips, chai buffer
 };
+
