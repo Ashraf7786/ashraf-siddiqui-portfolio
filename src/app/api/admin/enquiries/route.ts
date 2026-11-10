@@ -96,3 +96,4 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ success: false, error: "Failed to delete enquiry." }, { status: 500 });
   }
 }
+

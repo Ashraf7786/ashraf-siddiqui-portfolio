@@ -49,27 +49,35 @@ export async function POST(req: NextRequest) {
       tripTitle,
       tripSlug,
       pricePerPerson,
+      collabType,
+      subject,
     } = body;
 
-    if (!fullName || !email || !whatsapp) {
+    if (!fullName || !email) {
       return NextResponse.json(
-        { success: false, error: "Full name, email, and WhatsApp number are required." },
+        { success: false, error: "Full name and email are required." },
         { status: 400 }
       );
     }
+
+    const title = tripTitle
+      ? String(tripTitle).trim()
+      : collabType
+      ? `Collaboration: ${collabType}${subject ? ` · ${subject}` : ""}`
+      : "General Travel Inquiry";
 
     const newEnquiry = {
       id: `enq-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       createdAt: new Date().toISOString(),
       fullName: String(fullName).trim(),
       email: String(email).trim().toLowerCase(),
-      whatsapp: String(whatsapp).trim().replace(/\s+/g, ""),
+      whatsapp: String(whatsapp || "").trim().replace(/\s+/g, ""),
       travelersCount: Number(travelersCount) || 1,
       cityOfOrigin: String(cityOfOrigin || "").trim(),
       dietPreference: String(dietPreference || "Vegetarian").trim(),
       emergencyContact: String(emergencyContact || "").trim(),
       message: String(message || "").trim(),
-      tripTitle: String(tripTitle || "Group Expedition").trim(),
+      tripTitle: title,
       tripSlug: String(tripSlug || "").trim(),
       pricePerPerson: pricePerPerson ? Number(pricePerPerson) : undefined,
       status: "New" as "New" | "Contacted" | "Confirmed" | "Archived",

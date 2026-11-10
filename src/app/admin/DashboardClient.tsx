@@ -239,9 +239,211 @@ const SearchIcon = () => (
   </svg>
 );
 
+// ── Image & Video Inspector Helpers ─────────────────────────────────────────────
+function VideoInspectorBadge({
+  videoUrl,
+  targetType,
+}: {
+  videoUrl: string;
+  targetType: "reels" | "hero";
+}) {
+  const [meta, setMeta] = useState<{
+    width?: number;
+    height?: number;
+    status: "idle" | "loading" | "valid" | "error";
+    errorMsg?: string;
+  }>({ status: "idle" });
+
+  useEffect(() => {
+    if (!videoUrl) {
+      setMeta({ status: "idle" });
+      return;
+    }
+
+    setMeta({ status: "loading" });
+    const video = document.createElement("video");
+    video.src = videoUrl;
+    video.preload = "metadata";
+
+    video.onloadedmetadata = () => {
+      setMeta({
+        status: "valid",
+        width: video.videoWidth,
+        height: video.videoHeight,
+      });
+    };
+
+    video.onerror = () => {
+      setMeta({
+        status: "error",
+        errorMsg: `Could not load video from "${videoUrl}". Ensure file is in /public/videos/ and encoded in H.264 MP4 format.`,
+      });
+    };
+  }, [videoUrl]);
+
+  if (!videoUrl) return null;
+
+  if (meta.status === "loading") {
+    return (
+      <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2 text-[11px] text-white/60">
+        <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        <span>Inspecting video resolution & mobile responsiveness...</span>
+      </div>
+    );
+  }
+
+  if (meta.status === "error") {
+    return (
+      <div className="p-3 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs flex items-start gap-2.5">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-red-400">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <div>
+          <p className="font-bold text-red-200">Video Alert: Playback Failed</p>
+          <p className="text-[11px] opacity-90 mt-0.5">{meta.errorMsg}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (meta.status === "valid" && meta.width && meta.height) {
+    const isVertical = meta.height > meta.width;
+    const ratio = Math.round((meta.width / meta.height) * 100) / 100;
+
+    // Checks for Reels (must be strictly vertical 9:16)
+    if (targetType === "reels") {
+      if (!isVertical) {
+        return (
+          <div className="p-3 rounded-xl bg-amber-950/60 border border-amber-500/40 text-amber-200 text-xs flex items-start gap-2.5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-amber-400">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <div>
+              <p className="font-bold text-amber-300">Non-Responsive Aspect Ratio Alert!</p>
+              <p className="text-[11px] opacity-90 mt-0.5">
+                This video is <strong>{meta.width}×{meta.height} (Landscape {ratio}:1)</strong>. Reels require <strong>Vertical 9:16 (1080×1920)</strong>. On mobile phone screens, this video will appear letterboxed with black bars on top and bottom.
+              </p>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div className="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-emerald-400 shrink-0">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span className="text-[11px]">
+            <strong>Mobile Responsive Verified:</strong> {meta.width}×{meta.height} (Vertical 9:16). Perfectly optimized for mobile phone viewports.
+          </span>
+        </div>
+      );
+    }
+
+    // Checks for Hero Banner (prefers 16:9 Landscape)
+    if (targetType === "hero") {
+      if (isVertical) {
+        return (
+          <div className="p-3 rounded-xl bg-amber-950/60 border border-amber-500/40 text-amber-200 text-xs flex items-start gap-2.5">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 mt-0.5 text-amber-400">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <div>
+              <p className="font-bold text-amber-300">Hero Aspect Ratio Notice</p>
+              <p className="text-[11px] opacity-90 mt-0.5">
+                Video is <strong>{meta.width}×{meta.height} (Vertical)</strong>. For a cinematic full-width hero header across desktop monitors & laptops, <strong>1920×1080 (16:9 Landscape)</strong> is recommended.
+              </p>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <div className="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-emerald-400 shrink-0">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span className="text-[11px]">
+            <strong>Responsive Verified:</strong> {meta.width}×{meta.height} ({ratio}:1 Landscape). Covers widescreen & mobile viewports smoothly.
+          </span>
+        </div>
+      );
+    }
+  }
+
+  return null;
+}
+
+function ImageInspectorBadge({
+  src,
+  suggestedSize,
+  suggestedDimensions,
+  expectedRatio,
+}: {
+  src: string;
+  suggestedSize: string;
+  suggestedDimensions: string;
+  expectedRatio?: "landscape" | "portrait" | "square";
+}) {
+  const [dim, setDim] = useState<{ width?: number; height?: number; error?: boolean } | null>(null);
+
+  useEffect(() => {
+    if (!src) {
+      setDim(null);
+      return;
+    }
+    const img = new Image();
+    img.src = src;
+    img.onload = () => setDim({ width: img.naturalWidth, height: img.naturalHeight });
+    img.onerror = () => setDim({ error: true });
+  }, [src]);
+
+  return (
+    <div className="p-2.5 rounded-xl bg-[#080808] border border-white/10 space-y-1 text-[11px]">
+      <div className="flex flex-wrap items-center justify-between gap-1">
+        <span className="text-white/40 uppercase font-mono font-semibold text-[10px]">
+          Target Size Guide
+        </span>
+        <span className="text-emerald-400 font-mono text-[10px] font-semibold">
+          {suggestedSize}
+        </span>
+      </div>
+      <div className="flex flex-wrap items-center justify-between gap-1 text-white/70">
+        <span>Recommended Dimensions:</span>
+        <strong className="text-white font-mono">{suggestedDimensions}</strong>
+      </div>
+      {dim && (
+        <div className="pt-1 border-t border-white/5 flex items-center justify-between text-[10px]">
+          {dim.error ? (
+            <span className="text-red-400 flex items-center gap-1">
+              <span>Could not load image file from {src}</span>
+            </span>
+          ) : (
+            <span className="text-white/60">
+              Current File: <strong className="text-white">{dim.width}×{dim.height} px</strong>
+              {expectedRatio === "landscape" && dim.width! < dim.height! && (
+                <span className="text-amber-400 ml-1.5 font-semibold">(⚠️ Image is vertical but category is Landscape)</span>
+              )}
+              {expectedRatio === "portrait" && dim.width! > dim.height! && (
+                <span className="text-amber-400 ml-1.5 font-semibold">(⚠️ Image is horizontal but category is Portrait)</span>
+              )}
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Main Dashboard Component ──────────────────────────────────────────────────
 export default function DashboardClient({ adminUsername }: { adminUsername: string }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<AdminTab>("hero");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Status and loading states
   const [isLoading, setIsLoading] = useState(true);
@@ -499,11 +701,11 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
   }
 
   return (
-    <div className="min-h-screen bg-[#080808] text-[#f5f5f5] flex flex-col">
+    <div className="min-h-screen bg-[#080808] text-[#f5f5f5] flex flex-col pb-20 lg:pb-0">
       {/* Toast Notification */}
       {statusMessage && (
         <div
-          className={`fixed bottom-6 right-6 z-50 px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs font-semibold backdrop-blur-xl border transition-all ${
+          className={`fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-50 px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 text-xs font-semibold backdrop-blur-xl border transition-all ${
             statusMessage.type === "success"
               ? "bg-emerald-950/90 text-emerald-300 border-emerald-500/30"
               : "bg-red-950/90 text-red-300 border-red-500/30"
@@ -517,13 +719,27 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
       {/* Top Header Bar */}
       <header className="h-16 border-b border-white/10 bg-[#0c0c0e]/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between shrink-0 sticky top-0 z-40">
         <div className="flex items-center gap-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+          {/* Mobile Menu Toggle Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10"
+            title="Toggle Menu"
+            aria-label="Toggle modules menu"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse hidden sm:block" />
           <div>
             <h1 className="text-sm sm:text-base font-bold text-white tracking-wide" style={{ fontFamily: "var(--font-fredoka)" }}>
               Ashraf Siddiqui · CMS Control Center
             </h1>
             <p className="text-[11px] text-[#f5f5f5]/50 hidden sm:block">
-              Logged in as <span className="text-white font-mono font-semibold">@{adminUsername}</span> · Local Persistent Store
+              Logged in as <span className="text-white font-mono font-semibold">@{adminUsername}</span> · In-Memory Fast Cache Enabled
             </p>
           </div>
         </div>
@@ -534,7 +750,8 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
             target="_blank"
             className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-[#f5f5f5]/80 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1.5"
           >
-            <span>View Live Website</span>
+            <span className="hidden sm:inline">View Live Website</span>
+            <span className="sm:hidden">Live</span>
             <ExternalLinkIcon />
           </Link>
           <button
@@ -547,10 +764,52 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
         </div>
       </header>
 
+      {/* Mobile Drawer Navigation (When toggled) */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-[#0c0c0e] border-b border-white/10 p-4 space-y-2 z-30">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-[#f5f5f5]/40 block mb-1">
+            Switch Module
+          </span>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { id: "hero", label: "Hero Banner", count: `${slides.length} Slides`, icon: <SlidersIcon /> },
+              { id: "gallery", label: "Photo Gallery", count: `${photos.length} Photos`, icon: <CameraIcon /> },
+              { id: "reels", label: "Reels & Dispatches", count: `${reels.length} Clips`, icon: <FilmIcon /> },
+              { id: "trips", label: "Expeditions", count: `${trips.length} Tours`, icon: <CompassIcon /> },
+              { id: "enquiries", label: "Tour Leads", count: `${enquiries.length} Inquiries`, icon: <InboxIcon />, badge: newEnquiriesCount },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={() => {
+                  setActiveTab(item.id as AdminTab);
+                  setMobileMenuOpen(false);
+                }}
+                className={`p-3 rounded-xl text-left border flex items-center gap-2.5 transition-all ${
+                  activeTab === item.id
+                    ? "bg-white text-black border-white shadow-md font-bold"
+                    : "bg-white/[0.03] text-white/70 border-white/5"
+                }`}
+              >
+                <div className="shrink-0">{item.icon}</div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-xs truncate">{item.label}</div>
+                  <div className={`text-[9px] ${activeTab === item.id ? "text-black/60" : "text-white/40"}`}>{item.count}</div>
+                </div>
+                {item.badge ? (
+                  <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-emerald-500 text-black">
+                    {item.badge}
+                  </span>
+                ) : null}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Main Container with Sidebar + Content */}
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Left Navigation Sidebar */}
-        <aside className="w-full lg:w-64 bg-[#0a0a0c] border-b lg:border-b-0 lg:border-r border-white/10 p-3 sm:p-4 shrink-0 flex flex-col justify-between">
+        {/* Left Navigation Sidebar (Desktop) */}
+        <aside className="w-full lg:w-64 bg-[#0a0a0c] border-b lg:border-b-0 lg:border-r border-white/10 p-3 sm:p-4 shrink-0 hidden lg:flex flex-col justify-between">
           <div>
             <span className="text-[10px] uppercase font-bold tracking-wider text-[#f5f5f5]/40 px-3 mb-2 block">
               Website Modules
@@ -658,10 +917,10 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
           {/* Sidebar Footer info */}
           <div className="hidden lg:block pt-6 border-t border-white/5 px-2">
             <div className="text-[11px] text-[#f5f5f5]/40 space-y-1">
-              <p className="font-semibold text-[#f5f5f5]/60">Security & Storage</p>
-              <p>Timing-safe authentication</p>
-              <p>HMAC-SHA256 session token</p>
-              <p>Persistent JSON database</p>
+              <p className="font-semibold text-[#f5f5f5]/60">Optimization & Cache</p>
+              <p>In-memory file mtime cache</p>
+              <p>Edge Cache-Control 60s</p>
+              <p>Automatic format & ratio inspector</p>
             </div>
           </div>
         </aside>
@@ -853,6 +1112,11 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                         </div>
                       </div>
 
+                      {/* Video Responsiveness Inspector Alert */}
+                      {currentSlide.videoUrl && (
+                        <VideoInspectorBadge videoUrl={currentSlide.videoUrl} targetType="hero" />
+                      )}
+
                       {/* Form Fields */}
                       <div className="p-6 rounded-3xl bg-[#111113] border border-white/10 space-y-5">
                         <div className="flex items-center justify-between pb-3 border-b border-white/5">
@@ -888,7 +1152,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                 updated[selectedSlideIndex].titleLine1 = e.target.value;
                                 setSlides(updated);
                               }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:border-white/40 outline-none"
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
                             />
                           </div>
 
@@ -904,7 +1168,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                 updated[selectedSlideIndex].titleLine2 = e.target.value;
                                 setSlides(updated);
                               }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:border-white/40 outline-none"
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
                             />
                           </div>
                         </div>
@@ -923,7 +1187,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                 updated[selectedSlideIndex].badgeLabel = e.target.value;
                                 setSlides(updated);
                               }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:border-white/40 outline-none"
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
                             />
                           </div>
 
@@ -939,14 +1203,14 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                 updated[selectedSlideIndex].subtitle = e.target.value;
                                 setSlides(updated);
                               }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:border-white/40 outline-none"
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
                             />
                           </div>
                         </div>
 
-                        {/* Video & Poster Media */}
+                        {/* Video & Poster Media with Size Guides */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
+                          <div className="space-y-2">
                             <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
                               Background Video URL (.mp4)
                             </label>
@@ -959,11 +1223,20 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                 setSlides(updated);
                               }}
                               placeholder="/videos/reels/travelashraf1.mp4"
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:border-white/40 outline-none"
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none font-mono"
                             />
+                            <div className="p-2.5 rounded-xl bg-[#080808] border border-white/10 space-y-1 text-[11px]">
+                              <div className="flex justify-between text-white/50">
+                                <span>Suggested Video Specs:</span>
+                                <span className="text-emerald-400 font-mono font-bold">&lt; 15 MB</span>
+                              </div>
+                              <p className="text-white/70">
+                                Resolution: <strong className="text-white">1920×1080 (16:9 Landscape)</strong> · 30 fps MP4 (H.264)
+                              </p>
+                            </div>
                           </div>
 
-                          <div>
+                          <div className="space-y-2">
                             <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
                               Fallback Poster Image
                             </label>
@@ -976,7 +1249,13 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                 setSlides(updated);
                               }}
                               placeholder="/img/travel/kashmir_hero.jpg"
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2 text-xs text-white focus:border-white/40 outline-none"
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
+                            />
+                            <ImageInspectorBadge
+                              src={currentSlide.posterImage}
+                              suggestedSize="< 400 KB"
+                              suggestedDimensions="1920×1080 (16:9 Landscape)"
+                              expectedRatio="landscape"
                             />
                           </div>
                         </div>
@@ -1000,7 +1279,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                     updated[selectedSlideIndex].metrics[mIdx].value = e.target.value;
                                     setSlides(updated);
                                   }}
-                                  className="w-full bg-transparent border-b border-white/15 text-xs text-white font-semibold focus:border-white/40 outline-none pb-0.5"
+                                  className="w-full bg-transparent border-b border-white/15 text-sm sm:text-xs text-white font-semibold focus:border-white/40 outline-none pb-0.5"
                                 />
                               </div>
                             ))}
@@ -1026,7 +1305,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                     Visual Photo Gallery
                   </h2>
                   <p className="text-xs text-[#f5f5f5]/50 mt-0.5">
-                    Manage high-resolution images, places, states, categories, and field notes.
+                    Manage high-resolution images, places, states, categories, orientation, and field notes.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -1075,7 +1354,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                     placeholder="Search by title, place, state, or notes..."
                     value={gallerySearch}
                     onChange={(e) => setGallerySearch(e.target.value)}
-                    className="w-full bg-[#111113] border border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-white/30 outline-none focus:border-white/30"
+                    className="w-full bg-[#111113] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-base sm:text-xs text-white placeholder-white/30 outline-none focus:border-white/30"
                   />
                 </div>
 
@@ -1175,25 +1454,29 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                 arr[selectedPhotoIndex].src = e.target.value;
                                 setPhotos(arr);
                               }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                             />
                           </div>
 
-                          <div>
-                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                              Alt Text (Accessibility & SEO)
-                            </label>
-                            <input
-                              type="text"
-                              value={currentPhoto.alt}
-                              onChange={(e) => {
-                                const arr = [...photos];
-                                arr[selectedPhotoIndex].alt = e.target.value;
-                                setPhotos(arr);
-                              }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
-                            />
-                          </div>
+                          {/* Image Size Inspector with Suggested Dimensions */}
+                          <ImageInspectorBadge
+                            src={currentPhoto.src}
+                            suggestedSize={
+                              currentPhoto.orientation === "landscape"
+                                ? "< 600 KB"
+                                : currentPhoto.orientation === "portrait"
+                                ? "< 500 KB"
+                                : "< 400 KB"
+                            }
+                            suggestedDimensions={
+                              currentPhoto.orientation === "landscape"
+                                ? "1920×1280 (3:2) or 1920×1080 (16:9)"
+                                : currentPhoto.orientation === "portrait"
+                                ? "1080×1350 (4:5) or 1080×1920 (9:16)"
+                                : "1080×1080 (1:1 Square)"
+                            }
+                            expectedRatio={currentPhoto.orientation}
+                          />
                         </div>
                       </div>
 
@@ -1211,7 +1494,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedPhotoIndex].title = e.target.value;
                               setPhotos(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
 
@@ -1226,7 +1509,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedPhotoIndex].category = e.target.value;
                               setPhotos(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           >
                             {["Mountains", "Roads", "Cultures", "Cities", "Nature", "People"].map((cat) => (
                               <option key={cat} value={cat}>
@@ -1252,7 +1535,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setPhotos(arr);
                             }}
                             placeholder="e.g. Dal Lake, Srinagar"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
 
@@ -1269,7 +1552,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setPhotos(arr);
                             }}
                             placeholder="e.g. Kashmir"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
 
@@ -1285,7 +1568,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedPhotoIndex].year = Number(e.target.value) || 2026;
                               setPhotos(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono"
                           />
                         </div>
                       </div>
@@ -1304,7 +1587,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                             setPhotos(arr);
                           }}
                           placeholder="Write notes about the moment, conditions, or story behind this photograph..."
-                          className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
+                          className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
                         />
                       </div>
 
@@ -1323,7 +1606,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setPhotos(arr);
                             }}
                             placeholder="kashmir, dal lake, sunrise, mountains"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
 
@@ -1338,11 +1621,11 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedPhotoIndex].orientation = e.target.value as any;
                               setPhotos(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           >
-                            <option value="landscape">Landscape (Horizontal)</option>
-                            <option value="portrait">Portrait (Vertical)</option>
-                            <option value="square">Square</option>
+                            <option value="landscape">Landscape (Horizontal - 3:2 / 16:9)</option>
+                            <option value="portrait">Portrait (Vertical - 4:5 / 9:16)</option>
+                            <option value="square">Square (1:1)</option>
                           </select>
                         </div>
                       </div>
@@ -1369,7 +1652,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                     Reels & Video Dispatches
                   </h2>
                   <p className="text-xs text-[#f5f5f5]/50 mt-0.5">
-                    Manage vertical travel reels, local MP4 videos, Instagram captions, sound tracks, and engagement stats.
+                    Manage vertical travel reels, MP4 videos, Instagram captions, sound tracks, and engagement stats.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -1478,7 +1761,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                       </div>
 
                       {/* Video Player Preview */}
-                      <div className="relative rounded-2xl overflow-hidden bg-black border border-white/15 h-48 flex items-center justify-center">
+                      <div className="relative rounded-2xl overflow-hidden bg-black border border-white/15 h-56 flex items-center justify-center">
                         <video
                           key={currentReel.localVideoUrl || currentReel.videoUrl}
                           src={currentReel.localVideoUrl || currentReel.videoUrl}
@@ -1486,6 +1769,12 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                           className="h-full object-contain"
                         />
                       </div>
+
+                      {/* Live Video Responsiveness Alert */}
+                      <VideoInspectorBadge
+                        videoUrl={currentReel.localVideoUrl || currentReel.videoUrl}
+                        targetType="reels"
+                      />
 
                       {/* Title & Category */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1501,7 +1790,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedReelIndex].title = e.target.value;
                               setReels(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-bold"
                           />
                         </div>
 
@@ -1518,14 +1807,14 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setReels(arr);
                             }}
                             placeholder="Road Adventures, Mountain Passes, etc."
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
                       </div>
 
-                      {/* Video URLs & Poster */}
+                      {/* Video URLs & Poster with Dimension Guide */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
+                        <div className="space-y-2">
                           <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
                             Video URL (.mp4)
                           </label>
@@ -1538,11 +1827,20 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedReelIndex].videoUrl = e.target.value;
                               setReels(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40 font-mono"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono"
                           />
+                          <div className="p-2.5 rounded-xl bg-[#080808] border border-white/10 space-y-1 text-[11px]">
+                            <div className="flex justify-between text-white/50">
+                              <span>Reel Format Target:</span>
+                              <span className="text-emerald-400 font-mono font-bold">&lt; 25 MB</span>
+                            </div>
+                            <p className="text-white/70">
+                              Strictly Vertical: <strong className="text-white">1080×1920 (9:16 Aspect Ratio)</strong> · 30-60 fps MP4
+                            </p>
+                          </div>
                         </div>
 
-                        <div>
+                        <div className="space-y-2">
                           <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
                             Poster Image URL
                           </label>
@@ -1554,7 +1852,13 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedReelIndex].posterUrl = e.target.value;
                               setReels(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                          />
+                          <ImageInspectorBadge
+                            src={currentReel.posterUrl}
+                            suggestedSize="< 350 KB"
+                            suggestedDimensions="1080×1920 (9:16 Vertical)"
+                            expectedRatio="portrait"
                           />
                         </div>
                       </div>
@@ -1572,7 +1876,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                             arr[selectedReelIndex].caption = e.target.value;
                             setReels(arr);
                           }}
-                          className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
+                          className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
                         />
                       </div>
 
@@ -1590,7 +1894,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedReelIndex].locationName = e.target.value;
                               setReels(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
 
@@ -1606,7 +1910,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedReelIndex].soundtrack = e.target.value;
                               setReels(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
                       </div>
@@ -1626,7 +1930,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setReels(arr);
                             }}
                             placeholder="140K"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
 
@@ -1642,7 +1946,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedReelIndex].likes = Number(e.target.value) || 0;
                               setReels(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono"
                           />
                         </div>
 
@@ -1659,7 +1963,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setReels(arr);
                             }}
                             placeholder="0:58"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
                       </div>
@@ -1814,7 +2118,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedTripIndex].title = e.target.value;
                               setTrips(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40 font-bold"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-bold"
                           />
                         </div>
 
@@ -1830,7 +2134,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedTripIndex].tagline = e.target.value;
                               setTrips(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
                       </div>
@@ -1850,7 +2154,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setTrips(arr);
                             }}
                             placeholder="14 Feb 2026"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
 
@@ -1867,7 +2171,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setTrips(arr);
                             }}
                             placeholder="21 Feb 2026"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
 
@@ -1884,7 +2188,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setTrips(arr);
                             }}
                             placeholder="8 Days / 7 Nights"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
                       </div>
@@ -1903,7 +2207,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedTripIndex].pricePerPerson = Number(e.target.value) || 0;
                               setTrips(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40 font-mono font-bold"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono font-bold"
                           />
                         </div>
 
@@ -1919,7 +2223,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedTripIndex].availableSeats = Number(e.target.value) || 0;
                               setTrips(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono"
                           />
                         </div>
 
@@ -1936,14 +2240,14 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setTrips(arr);
                             }}
                             placeholder="Open for Booking, Almost Full"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
                       </div>
 
-                      {/* Cover Image & Destination */}
+                      {/* Cover Image & Destination with Image Size Guide */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
+                        <div className="space-y-2">
                           <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
                             Cover Image Path
                           </label>
@@ -1955,7 +2259,13 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               arr[selectedTripIndex].coverImage = e.target.value;
                               setTrips(arr);
                             }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
+                          />
+                          <ImageInspectorBadge
+                            src={currentTrip.coverImage}
+                            suggestedSize="< 500 KB"
+                            suggestedDimensions="1600×900 (16:9 Landscape)"
+                            expectedRatio="landscape"
                           />
                         </div>
 
@@ -1974,7 +2284,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               setTrips(arr);
                             }}
                             placeholder="Kashmir, Jammu and Kashmir"
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
                           />
                         </div>
                       </div>
@@ -1992,7 +2302,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                             arr[selectedTripIndex].inclusions = e.target.value.split("\n").filter(Boolean);
                             setTrips(arr);
                           }}
-                          className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white outline-none focus:border-white/40 font-mono resize-none leading-relaxed"
+                          className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono resize-none leading-relaxed"
                         />
                       </div>
                     </div>
@@ -2018,7 +2328,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                     Group Tour Inquiries & Leads Inbox
                   </h2>
                   <p className="text-xs text-[#f5f5f5]/50 mt-0.5">
-                    Live bookings submitted by travelers through the website booking form. One-click WhatsApp and email.
+                    Live bookings submitted by travelers through mobile & web forms. One-click WhatsApp and email contact.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -2039,7 +2349,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                     placeholder="Search leads by name, WhatsApp, email, or trip..."
                     value={enquirySearch}
                     onChange={(e) => setEnquirySearch(e.target.value)}
-                    className="w-full bg-[#111113] border border-white/10 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-white/30 outline-none focus:border-white/30"
+                    className="w-full bg-[#111113] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-base sm:text-xs text-white placeholder-white/30 outline-none focus:border-white/30"
                   />
                 </div>
 
@@ -2070,13 +2380,13 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
               {/* Inquiries Cards Grid */}
               <div className="space-y-3">
                 {filteredEnquiries.length === 0 ? (
-                  <div className="p-16 text-center rounded-3xl bg-[#111113] border border-white/5 space-y-2">
+                  <div className="p-12 sm:p-16 text-center rounded-3xl bg-[#111113] border border-white/5 space-y-2">
                     <div className="w-12 h-12 rounded-full bg-white/5 text-white/40 flex items-center justify-center mx-auto mb-2">
                       <InboxIcon />
                     </div>
                     <p className="text-sm font-bold text-white">No inquiries found in this view</p>
                     <p className="text-xs text-white/40">
-                      When visitors fill out the trip booking modal on the website, they will appear here instantly.
+                      When travelers submit the booking modal on mobile or desktop, inquiries appear here instantly.
                     </p>
                   </div>
                 ) : (
@@ -2093,7 +2403,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                     return (
                       <div
                         key={enq.id}
-                        className={`p-5 rounded-3xl border transition-all ${
+                        className={`p-4 sm:p-5 rounded-3xl border transition-all ${
                           enq.status === "New"
                             ? "bg-[#111113] border-emerald-500/30 shadow-lg shadow-emerald-500/5"
                             : "bg-[#111113]/80 border-white/5"
@@ -2103,7 +2413,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                           {/* Traveler Core Info */}
                           <div className="space-y-2 flex-1">
                             <div className="flex flex-wrap items-center gap-2">
-                              <h3 className="text-base font-bold text-white">{enq.fullName}</h3>
+                              <h3 className="text-sm sm:text-base font-bold text-white">{enq.fullName}</h3>
                               <span
                                 className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                                   enq.status === "New"
@@ -2125,8 +2435,8 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               <div className="flex items-center justify-between text-xs">
                                 <span className="font-bold text-white tracking-wide">{enq.tripTitle}</span>
                                 {enq.pricePerPerson && (
-                                  <span className="font-mono text-emerald-400 font-semibold">
-                                    ₹{(enq.pricePerPerson * enq.travelersCount).toLocaleString()} (for {enq.travelersCount} pax)
+                                  <span className="font-mono text-emerald-400 font-semibold text-xs">
+                                    ₹{(enq.pricePerPerson * enq.travelersCount).toLocaleString()} ({enq.travelersCount} pax)
                                   </span>
                                 )}
                               </div>
@@ -2149,7 +2459,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                           </div>
 
                           {/* Quick Action Buttons & Status Changer */}
-                          <div className="flex flex-row md:flex-col items-center md:items-end gap-2 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-white/5">
+                          <div className="flex flex-wrap sm:flex-nowrap md:flex-col items-center md:items-end gap-2 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-white/5 w-full md:w-auto">
                             {/* WhatsApp Direct Chat */}
                             <a
                               href={`https://wa.me/${whatsappDigits}?text=${encodeURIComponent(
@@ -2157,7 +2467,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               )}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="px-3.5 py-1.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                              className="flex-1 sm:flex-none px-3.5 py-2 sm:py-1.5 rounded-full bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all touch-manipulation min-h-[38px]"
                             >
                               <WhatsAppIcon />
                               <span>WhatsApp</span>
@@ -2168,7 +2478,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               href={`mailto:${enq.email}?subject=${encodeURIComponent(
                                 `Ashraf Siddiqui Expeditions — Confirmation for ${enq.tripTitle}`
                               )}`}
-                              className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                              className="flex-1 sm:flex-none px-3.5 py-2 sm:py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all touch-manipulation min-h-[38px]"
                             >
                               <MailIcon />
                               <span>Email</span>
@@ -2180,7 +2490,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               onChange={(e) =>
                                 handleUpdateEnquiryStatus(enq.id, e.target.value as LeadEnquiryItem["status"])
                               }
-                              className="bg-[#080808] border border-white/15 rounded-xl px-2.5 py-1.5 text-xs text-white outline-none cursor-pointer"
+                              className="w-full sm:w-auto bg-[#080808] border border-white/15 rounded-xl px-2.5 py-2 sm:py-1.5 text-xs text-white outline-none cursor-pointer min-h-[38px]"
                             >
                               <option value="New">Status: New</option>
                               <option value="Contacted">Status: Contacted</option>
@@ -2191,11 +2501,11 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                             {/* Delete Lead */}
                             <button
                               onClick={() => handleDeleteEnquiry(enq.id)}
-                              className="text-[11px] text-white/30 hover:text-red-400 px-2 py-1 transition-colors flex items-center gap-1"
+                              className="text-[11px] text-white/30 hover:text-red-400 px-2 py-1 transition-colors flex items-center gap-1 ml-auto md:ml-0"
                               title="Delete enquiry"
                             >
                               <TrashIcon />
-                              <span className="hidden sm:inline">Delete</span>
+                              <span>Delete</span>
                             </button>
                           </div>
                         </div>
@@ -2207,6 +2517,54 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
             </div>
           )}
         </main>
+      </div>
+
+      {/* Floating Sticky Mobile Publish Button */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-[#0c0c0e]/95 backdrop-blur-md border-t border-white/10 z-30 flex items-center justify-between gap-3 shadow-2xl">
+        <div className="text-xs">
+          <span className="text-white/40 block text-[10px] uppercase font-bold">Module</span>
+          <span className="font-bold text-white capitalize">{activeTab}</span>
+        </div>
+        {activeTab === "hero" && (
+          <button
+            onClick={handleSaveHero}
+            disabled={isSaving}
+            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
+          >
+            <CheckIcon />
+            <span>{isSaving ? "Saving..." : "Publish Banner"}</span>
+          </button>
+        )}
+        {activeTab === "gallery" && (
+          <button
+            onClick={handleSaveGallery}
+            disabled={isSaving}
+            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
+          >
+            <CheckIcon />
+            <span>{isSaving ? "Saving..." : "Publish Gallery"}</span>
+          </button>
+        )}
+        {activeTab === "reels" && (
+          <button
+            onClick={handleSaveReels}
+            disabled={isSaving}
+            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
+          >
+            <CheckIcon />
+            <span>{isSaving ? "Saving..." : "Publish Reels"}</span>
+          </button>
+        )}
+        {activeTab === "trips" && (
+          <button
+            onClick={handleSaveTrips}
+            disabled={isSaving}
+            className="px-5 py-2.5 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 shadow-lg touch-manipulation"
+          >
+            <CheckIcon />
+            <span>{isSaving ? "Saving..." : "Publish Trips"}</span>
+          </button>
+        )}
       </div>
     </div>
   );

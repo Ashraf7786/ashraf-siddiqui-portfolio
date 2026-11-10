@@ -95,18 +95,21 @@ export default function TripBookingModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-[#080808]/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+      className="fixed inset-0 z-50 bg-[#080808]/95 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 overflow-y-auto"
       role="dialog"
       aria-modal="true"
     >
-      <div className="relative w-full max-w-xl bg-[#111113] border border-[#f5f5f5]/15 rounded-3xl p-6 sm:p-8 shadow-2xl my-8">
+      <div className="relative w-full max-w-xl bg-[#111113] border-t sm:border border-[#f5f5f5]/15 rounded-t-[28px] sm:rounded-3xl p-5 sm:p-8 shadow-2xl max-h-[92vh] sm:max-h-[88vh] overflow-y-auto my-0 sm:my-6 overscroll-contain">
+        {/* Mobile Drag Indicator Bar */}
+        <div className="w-12 h-1 bg-white/20 rounded-full mx-auto mb-4 sm:hidden" />
+
         {/* Close Button */}
         <button
           onClick={handleResetAndClose}
-          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 flex items-center justify-center transition-colors"
+          className="absolute top-4 sm:top-5 right-4 sm:right-5 w-9 h-9 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 flex items-center justify-center transition-colors touch-manipulation"
           aria-label="Close modal"
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="18" y1="6" x2="6" y2="18"/>
             <line x1="6" y1="6" x2="18" y2="18"/>
           </svg>
@@ -149,10 +152,11 @@ export default function TripBookingModal({
                 </label>
                 <input
                   type="text"
+                  autoComplete="name"
                   placeholder="e.g. Rahul Sharma"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-2.5 text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
+                  className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
                 />
                 {errors.fullName && <p className="text-rose-400 text-[10px] mt-1">{errors.fullName}</p>}
               </div>
@@ -165,10 +169,12 @@ export default function TripBookingModal({
                   </label>
                   <input
                     type="email"
+                    inputMode="email"
+                    autoComplete="email"
                     placeholder="name@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-2.5 text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
+                    className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
                   />
                   {errors.email && <p className="text-rose-400 text-[10px] mt-1">{errors.email}</p>}
                 </div>
@@ -179,10 +185,12 @@ export default function TripBookingModal({
                   </label>
                   <input
                     type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
                     placeholder="+91 98765 43210"
                     value={formData.whatsapp}
                     onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                    className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-2.5 text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
+                    className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40 font-mono"
                   />
                   {errors.whatsapp && <p className="text-rose-400 text-[10px] mt-1">{errors.whatsapp}</p>}
                 </div>
@@ -197,7 +205,7 @@ export default function TripBookingModal({
                   <select
                     value={formData.travelersCount}
                     onChange={(e) => setFormData({ ...formData, travelersCount: e.target.value })}
-                    className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-2.5 text-[#f5f5f5] outline-none focus:border-[#f5f5f5]/40"
+                    className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] outline-none focus:border-[#f5f5f5]/40"
                   >
                     <option value="1">1 Person (Solo Traveler)</option>
                     <option value="2">2 Persons</option>
@@ -215,7 +223,7 @@ export default function TripBookingModal({
                     placeholder="e.g. Mumbai / Delhi / Jaipur"
                     value={formData.cityOfOrigin}
                     onChange={(e) => setFormData({ ...formData, cityOfOrigin: e.target.value })}
-                    className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-2.5 text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
+                    className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
                   />
                   {errors.cityOfOrigin && <p className="text-rose-400 text-[10px] mt-1">{errors.cityOfOrigin}</p>}
                 </div>
@@ -274,11 +282,11 @@ export default function TripBookingModal({
               )}
 
               {/* Submit Button */}
-              <div className="pt-2">
+              <div className="pt-2 sticky bottom-0 bg-[#111113] pb-1">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 rounded-full bg-[#f5f5f5] text-[#080808] font-bold text-xs hover:bg-white transition-all disabled:opacity-50 shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full min-h-[48px] py-3.5 sm:py-3 rounded-full bg-[#f5f5f5] text-[#080808] font-bold text-sm sm:text-xs hover:bg-white transition-all disabled:opacity-50 shadow-lg flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] touch-manipulation"
                 >
                   {isSubmitting ? (
                     <>

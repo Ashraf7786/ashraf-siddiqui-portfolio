@@ -1,26 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { getAdminSessionFromCookies } from "@/lib/adminAuth";
+import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
 import { TRAVEL_PHOTOS } from "@/app/travel/data/gallery";
-
-const DATA_FILE_PATH = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "travel",
-  "data",
-  "gallery.json"
-);
-
-const BACKUP_FILE_PATH = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "travel",
-  "data",
-  "gallery.backup.json"
-);
 
 export async function GET() {
   const session = await getAdminSessionFromCookies();
@@ -28,16 +9,8 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Unauthorized access." }, { status: 401 });
   }
 
-  try {
-    if (!fs.existsSync(DATA_FILE_PATH)) {
-      return NextResponse.json({ success: true, photos: TRAVEL_PHOTOS });
-    }
-    const content = fs.readFileSync(DATA_FILE_PATH, "utf-8");
-    const photos = JSON.parse(content);
-    return NextResponse.json({ success: true, photos });
-  } catch (error) {
-    return NextResponse.json({ success: false, error: "Failed to read gallery." }, { status: 500 });
-  }
+  const photos = getCachedJson("gallery.json", TRAVEL_PHOTOS);
+  return NextResponse.json({ success: true, count: photos.length, photos });
 }
 
 export async function POST(req: NextRequest) {
@@ -83,11 +56,10 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    if (fs.existsSync(DATA_FILE_PATH)) {
-      fs.copyFileSync(DATA_FILE_PATH, BACKUP_FILE_PATH);
+    const saved = writeCachedJson("gallery.json", sanitizedPhotos);
+    if (!saved) {
+      throw new Error("Disk write failed.");
     }
-
-    fs.writeFileSync(DATA_FILE_PATH, JSON.stringify(sanitizedPhotos, null, 2), "utf-8");
 
     return NextResponse.json({
       success: true,

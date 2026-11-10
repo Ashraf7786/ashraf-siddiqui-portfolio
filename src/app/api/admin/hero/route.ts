@@ -1,51 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { getAdminSessionFromCookies } from "@/lib/adminAuth";
+import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
 
-const DATA_FILE_PATH = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "travel",
-  "data",
-  "hero-slides.json"
-);
-
-const BACKUP_FILE_PATH = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "travel",
-  "data",
-  "hero-slides.backup.json"
-);
-
-// GET: Fetch all slides (including inactive) for admin editor
 export async function GET() {
   const session = await getAdminSessionFromCookies();
   if (!session.authenticated) {
     return NextResponse.json({ success: false, error: "Unauthorized access." }, { status: 401 });
   }
 
-  try {
-    if (!fs.existsSync(DATA_FILE_PATH)) {
-      return NextResponse.json({ success: false, error: "Database file not found." }, { status: 404 });
-    }
-
-    const content = fs.readFileSync(DATA_FILE_PATH, "utf-8");
-    const slides = JSON.parse(content);
-
-    return NextResponse.json({
-      success: true,
-      slides,
-    });
-  } catch (error) {
-    return NextResponse.json({ success: false, error: "Failed to read slides." }, { status: 500 });
-  }
+  const slides = getCachedJson<any[]>("hero-slides.json", []);
+  return NextResponse.json({ success: true, count: slides.length, slides });
 }
 
-// POST: Save updated slides array with strict validation
 export async function POST(req: NextRequest) {
   const session = await getAdminSessionFromCookies();
   if (!session.authenticated) {
@@ -63,7 +29,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Input validation & sanitization
     const sanitizedSlides = slides.map((slide, idx) => {
       if (!slide.titleLine1 || !slide.titleLine2) {
         throw new Error(`Slide #${idx + 1} is missing title lines.`);
@@ -101,26 +66,18 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    // Create a safety backup of existing file
-    if (fs.existsSync(DATA_FILE_PATH)) {
-      try {
-        fs.copyFileSync(DATA_FILE_PATH, BACKUP_FILE_PATH);
-      } catch {
-        // Backup failure is non-fatal
-      }
-    }
-
-    // Write sanitized JSON atomically
-    fs.writeFileSync(DATA_FILE_PATH, JSON.stringify(sanitizedSlides, null, 2), "utf-8");
+    const saved = writeCachedJson("hero-slides.json", sanitizedSlides);
+    if (!saved) throw new Error("Disk write failed.");
 
     return NextResponse.json({
       success: true,
-      message: "Hero banner slides updated successfully.",
-      count: sanitizedSlides.length,
+      message: `Successfully saved ${sanitizedSlides.length} banner slides.`,
+      slides: sanitizedSlides,
     });
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Validation or file writing error.";
-    return NextResponse.json({ success: false, error: message }, { status: 400 });
+  } catch (error: any) {
+    return NextResponse.json(
+      { success: false, error: error.message || "Failed to save slides." },
+      { status: 500 }
+    );
   }
 }
-

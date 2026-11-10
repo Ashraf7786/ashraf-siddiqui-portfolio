@@ -1,26 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { getAdminSessionFromCookies } from "@/lib/adminAuth";
+import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
 import { TRAVEL_REELS } from "@/app/travel/data/reels";
-
-const DATA_FILE_PATH = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "travel",
-  "data",
-  "reels.json"
-);
-
-const BACKUP_FILE_PATH = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "travel",
-  "data",
-  "reels.backup.json"
-);
 
 export async function GET() {
   const session = await getAdminSessionFromCookies();
@@ -28,16 +9,8 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Unauthorized access." }, { status: 401 });
   }
 
-  try {
-    if (!fs.existsSync(DATA_FILE_PATH)) {
-      return NextResponse.json({ success: true, reels: TRAVEL_REELS });
-    }
-    const content = fs.readFileSync(DATA_FILE_PATH, "utf-8");
-    const reels = JSON.parse(content);
-    return NextResponse.json({ success: true, reels });
-  } catch (error) {
-    return NextResponse.json({ success: false, error: "Failed to read reels." }, { status: 500 });
-  }
+  const reels = getCachedJson("reels.json", TRAVEL_REELS);
+  return NextResponse.json({ success: true, count: reels.length, reels });
 }
 
 export async function POST(req: NextRequest) {
@@ -91,11 +64,8 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    if (fs.existsSync(DATA_FILE_PATH)) {
-      fs.copyFileSync(DATA_FILE_PATH, BACKUP_FILE_PATH);
-    }
-
-    fs.writeFileSync(DATA_FILE_PATH, JSON.stringify(sanitizedReels, null, 2), "utf-8");
+    const saved = writeCachedJson("reels.json", sanitizedReels);
+    if (!saved) throw new Error("Disk write failed.");
 
     return NextResponse.json({
       success: true,
