@@ -99,6 +99,7 @@ interface GroupTripItem {
   difficulty: string;
   status: string;
   isConfirmed: boolean;
+  isUpcoming?: boolean;
   overview: string;
   highlights: string[];
   inclusions: string[];
@@ -2049,6 +2050,7 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                 <div className="lg:col-span-5 space-y-2 max-h-[720px] overflow-y-auto pr-1">
                   {trips.map((t, idx) => {
                     const isSelected = selectedTripIndex === idx;
+                    const isUpcoming = t.isUpcoming || t.status === "Upcoming";
                     return (
                       <div
                         key={t.id}
@@ -2061,18 +2063,41 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                       >
                         <div className="w-16 h-16 rounded-xl overflow-hidden bg-black shrink-0 relative border border-white/10">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={t.coverImage} alt="" className="w-full h-full object-cover" />
+                          <img src={t.coverImage} alt="" className={`w-full h-full object-cover ${isUpcoming ? "opacity-60 grayscale-[30%]" : ""}`} />
+                          {isUpcoming && (
+                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-amber-400">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                              </svg>
+                            </div>
+                          )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs font-bold truncate text-white">{t.title}</p>
+                          <p className="text-xs font-bold truncate text-white flex items-center gap-1.5">
+                            {isUpcoming && (
+                              <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono font-bold shrink-0">
+                                🔒 UPCOMING
+                              </span>
+                            )}
+                            <span className="truncate">{t.title}</span>
+                          </p>
                           <p className="text-[10px] text-[#f5f5f5]/50 truncate">{t.departureDate} · {t.durationLabel}</p>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="text-[11px] font-bold text-white">
-                              ₹{t.pricePerPerson.toLocaleString()}
-                            </span>
-                            <span className="text-[10px] text-emerald-400 font-semibold">
-                              {t.availableSeats} / {t.totalSeats} seats
-                            </span>
+                            {isUpcoming ? (
+                              <span className="text-[10px] text-amber-400 font-semibold">
+                                Locked Preview (Tagline Only)
+                              </span>
+                            ) : (
+                              <>
+                                <span className="text-[11px] font-bold text-white">
+                                  ₹{t.pricePerPerson.toLocaleString()}
+                                </span>
+                                <span className="text-[10px] text-emerald-400 font-semibold">
+                                  {t.availableSeats} / {t.totalSeats} seats
+                                </span>
+                              </>
+                            )}
                           </div>
                         </div>
                         <button
@@ -2102,6 +2127,85 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                           Editing: {currentTrip.title}
                         </h3>
                         <span className="text-[11px] font-mono text-white/40">{currentTrip.id}</span>
+                      </div>
+
+                      {/* Expedition Mode Selector: Live vs Upcoming */}
+                      <div className="p-4 rounded-2xl bg-[#080808] border border-white/10 space-y-3">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div>
+                            <span className="text-[11px] uppercase tracking-wider text-white/50 font-bold block">
+                              Expedition Status Mode
+                            </span>
+                            <p className="text-xs text-white/60">
+                              Toggle between live booking mode or upcoming locked preview.
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const arr = [...trips];
+                                arr[selectedTripIndex].isUpcoming = false;
+                                if (arr[selectedTripIndex].status === "Upcoming") {
+                                  arr[selectedTripIndex].status = "Open for Booking";
+                                }
+                                setTrips(arr);
+                              }}
+                              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                                !currentTrip.isUpcoming && currentTrip.status !== "Upcoming"
+                                  ? "bg-emerald-500 text-black font-bold shadow-md"
+                                  : "bg-white/5 text-white/60 hover:text-white"
+                              }`}
+                            >
+                              <div className="w-2 h-2 rounded-full bg-current" />
+                              <span>Live Mode</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const arr = [...trips];
+                                arr[selectedTripIndex].isUpcoming = true;
+                                arr[selectedTripIndex].status = "Upcoming";
+                                setTrips(arr);
+                              }}
+                              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                                currentTrip.isUpcoming || currentTrip.status === "Upcoming"
+                                  ? "bg-amber-400 text-black font-bold shadow-md"
+                                  : "bg-white/5 text-white/60 hover:text-white"
+                              }`}
+                            >
+                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                              </svg>
+                              <span>Upcoming (Locked)</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {currentTrip.isUpcoming || currentTrip.status === "Upcoming" ? (
+                          <div className="p-3 rounded-xl bg-amber-950/40 border border-amber-500/30 text-amber-200 text-xs flex items-start gap-2.5">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-400 shrink-0 mt-0.5">
+                              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                            <div>
+                              <p className="font-bold text-amber-300">Upcoming Locked Mode Active</p>
+                              <p className="text-[11px] opacity-90 mt-0.5">
+                                This trip will show with <strong>opacity &amp; lock icon</strong>. Dates, price, and seats are <strong>hidden</strong>; visitors will <strong>only see the tagline</strong>.
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/20 text-emerald-300 text-[11px] flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            <span>
+                              <strong>Live Mode Active:</strong> Travelers see full dates, transparent pricing, remaining seats, and can book directly via the modal.
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Title & Tagline */}

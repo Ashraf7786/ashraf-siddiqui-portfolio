@@ -247,10 +247,32 @@ export default function ContactClient() {
     e.preventDefault();
     if (!validate()) return;
     setSubmitting(true);
-    // Simulate a short async delay
-    await new Promise((res) => setTimeout(res, 800));
-    setSubmitting(false);
-    setSubmitted(true);
+
+    try {
+      const res = await fetch("/api/travel/enquire", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: form.name,
+          email: form.email,
+          whatsapp: "",
+          collabType: form.collabType,
+          subject: form.subject,
+          message: form.message,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setErrors((prev) => ({ ...prev, message: data.error || "Failed to send message." }));
+      }
+    } catch {
+      setErrors((prev) => ({ ...prev, message: "Network error. Please try emailing directly." }));
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const inputClass =

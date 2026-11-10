@@ -32,8 +32,9 @@ export interface GroupTrip {
   availableSeats: number;
   totalSeats: number;
   difficulty: "Easy to Moderate" | "Moderate" | "Challenging";
-  status: "Confirmed" | "Almost Full" | "Early Bird Open" | "Draft Sample";
+  status: "Confirmed" | "Almost Full" | "Early Bird Open" | "Draft Sample" | "Live" | "Upcoming" | string;
   isConfirmed: boolean; // Distinguish confirmed from draft sample
+  isUpcoming?: boolean; // When true: locked preview with opacity, lock icon, tagline only
   overview: string;
   highlights: string[];
   inclusions: string[];

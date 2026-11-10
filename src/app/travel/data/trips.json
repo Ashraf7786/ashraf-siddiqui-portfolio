@@ -433,7 +433,8 @@
     "availableSeats": 12,
     "totalSeats": 12,
     "difficulty": "Moderate",
-    "status": "Draft Sample",
+    "status": "Upcoming",
+    "isUpcoming": true,
     "isConfirmed": false,
     "overview": "A preliminary draft itinerary for our autumn 2026 Northeast expedition. Registration is open for early interest; confirmed dates will be announced in mid-2026.",
     "highlights": [

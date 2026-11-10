@@ -135,11 +135,16 @@ export default function TripsClient() {
         {/* Trips Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredTrips.map((trip) => {
+            const isUpcoming = Boolean(trip.isUpcoming || trip.status === "Upcoming" || trip.status === "Draft Sample");
             const seatsPercent = ((trip.totalSeats - trip.availableSeats) / trip.totalSeats) * 100;
             return (
               <div
                 key={trip.id}
-                className="group flex flex-col rounded-3xl overflow-hidden border border-[#f5f5f5]/10 bg-[#111113] hover:border-[#f5f5f5]/30 transition-all duration-300 hover:-translate-y-1 shadow-lg"
+                className={`group flex flex-col rounded-3xl overflow-hidden border transition-all duration-300 shadow-lg ${
+                  isUpcoming
+                    ? "opacity-75 hover:opacity-90 border-amber-500/20 bg-[#0d0d0f]"
+                    : "border-[#f5f5f5]/10 bg-[#111113] hover:border-[#f5f5f5]/30 hover:-translate-y-1"
+                }`}
               >
                 {/* Cover Frame */}
                 <div className="relative h-60 w-full overflow-hidden">
@@ -147,24 +152,49 @@ export default function TripsClient() {
                     src={trip.coverImage}
                     alt={trip.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`object-cover transition-transform duration-700 group-hover:scale-105 ${
+                      isUpcoming ? "grayscale-[25%]" : ""
+                    }`}
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#111113] via-transparent to-transparent" />
 
+                  {/* Lock Overlay on Image for Upcoming Trips */}
+                  {isUpcoming && (
+                    <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-black/80 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow-2xl">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Top Status & Date Badges */}
                   <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                    <span
-                      className={`text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full backdrop-blur-md border ${
-                        trip.isConfirmed
-                          ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-                          : "bg-white/10 text-[#f5f5f5]/60 border-white/10"
-                      }`}
-                    >
-                      {trip.status}
-                    </span>
+                    {isUpcoming ? (
+                      <span className="text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full backdrop-blur-md bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <span>Upcoming Expedition</span>
+                      </span>
+                    ) : (
+                      <span
+                        className={`text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full backdrop-blur-md border ${
+                          trip.isConfirmed
+                            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
+                            : "bg-white/10 text-[#f5f5f5]/60 border-white/10"
+                        }`}
+                      >
+                        {trip.status}
+                      </span>
+                    )}
+
                     <span className="text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/10">
-                      {trip.durationLabel}
+                      {isUpcoming ? "Announcement" : trip.durationLabel}
                     </span>
                   </div>
 
@@ -176,85 +206,134 @@ export default function TripsClient() {
                       </svg>
                       {trip.destination}, {trip.state}
                     </span>
-                    <span className="text-[11px] text-white/70">
-                      Departs {trip.departureCity}
-                    </span>
+                    {!isUpcoming && (
+                      <span className="text-[11px] text-white/70">
+                        Departs {trip.departureCity}
+                      </span>
+                    )}
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    {/* Departure Dates */}
-                    <div className="flex items-center gap-1.5 text-xs text-[#f5f5f5]/50 mb-2">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                      </svg>
-                      <span>{trip.departureDate} &rarr; {trip.returnDate}</span>
-                    </div>
-
-                    <h3
-                      className="text-xl font-bold text-[#f5f5f5] leading-snug group-hover:text-white transition-colors mb-2"
-                      style={{ fontFamily: "var(--font-fredoka)" }}
-                    >
-                      {trip.title}
-                    </h3>
-
-                    <p className="text-xs text-[#f5f5f5]/55 leading-relaxed line-clamp-2 mb-4">
-                      {trip.tagline}
-                    </p>
-                  </div>
-
-                  <div>
-                    {/* Seats Availability Bar */}
-                    <div className="p-3.5 rounded-2xl bg-[#080808] border border-[#f5f5f5]/10 mb-4">
-                      <div className="flex items-center justify-between text-xs mb-1.5">
-                        <span className="text-[#f5f5f5]/40 text-[10px] uppercase tracking-wider font-medium">
-                          Seats Remaining
-                        </span>
-                        <span className="text-[11px] font-bold text-white">
-                          {trip.availableSeats} of {trip.totalSeats} seats left
-                        </span>
-                      </div>
-                      <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-                        <div
-                          className="h-full rounded-full bg-white transition-all duration-300"
-                          style={{ width: `${seatsPercent}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Price and CTA */}
-                    <div className="flex items-center justify-between pt-3 border-t border-[#f5f5f5]/10">
+                  {isUpcoming ? (
+                    /* ─── UPCOMING TRIP VIEW: ONLY TITLE & TAGLINE (DETAILS HIDDEN) ─── */
+                    <>
                       <div>
-                        <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 block">Price per Person</span>
-                        <p
-                          className="text-lg font-bold text-[#f5f5f5]"
+                        <h3
+                          className="text-xl font-bold text-[#f5f5f5] leading-snug mb-3"
                           style={{ fontFamily: "var(--font-fredoka)" }}
                         >
-                          ₹{trip.pricePerPerson.toLocaleString()}
+                          {trip.title}
+                        </h3>
+
+                        {/* ONLY TAGLINE SHOWN AS REQUESTED */}
+                        <div className="p-3.5 rounded-2xl bg-black/40 border border-white/5 my-2">
+                          <p className="text-xs text-[#f5f5f5]/80 leading-relaxed italic border-l-2 border-amber-400/50 pl-3">
+                            &ldquo;{trip.tagline}&rdquo;
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Locked Footer Action */}
+                      <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-6">
+                        <div className="flex items-center gap-1.5 text-white/50 text-xs">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-400">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                          </svg>
+                          <span className="text-[11px] font-semibold uppercase tracking-wider text-white/50">
+                            Dates &amp; Pricing TBA
+                          </span>
+                        </div>
+                        <button
+                          onClick={() =>
+                            alert(
+                              `"${trip.title}" is currently in reconnaissance. Follow Ashraf on Instagram (@ashraf._siddiqui) to get early access when dates drop!`
+                            )
+                          }
+                          className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white border border-white/20 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                        >
+                          <span>Notify Me</span>
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    /* ─── LIVE TRIP VIEW: FULL DETAILS, PRICING & BOOKING ─── */
+                    <>
+                      <div>
+                        {/* Departure Dates */}
+                        <div className="flex items-center gap-1.5 text-xs text-[#f5f5f5]/50 mb-2">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                          </svg>
+                          <span>{trip.departureDate} &rarr; {trip.returnDate}</span>
+                        </div>
+
+                        <h3
+                          className="text-xl font-bold text-[#f5f5f5] leading-snug group-hover:text-white transition-colors mb-2"
+                          style={{ fontFamily: "var(--font-fredoka)" }}
+                        >
+                          {trip.title}
+                        </h3>
+
+                        <p className="text-xs text-[#f5f5f5]/55 leading-relaxed line-clamp-2 mb-4">
+                          {trip.tagline}
                         </p>
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <Link
-                          href={`/travel/trips/${trip.slug}`}
-                          className="px-3.5 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 text-xs font-semibold text-[#f5f5f5] transition-colors"
-                        >
-                          Details
-                        </Link>
-                        <button
-                          onClick={() => handleOpenBooking(trip)}
-                          className="px-4 py-2 rounded-full bg-[#f5f5f5] text-[#080808] text-xs font-bold hover:bg-white transition-colors shadow-md"
-                        >
-                          Join Trip
-                        </button>
+                      <div>
+                        {/* Seats Availability Bar */}
+                        <div className="p-3.5 rounded-2xl bg-[#080808] border border-[#f5f5f5]/10 mb-4">
+                          <div className="flex items-center justify-between text-xs mb-1.5">
+                            <span className="text-[#f5f5f5]/40 text-[10px] uppercase tracking-wider font-medium">
+                              Seats Remaining
+                            </span>
+                            <span className="text-[11px] font-bold text-white">
+                              {trip.availableSeats} of {trip.totalSeats} seats left
+                            </span>
+                          </div>
+                          <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                            <div
+                              className="h-full rounded-full bg-white transition-all duration-300"
+                              style={{ width: `${seatsPercent}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Price and CTA */}
+                        <div className="flex items-center justify-between pt-3 border-t border-[#f5f5f5]/10">
+                          <div>
+                            <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 block">Price per Person</span>
+                            <p
+                              className="text-lg font-bold text-[#f5f5f5]"
+                              style={{ fontFamily: "var(--font-fredoka)" }}
+                            >
+                              ₹{trip.pricePerPerson.toLocaleString()}
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/travel/trips/${trip.slug}`}
+                              className="px-3.5 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 text-xs font-semibold text-[#f5f5f5] transition-colors"
+                            >
+                              Details
+                            </Link>
+                            <button
+                              onClick={() => handleOpenBooking(trip)}
+                              className="px-4 py-2 rounded-full bg-[#f5f5f5] text-[#080808] text-xs font-bold hover:bg-white transition-colors shadow-md"
+                            >
+                              Join Trip
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
+                    </>
+                  )}
                 </div>
               </div>
             );

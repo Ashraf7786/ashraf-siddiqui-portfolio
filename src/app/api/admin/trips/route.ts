@@ -58,6 +58,7 @@ export async function POST(req: NextRequest) {
         difficulty: String(trip.difficulty || "Moderate").trim(),
         status: String(trip.status || "Open for Booking").trim(),
         isConfirmed: Boolean(trip.isConfirmed),
+        isUpcoming: Boolean(trip.isUpcoming || trip.status === "Upcoming"),
         overview: String(trip.overview || "").trim(),
         highlights: Array.isArray(trip.highlights)
           ? trip.highlights.map((h: string) => String(h).trim()).filter(Boolean)
