@@ -367,7 +367,7 @@ export default function TravelHero() {
       })}
 
       {/* ─── 2. TOP EXPEDITION BADGE ─────────────────────────────────── */}
-      <div className="absolute top-16 sm:top-20 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-4 flex justify-center pointer-events-none">
+      <div className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-4 flex justify-center pointer-events-none">
         <div className="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111113]/85 backdrop-blur-md border border-[#f5f5f5]/20 shadow-2xl transition-all hover:border-[#f5f5f5]/40">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -386,7 +386,7 @@ export default function TravelHero() {
       {/* ─── 3. MAIN HERO CONTENT STAGE ───────────────────────────────── */}
       <div
         ref={contentStageRef}
-        className="relative z-10 h-full max-w-5xl mx-auto px-4 sm:px-6 md:px-10 flex flex-col justify-center items-center text-center pt-32 sm:pt-36 pb-28 sm:pb-24"
+        className="relative z-10 h-full max-w-5xl mx-auto px-4 sm:px-6 md:px-10 flex flex-col justify-center items-center text-center pt-36 sm:pt-40 pb-28 sm:pb-24"
       >
         <div className="w-full flex flex-col items-center">
           {/* Eyebrow Label — cleanly below the top badge */}

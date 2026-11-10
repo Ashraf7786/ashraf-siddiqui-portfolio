@@ -1,0 +1,904 @@
+{
+  "rj": {
+    "id": "rj",
+    "name": "Rajasthan",
+    "isUT": false,
+    "visited": true,
+    "capital": "Jaipur",
+    "region": "West",
+    "color": "#f59e0b",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Jaipur",
+      "Jodhpur",
+      "Jaisalmer",
+      "Pushkar",
+      "Udaipur"
+    ],
+    "highlights": [
+      "Thar Desert Dunes",
+      "Mehrangarh Fort",
+      "Hawa Mahal",
+      "Lake Pichola"
+    ],
+    "topPlacesToVisit": [
+      "Jaisalmer Golden Fort & Sam Sand Dunes",
+      "Mehrangarh Fort & Blue City (Jodhpur)",
+      "Hawa Mahal & Amer Fort (Jaipur)",
+      "Lake Pichola & City Palace (Udaipur)",
+      "Pushkar Sacred Lake & Ghats"
+    ],
+    "notes": "Home state. Countless desert journeys, ancient forts, and rich heritage stories.",
+    "coverImage": "/img/travel/rajasthan.jpg"
+  },
+  "hp": {
+    "id": "hp",
+    "name": "Himachal Pradesh",
+    "isUT": false,
+    "visited": true,
+    "capital": "Shimla",
+    "region": "North",
+    "color": "#38bdf8",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Manali",
+      "Shimla",
+      "Dharamshala",
+      "Spiti Valley"
+    ],
+    "highlights": [
+      "Rohtang Pass",
+      "Key Monastery",
+      "Solang Valley",
+      "Parvati Valley"
+    ],
+    "topPlacesToVisit": [
+      "Spiti Valley & Key Monastery",
+      "Rohtang & Atal Tunnel Pass",
+      "Solang Valley & Old Manali",
+      "McLeod Ganj & Dalai Lama Temple",
+      "Kasol & Parvati Valley Trails"
+    ],
+    "notes": "Towering snow peaks, cedar forests, and remote Himalayan passes.",
+    "coverImage": "/img/travel/kashmir_hero.jpg"
+  },
+  "ut": {
+    "id": "ut",
+    "name": "Uttarakhand",
+    "isUT": false,
+    "visited": true,
+    "capital": "Dehradun",
+    "region": "North",
+    "color": "#34d399",
+    "visitedYear": "2024",
+    "citiesExplored": [
+      "Rishikesh",
+      "Dehradun",
+      "Mussoorie",
+      "Nainital"
+    ],
+    "highlights": [
+      "Ganga Aarti Rishikesh",
+      "Trekking Trails",
+      "Valley of Flowers",
+      "Corbett"
+    ],
+    "topPlacesToVisit": [
+      "Rishikesh Triveni Ghat & Beatles Ashram",
+      "Valley of Flowers & Hemkund",
+      "Mussoorie Gun Hill & Kempty Falls",
+      "Jim Corbett Tiger Reserve",
+      "Nainital Naini Lake & Tiffin Top"
+    ],
+    "notes": "Land of Gods. Clean river air and sunrise yoga on the banks of the sacred Ganges."
+  },
+  "pb": {
+    "id": "pb",
+    "name": "Punjab",
+    "isUT": false,
+    "visited": true,
+    "capital": "Chandigarh",
+    "region": "North",
+    "color": "#fbbf24",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Amritsar",
+      "Ludhiana"
+    ],
+    "highlights": [
+      "Golden Temple",
+      "Wagah Border Ceremony",
+      "Punjabi Dhaba trails"
+    ],
+    "topPlacesToVisit": [
+      "Sri Harmandir Sahib (Golden Temple)",
+      "Wagah Border Beating Retreat Ceremony",
+      "Jallianwala Bagh Memorial",
+      "Gobindgarh Fort & Heritage Street"
+    ],
+    "notes": "Unmatched hospitality, spiritual peace at Sri Harmandir Sahib, and rich culinary culture."
+  },
+  "hr": {
+    "id": "hr",
+    "name": "Haryana",
+    "isUT": false,
+    "visited": true,
+    "capital": "Chandigarh",
+    "region": "North",
+    "color": "#a3e635",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Gurugram",
+      "Kurukshetra"
+    ],
+    "highlights": [
+      "Heritage Transport Museum",
+      "Brahma Sarovar"
+    ],
+    "topPlacesToVisit": [
+      "Heritage Transport Museum (Tauru)",
+      "Brahma Sarovar & Jyotisar (Kurukshetra)",
+      "Sultanpur National Bird Sanctuary",
+      "Yadavindra Gardens (Pinjore)"
+    ],
+    "notes": "Historic plains connecting North India's heartland with the capital."
+  },
+  "up": {
+    "id": "up",
+    "name": "Uttar Pradesh",
+    "isUT": false,
+    "visited": true,
+    "capital": "Lucknow",
+    "region": "North",
+    "color": "#fb923c",
+    "visitedYear": "2022",
+    "citiesExplored": [
+      "Varanasi",
+      "Agra",
+      "Lucknow",
+      "Prayagraj"
+    ],
+    "highlights": [
+      "Ghats of Varanasi",
+      "Taj Mahal",
+      "Awadhi Cuisine in Lucknow"
+    ],
+    "topPlacesToVisit": [
+      "Dashashwamedh & Assi Ghats (Varanasi)",
+      "Taj Mahal & Agra Fort",
+      "Bara Imambara & Rumi Darwaza (Lucknow)",
+      "Triveni Sangam (Prayagraj)",
+      "Sarnath Buddhist Stupa"
+    ],
+    "notes": "Ancient spiritual traditions along the ghats and timeless Mughal architecture."
+  },
+  "br": {
+    "id": "br",
+    "name": "Bihar",
+    "isUT": false,
+    "visited": true,
+    "capital": "Patna",
+    "region": "East",
+    "color": "#eab308",
+    "visitedYear": "2022",
+    "citiesExplored": [
+      "Patna",
+      "Bodh Gaya",
+      "Nalanda",
+      "Rajgir"
+    ],
+    "highlights": [
+      "Mahabodhi Temple",
+      "Ancient Nalanda University",
+      "Vishwa Shanti Stupa"
+    ],
+    "topPlacesToVisit": [
+      "Mahabodhi Temple & Bodhi Tree (Bodh Gaya)",
+      "Ruins of Ancient Nalanda University",
+      "Vishwa Shanti Stupa & Ropeway (Rajgir)",
+      "Golghar & Patna Sahib"
+    ],
+    "notes": "Where Buddhism and Jainism took root; ancient centers of global learning."
+  },
+  "wb": {
+    "id": "wb",
+    "name": "West Bengal",
+    "isUT": false,
+    "visited": true,
+    "capital": "Kolkata",
+    "region": "East",
+    "color": "#f472b6",
+    "visitedYear": "2026",
+    "citiesExplored": [
+      "Kolkata",
+      "Darjeeling",
+      "Siliguri"
+    ],
+    "highlights": [
+      "Howrah Bridge",
+      "Victoria Memorial",
+      "Darjeeling Himalayan Railway"
+    ],
+    "topPlacesToVisit": [
+      "Tiger Hill Sunrise over Kanchenjunga",
+      "Darjeeling Himalayan Toy Train",
+      "Victoria Memorial & Howrah Bridge",
+      "Sundarbans Mangrove Delta",
+      "Kalimpong & Happy Valley Tea Estate"
+    ],
+    "notes": "Colonial trams, artistic legacy, and emerald tea gardens overlooking Kanchenjunga."
+  },
+  "sk": {
+    "id": "sk",
+    "name": "Sikkim",
+    "isUT": false,
+    "visited": true,
+    "capital": "Gangtok",
+    "region": "Northeast",
+    "color": "#2dd4bf",
+    "visitedYear": "2026",
+    "citiesExplored": [
+      "Gangtok",
+      "Pelling",
+      "Lachung"
+    ],
+    "highlights": [
+      "Tsomgo Lake",
+      "Gurudongmar Lake",
+      "Rumtek Monastery"
+    ],
+    "topPlacesToVisit": [
+      "Gurudongmar High-Altitude Lake (17,800 ft)",
+      "Tsomgo (Changu) Lake & Nathu La Pass",
+      "Yumthang Valley of Flowers (Lachung)",
+      "Rumtek & Enchey Monasteries",
+      "Pelling Skywalk & Chenrezig Statue"
+    ],
+    "notes": "Organic Himalayan haven with dramatic ravines and panoramic Kanchenjunga views."
+  },
+  "as": {
+    "id": "as",
+    "name": "Assam",
+    "isUT": false,
+    "visited": true,
+    "capital": "Dispur",
+    "region": "Northeast",
+    "color": "#4ade80",
+    "visitedYear": "2026",
+    "citiesExplored": [
+      "Guwahati",
+      "Kaziranga",
+      "Tezpur"
+    ],
+    "highlights": [
+      "Kaziranga Rhino Safari",
+      "Kamakhya Temple",
+      "Brahmaputra Sunset Cruises"
+    ],
+    "topPlacesToVisit": [
+      "Kaziranga National Park (One-horned Rhinos)",
+      "Maa Kamakhya Devi Temple (Nilachal Hill)",
+      "Majuli Island (World's Largest River Island)",
+      "Brahmaputra River Sunset Safari",
+      "Manas National Park Biosphere"
+    ],
+    "notes": "Expansive tea estates along the mighty Brahmaputra river."
+  },
+  "ml": {
+    "id": "ml",
+    "name": "Meghalaya",
+    "isUT": false,
+    "visited": true,
+    "capital": "Shillong",
+    "region": "Northeast",
+    "color": "#06b6d4",
+    "visitedYear": "2024",
+    "citiesExplored": [
+      "Shillong",
+      "Cherrapunji",
+      "Dawki"
+    ],
+    "highlights": [
+      "Living Root Bridges",
+      "Crystal Clear Umngot River",
+      "Nohkalikai Falls"
+    ],
+    "topPlacesToVisit": [
+      "Double Decker Living Root Bridge (Nongriat)",
+      "Umngot River Crystal Boating (Dawki)",
+      "Nohkalikai & Seven Sisters Waterfalls",
+      "Mawsmai & Arwah Limestone Caves",
+      "Mawlynnong Cleanest Village in Asia"
+    ],
+    "notes": "The abode of clouds, emerald canyons, and ancient living bio-architecture."
+  },
+  "ar": {
+    "id": "ar",
+    "name": "Arunachal Pradesh",
+    "isUT": false,
+    "visited": true,
+    "capital": "Itanagar",
+    "region": "Northeast",
+    "color": "#818cf8",
+    "visitedYear": "2024",
+    "citiesExplored": [
+      "Tawang",
+      "Bomdila",
+      "Ziro"
+    ],
+    "highlights": [
+      "Tawang Monastery",
+      "Sela Pass",
+      "Ziro Valley Pine Forests"
+    ],
+    "topPlacesToVisit": [
+      "Tawang Monastery (Largest in India)",
+      "Sela Pass (13,700 ft) & Sela Lake",
+      "Ziro Valley Apatani Pine Trails",
+      "Madhuri Lake (Sangetsar Tso)",
+      "Bomdila Monastery Viewpoint"
+    ],
+    "notes": "The Land of Dawn-lit Mountains. Serene Buddhist prayer wheels at high altitudes."
+  },
+  "nl": {
+    "id": "nl",
+    "name": "Nagaland",
+    "isUT": false,
+    "visited": true,
+    "capital": "Kohima",
+    "region": "Northeast",
+    "color": "#c084fc",
+    "visitedYear": "2024",
+    "citiesExplored": [
+      "Kohima",
+      "Dimapur"
+    ],
+    "highlights": [
+      "Hornbill Festival Ground",
+      "Kohima War Cemetery",
+      "Dzükou Valley"
+    ],
+    "topPlacesToVisit": [
+      "Dzükou Valley Lilies & Trekking",
+      "Kisama Heritage Village (Hornbill Venue)",
+      "Kohima WWII Commonwealth Cemetery",
+      "Khonoma Green Village",
+      "Japfü Peak Scenic Trek"
+    ],
+    "notes": "Vibrant tribal folklore, mist-shrouded green hills, and warm mountain people."
+  },
+  "mn": {
+    "id": "mn",
+    "name": "Manipur",
+    "isUT": false,
+    "visited": true,
+    "capital": "Imphal",
+    "region": "Northeast",
+    "color": "#a78bfa",
+    "visitedYear": "2024",
+    "citiesExplored": [
+      "Imphal",
+      "Moirang",
+      "Loktak"
+    ],
+    "highlights": [
+      "Loktak Floating Lake",
+      "Keibul Lamjao Sanctuary",
+      "Kangla Fort"
+    ],
+    "topPlacesToVisit": [
+      "Loktak Lake & Floating Phumdis",
+      "Keibul Lamjao Floating National Park",
+      "Kangla Fort Historic Citadel",
+      "Ima Keithel (All-Women Market)",
+      "Sendra Island Panoramic Viewpoint"
+    ],
+    "notes": "Pristine jewel of India, famous for floating islands and the dancing Sangai deer."
+  },
+  "mz": {
+    "id": "mz",
+    "name": "Mizoram",
+    "isUT": false,
+    "visited": true,
+    "capital": "Aizawl",
+    "region": "Northeast",
+    "color": "#22c55e",
+    "visitedYear": "2024",
+    "citiesExplored": [
+      "Aizawl",
+      "Champhai"
+    ],
+    "highlights": [
+      "Phawngpui Blue Mountain",
+      "Vantawng Falls",
+      "Solomon's Temple"
+    ],
+    "topPlacesToVisit": [
+      "Phawngpui (Blue Mountain National Park)",
+      "Vantawng 750ft Roaring Waterfalls",
+      "Durtlang Hills Skyline Viewpoint",
+      "Rih Dil Heart-shaped Border Lake",
+      "Reiek Peak Mountain Hike"
+    ],
+    "notes": "Lush rolling green hills, mist canyons, and rich bamboo folklore."
+  },
+  "tr": {
+    "id": "tr",
+    "name": "Tripura",
+    "isUT": false,
+    "visited": true,
+    "capital": "Agartala",
+    "region": "Northeast",
+    "color": "#f97316",
+    "visitedYear": "2024",
+    "citiesExplored": [
+      "Agartala",
+      "Udaipur",
+      "Unakoti"
+    ],
+    "highlights": [
+      "Neermahal Water Palace",
+      "Unakoti Rock Carvings",
+      "Ujjayanta Palace"
+    ],
+    "topPlacesToVisit": [
+      "Neermahal Floating Water Palace (Rudrasagar)",
+      "Unakoti Bas-relief Rock Sculptures",
+      "Ujjayanta Royal Palace (Agartala)",
+      "Tripura Sundari Temple (Matabari)",
+      "Jampui Hills Orange Valley"
+    ],
+    "notes": "Royal lakeside palaces and enigmatic ancient carved rock shrines hidden in forests."
+  },
+  "ct": {
+    "id": "ct",
+    "name": "Chhattisgarh",
+    "isUT": false,
+    "visited": true,
+    "capital": "Raipur",
+    "region": "Central",
+    "color": "#84cc16",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Bastar",
+      "Jagdalpur",
+      "Raipur"
+    ],
+    "highlights": [
+      "Chitrakote Falls (Niagara of India)",
+      "Tirathgarh Falls",
+      "Kanger Valley"
+    ],
+    "topPlacesToVisit": [
+      "Chitrakote Horseshoe Waterfalls",
+      "Kanger Valley National Park & Limestone Caves",
+      "Tirathgarh Cascading Falls",
+      "Bastar Tribal Bell-Metal Art Centers",
+      "Sirpur Archaeological Buddhist Complex"
+    ],
+    "notes": "Dramatic roaring waterfalls, subterranean caves, and age-old Bastar metalcraft."
+  },
+  "jh": {
+    "id": "jh",
+    "name": "Jharkhand",
+    "isUT": false,
+    "visited": true,
+    "capital": "Ranchi",
+    "region": "East",
+    "color": "#10b981",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Ranchi",
+      "Jamshedpur",
+      "Netarhat"
+    ],
+    "highlights": [
+      "Hundru Falls",
+      "Netarhat Queen of Chotanagpur",
+      "Dassam Falls"
+    ],
+    "topPlacesToVisit": [
+      "Netarhat Sunset & Magnolia Point",
+      "Hundru & Dassam Roaring Waterfalls",
+      "Betla National Park Tiger Reserve",
+      "Tagore Hill Panoramic Peak",
+      "Jonha (Gautamdhara) Waterfalls"
+    ],
+    "notes": "Dense Sal forests, roaring waterfalls, and serene plateau landscapes."
+  },
+  "or": {
+    "id": "or",
+    "name": "Odisha",
+    "isUT": false,
+    "visited": true,
+    "capital": "Bhubaneswar",
+    "region": "East",
+    "color": "#ec4899",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Puri",
+      "Bhubaneswar",
+      "Konark"
+    ],
+    "highlights": [
+      "Konark Sun Temple",
+      "Puri Golden Beach",
+      "Chilika Lake Dolphins"
+    ],
+    "topPlacesToVisit": [
+      "Konark UNESCO Sun Temple Chariot",
+      "Chilika Lake & Irrawaddy Dolphins",
+      "Jagannath Temple & Puri Golden Sand Beach",
+      "Lingaraj & Mukteshwara Ancient Temples",
+      "Udayagiri & Khandagiri Rock Caves"
+    ],
+    "notes": "Intricate temple carvings, sacred coastlines, and Asia's largest brackish lagoon."
+  },
+  "mp": {
+    "id": "mp",
+    "name": "Madhya Pradesh",
+    "isUT": false,
+    "visited": true,
+    "capital": "Bhopal",
+    "region": "Central",
+    "color": "#e11d48",
+    "visitedYear": "2022",
+    "citiesExplored": [
+      "Bhopal",
+      "Gwalior",
+      "Khajuraho",
+      "Indore"
+    ],
+    "highlights": [
+      "Gwalior Fort",
+      "Khajuraho Temples",
+      "Bhimbetka Caves"
+    ],
+    "topPlacesToVisit": [
+      "Gwalior Hilltop Sandstone Fortress",
+      "Khajuraho UNESCO Erotic Sculpture Temples",
+      "Bhimbetka Prehistoric Cave Rock Art",
+      "Sanchi Great Buddhist Stupa",
+      "Kanha & Bandhavgarh Tiger Reserves"
+    ],
+    "notes": "The heart of India, ancient rock paintings, and renowned street food."
+  },
+  "gj": {
+    "id": "gj",
+    "name": "Gujarat",
+    "isUT": false,
+    "visited": true,
+    "capital": "Gandhinagar",
+    "region": "West",
+    "color": "#ea580c",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Ahmedabad",
+      "Kutch",
+      "Dwarka"
+    ],
+    "highlights": [
+      "White Rann of Kutch",
+      "Sabarmati Ashram",
+      "Statue of Unity"
+    ],
+    "topPlacesToVisit": [
+      "White Desert Rann of Kutch & Rann Utsav",
+      "Gir National Park (Asiatic Lions)",
+      "Statue of Unity & Sardar Sarovar",
+      "Somnath & Dwarkadhish Ocean Temples",
+      "Rani ki Vav Stepwell (Patan)"
+    ],
+    "notes": "Endless salt desert under the full moon and textile craft heritage."
+  },
+  "mh": {
+    "id": "mh",
+    "name": "Maharashtra",
+    "isUT": false,
+    "visited": true,
+    "capital": "Mumbai",
+    "region": "West",
+    "color": "#8b5cf6",
+    "visitedYear": "2026",
+    "citiesExplored": [
+      "Mumbai",
+      "Pune",
+      "Lonavala",
+      "Mahabaleshwar"
+    ],
+    "highlights": [
+      "Marine Drive",
+      "Gateway of India",
+      "Western Ghats Monsoons"
+    ],
+    "topPlacesToVisit": [
+      "Marine Drive & South Mumbai Heritage Walk",
+      "Ajanta & Ellora UNESCO Rock-Cut Caves",
+      "Lonavala-Khandala Western Ghat Waterfalls",
+      "Sinhagad & Raigad Mountain Forts",
+      "Mahabaleshwar Strawberry Valleys"
+    ],
+    "notes": "Coastal energy, historical hill forts, and misty monsoon road trips."
+  },
+  "ga": {
+    "id": "ga",
+    "name": "Goa",
+    "isUT": false,
+    "visited": true,
+    "capital": "Panaji",
+    "region": "West",
+    "color": "#14b8a6",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Panaji",
+      "Palolem",
+      "Anjuna",
+      "Old Goa"
+    ],
+    "highlights": [
+      "Old Goa Portuguese Churches",
+      "South Goa Quiet Beaches",
+      "Spice Plantations"
+    ],
+    "topPlacesToVisit": [
+      "Palolem & Agonda Crescent Beaches",
+      "Dudhsagar Cascading 4-Tier Waterfall",
+      "Fontainhas Latin Quarter Pastel Lanes",
+      "Basilica of Bom Jesus (Old Goa)",
+      "Chapora Fort Sunset Point"
+    ],
+    "notes": "Susegad lifestyle, golden sunsets, and centuries-old Latin Quarter lanes."
+  },
+  "tg": {
+    "id": "tg",
+    "name": "Telangana",
+    "isUT": false,
+    "visited": true,
+    "capital": "Hyderabad",
+    "region": "South",
+    "color": "#d946ef",
+    "visitedYear": "2025",
+    "citiesExplored": [
+      "Hyderabad",
+      "Warangal"
+    ],
+    "highlights": [
+      "Charminar",
+      "Golconda Fort",
+      "Ramappa Temple"
+    ],
+    "topPlacesToVisit": [
+      "Golconda Fort Acoustic Sound Engineering",
+      "Charminar & Laad Bazaar Pearl Street",
+      "Ramappa UNESCO Kakatiya Temple",
+      "Hussain Sagar & Buddha Island",
+      "Chowmahalla Royal Palace"
+    ],
+    "notes": "Nizami heritage, historic granite fortresses, and authentic biryani."
+  },
+  "tn": {
+    "id": "tn",
+    "name": "Tamil Nadu",
+    "isUT": false,
+    "visited": false,
+    "capital": "Chennai",
+    "region": "South",
+    "topPlacesToVisit": [
+      "Meenakshi Amman Temple (Madurai)",
+      "Brihadisvara UNESCO Chola Temple (Thanjavur)",
+      "Pamban Sea Bridge & Rameswaram",
+      "Kanyakumari Southern Tip of India",
+      "Ooty & Nilgiri Mountain Toy Train"
+    ],
+    "notes": "On the bucket list: Dravidian towering gopurams and Pamban railway bridge."
+  },
+  "ka": {
+    "id": "ka",
+    "name": "Karnataka",
+    "isUT": false,
+    "visited": false,
+    "capital": "Bengaluru",
+    "region": "South",
+    "topPlacesToVisit": [
+      "Ruins of Vijayanagara Empire (Hampi)",
+      "Mysore Royal Palace Light Spectacle",
+      "Coorg Mist & Coffee Plantations",
+      "Gokarna Om Beach & Cliff Hikes",
+      "Jog Falls Cascading Waterfalls"
+    ],
+    "notes": "On the bucket list: Boulders of Hampi and lush Western Ghats coffee estates."
+  },
+  "kl": {
+    "id": "kl",
+    "name": "Kerala",
+    "isUT": false,
+    "visited": false,
+    "capital": "Thiruvananthapuram",
+    "region": "South",
+    "topPlacesToVisit": [
+      "Alleppey Backwaters & Overnight Houseboat",
+      "Munnar High-Altitude Tea Terraces",
+      "Varkala Laterite Cliff Ocean Views",
+      "Wayanad Rainforests & Edakkal Caves",
+      "Fort Kochi Colonial Spice Streets"
+    ],
+    "notes": "On the bucket list: God's Own Country, palm waterways, and Western Ghats mists."
+  },
+  "ap": {
+    "id": "ap",
+    "name": "Andhra Pradesh",
+    "isUT": false,
+    "visited": false,
+    "capital": "Amaravati",
+    "region": "South",
+    "topPlacesToVisit": [
+      "Tirupati Balaji Sacred Hill Shrine",
+      "Araku Valley Scenic Hill Train & Coffee",
+      "Borra Million-Year-Old Limestone Caves",
+      "Gandikota Grand Canyon of India",
+      "Rishikonda Beach & Vizag Coast"
+    ],
+    "notes": "On the bucket list: Gandikota gorge and Eastern Ghats mountain railways."
+  },
+  "jk": {
+    "id": "jk",
+    "name": "Jammu and Kashmir & Ladakh",
+    "isUT": true,
+    "visited": true,
+    "capital": "Srinagar / Leh",
+    "region": "North",
+    "color": "#60a5fa",
+    "visitedYear": "2026",
+    "citiesExplored": [
+      "Srinagar",
+      "Gulmarg",
+      "Pahalgam",
+      "Leh",
+      "Nubra",
+      "Pangong"
+    ],
+    "highlights": [
+      "Dal Lake Shikara",
+      "Khardung La Pass",
+      "Pangong Lake"
+    ],
+    "topPlacesToVisit": [
+      "Dal Lake & Houseboat Stay (Srinagar)",
+      "Gulmarg Gondola & Apharwat Peak",
+      "Pangong Tso & Khardung La Pass (Ladakh)",
+      "Nubra Valley & Hunder Sand Dunes",
+      "Betaab Valley & Lidder River (Pahalgam)"
+    ],
+    "notes": "The ultimate mountain journey. Heaven on Earth and the Land of High Passes.",
+    "coverImage": "/img/travel/kashmir_hero.jpg"
+  },
+  "dl": {
+    "id": "dl",
+    "name": "Delhi",
+    "isUT": true,
+    "visited": true,
+    "capital": "New Delhi",
+    "region": "North",
+    "color": "#f43f5e",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "New Delhi",
+      "Old Delhi"
+    ],
+    "highlights": [
+      "India Gate",
+      "Humayun's Tomb",
+      "Chandni Chowk"
+    ],
+    "topPlacesToVisit": [
+      "Humayun's Tomb & Qutub Minar",
+      "Chandni Chowk Old Delhi Food Lanes",
+      "India Gate & Kartavya Path",
+      "Red Fort & Jama Masjid"
+    ],
+    "notes": "The historic capital, bustling food lanes, and central rail hub."
+  },
+  "ch": {
+    "id": "ch",
+    "name": "Chandigarh",
+    "isUT": true,
+    "visited": true,
+    "capital": "Chandigarh",
+    "region": "North",
+    "color": "#22c55e",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "Chandigarh"
+    ],
+    "highlights": [
+      "Rock Garden",
+      "Sukhna Lake"
+    ],
+    "topPlacesToVisit": [
+      "Nek Chand's Rock Garden",
+      "Sukhna Lake Promenade at Sunset",
+      "Zakir Hussain Rose Garden"
+    ],
+    "notes": "The City Beautiful, planned by Le Corbusier."
+  },
+  "py": {
+    "id": "py",
+    "name": "Puducherry",
+    "isUT": true,
+    "visited": true,
+    "capital": "Pondicherry",
+    "region": "South",
+    "color": "#fb7185",
+    "visitedYear": "2023",
+    "citiesExplored": [
+      "White Town",
+      "Auroville"
+    ],
+    "highlights": [
+      "French Quarter",
+      "Promenade Beach",
+      "Auroville Matrimandir"
+    ],
+    "topPlacesToVisit": [
+      "White Town French Colonial Quarter",
+      "Promenade Beach & Rock Beach",
+      "Auroville Matrimandir Golden Dome",
+      "Paradise Beach Boat Ferry"
+    ],
+    "notes": "Pastel colonial facades, bohemian cafes, and tranquil seaside boulevard."
+  },
+  "dn": {
+    "id": "dn",
+    "name": "Dadra and Nagar Haveli",
+    "isUT": true,
+    "visited": false,
+    "capital": "Silvassa",
+    "region": "West",
+    "topPlacesToVisit": [
+      "Vanganga Lake Garden",
+      "Dudhni Lake Water Sports"
+    ]
+  },
+  "dd": {
+    "id": "dd",
+    "name": "Daman and Diu",
+    "isUT": true,
+    "visited": false,
+    "capital": "Daman",
+    "region": "West",
+    "topPlacesToVisit": [
+      "Diu Fort",
+      "Nagoa Beach",
+      "St. Paul's Church"
+    ]
+  },
+  "an": {
+    "id": "an",
+    "name": "Andaman and Nicobar Islands",
+    "isUT": true,
+    "visited": false,
+    "capital": "Port Blair",
+    "region": "South",
+    "topPlacesToVisit": [
+      "Radhanagar Beach (Havelock)",
+      "Cellular Jail Light & Sound Show",
+      "Elephant Beach Coral Snorkelling",
+      "Neil Island Natural Bridge"
+    ],
+    "notes": "Planned for future: Radhanagar Beach, Havelock diving, Cellular Jail."
+  },
+  "ld": {
+    "id": "ld",
+    "name": "Lakshadweep",
+    "isUT": true,
+    "visited": false,
+    "capital": "Kavaratti",
+    "region": "South",
+    "topPlacesToVisit": [
+      "Bangaram Atoll",
+      "Agatti Island Lagoon",
+      "Kavaratti Marine Aquarium"
+    ],
+    "notes": "Planned: Coral atolls and turquoise lagoons."
+  }
+}
