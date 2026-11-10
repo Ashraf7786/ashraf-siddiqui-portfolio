@@ -1,58 +1,46 @@
 [
   {
-    "id": "spiti-4x4-expedition",
-    "tripSlug": "spiti-valley-circuit-2026",
-    "mediaType": "video",
-    "badgeLabel": "Official Announcement · High-Altitude Expedition",
-    "eyebrow": "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA",
-    "titleLine1": "TAWAN 4×4",
-    "titleLine2": "WHITE EXPEDITION.",
-    "subtitle": "Cross 15,000-ft frozen Himalayan passes, ancient cliff monasteries & ride across white TAWANG plains with a curated small group.",
-    "posterImage": "/img/travel/ladakh.jpg",
-    "imageAlt": "Winter Spiti 4x4 high-altitude snow expedition",
-    "videoUrl": "/videos/reels/travelashraf1.mp4",
-    "metrics": [
-      { "label": "Dates", "value": "10 Jun – 18 Jun 2026", "highlight": false },
-      { "label": "Duration", "value": "9 Days / 8 Nights", "highlight": false },
-      { "label": "Altitude", "value": "15,000 ft", "highlight": false },
-      { "label": "Group Size", "value": "10 Travellers", "highlight": false },
-      { "label": "Starting", "value": "₹34,000", "highlight": false },
-      { "label": "Available", "value": "7 Seats Left", "highlight": true }
-    ],
-    "primaryCta": {
-      "enabled": true,
-      "label": "View Trip Details & Reserve",
-      "action": "openModal",
-      "target": "spiti-valley-circuit-2026"
-    },
-    "secondaryCta": {
-      "enabled": true,
-      "label": "Explore All Expeditions",
-      "action": "scroll",
-      "target": "#group-tours"
-    },
-    "isActive": true,
-    "sortOrder": 1
-  },
-  {
     "id": "kashmir-winter-expedition",
-    "tripSlug": "kashmir-winter-expedition-2026",
-    "mediaType": "video",
-    "badgeLabel": "Alpine Winter · Verified Group Tour",
-    "eyebrow": "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA",
+    "tripSlug": "",
+    "mediaType": "photo",
+    "badgeLabel": "Winter · Verified Group Tour",
+    "eyebrow": "ASHRAF SIDDIQUI · SOLO TRAVELLER",
     "titleLine1": "KASHMIR WINTER",
-    "titleLine2": "POWDER TRAILS.",
+    "titleLine2": "GROUP TRIP",
     "subtitle": "From solitary shikara drifts on frozen Dal Lake to high-altitude powder at Apharwat Peak. Experience Kashmir with zero tourist rush.",
-    "posterImage": "/img/travel/kashmir_hero.jpg",
+    "posterImage": "/img/travel/IMG_3122.JPG.jpeg",
     "imageAlt": "Kashmir winter alpine snow expedition",
-    "videoUrl": "/videos/reels/travelashraf1.mp4",
     "metrics": [
-      { "label": "Dates", "value": "14 Feb – 21 Feb 2026", "highlight": false },
-      { "label": "Duration", "value": "8 Days / 7 Nights", "highlight": false },
-      { "label": "Altitude", "value": "14,000 ft", "highlight": false },
-      { "label": "Group Size", "value": "12 Travellers", "highlight": false },
-      { "label": "Starting", "value": "₹28,500", "highlight": false },
-      { "label": "Available", "value": "4 Seats Left", "highlight": true }
+      {
+        "label": "Dates",
+        "value": "27 Jan– 3 Feb 2027",
+        "highlight": true
+      },
+      {
+        "label": "Duration",
+        "value": "8 Days / 7 Nights",
+        "highlight": false
+      },
+      {
+        "label": "Altitude",
+        "value": "14,000 ft",
+        "highlight": false
+      },
+      {
+        "label": "Group Size",
+        "value": "12 Travellers",
+        "highlight": true
+      },
+      {
+        "label": "Starting",
+        "value": "₹14,987",
+        "highlight": false
+      },
+      {
+        "label": "Available",
+        "value": "8 Seats Left",
+        "highlight": true
+      }
     ],
     "primaryCta": {
       "enabled": true,
@@ -70,41 +58,6 @@
     "sortOrder": 2
   },
   {
-    "id": "ladakh-overland-expedition",
-    "tripSlug": "ladakh-high-passes-overland-2026",
-    "mediaType": "video",
-    "badgeLabel": "High Passes Circuit · 18,380 FT",
-    "eyebrow": "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA",
-    "titleLine1": "LADAKH OVERLAND",
-    "titleLine2": "HIGH PASSES.",
-    "subtitle": "Pangong's impossible blue, Khardung La's thin air, and star-filled night skies unpolluted by light. An overland route designed for true explorers.",
-    "posterImage": "/img/travel/ladakh.jpg",
-    "imageAlt": "Ladakh high passes overland expedition",
-    "videoUrl": "/videos/reels/travelashraf2.mp4",
-    "metrics": [
-      { "label": "Dates", "value": "18 Jul – 27 Jul 2026", "highlight": false },
-      { "label": "Duration", "value": "10 Days / 9 Nights", "highlight": false },
-      { "label": "Altitude", "value": "18,380 ft", "highlight": false },
-      { "label": "Group Size", "value": "12 Travellers", "highlight": false },
-      { "label": "Starting", "value": "₹38,500", "highlight": false },
-      { "label": "Available", "value": "6 Seats Left", "highlight": true }
-    ],
-    "primaryCta": {
-      "enabled": true,
-      "label": "View Trip Details & Reserve",
-      "action": "openModal",
-      "target": "ladakh-high-passes-overland-2026"
-    },
-    "secondaryCta": {
-      "enabled": true,
-      "label": "Explore All Expeditions",
-      "action": "scroll",
-      "target": "#group-tours"
-    },
-    "isActive": true,
-    "sortOrder": 3
-  },
-  {
     "id": "meghalaya-living-roots",
     "tripSlug": "meghalaya-living-root-bridges-2026",
     "mediaType": "photo",
@@ -113,15 +66,39 @@
     "titleLine1": "MEGHALAYA TRAILS",
     "titleLine2": "ROOT BRIDGES.",
     "subtitle": "Trek down 3,500 steps to century-old bio-engineered root bridges, swim in crystal Umngot waters, and explore sacred Khasi rainforests.",
-    "posterImage": "/img/travel/kashmir_hero.jpg",
+    "posterImage": "/img/travel/Snowy Mountain Road Journey.png",
     "imageAlt": "Meghalaya living root bridges expedition",
     "metrics": [
-      { "label": "Dates", "value": "15 Oct – 21 Oct 2026", "highlight": false },
-      { "label": "Duration", "value": "7 Days / 6 Nights", "highlight": false },
-      { "label": "Altitude", "value": "4,600 ft", "highlight": false },
-      { "label": "Group Size", "value": "14 Travellers", "highlight": false },
-      { "label": "Starting", "value": "₹26,000", "highlight": false },
-      { "label": "Available", "value": "12 Seats Left", "highlight": false }
+      {
+        "label": "Dates",
+        "value": "15 Oct – 21 Oct 2026",
+        "highlight": false
+      },
+      {
+        "label": "Duration",
+        "value": "7 Days / 6 Nights",
+        "highlight": false
+      },
+      {
+        "label": "Altitude",
+        "value": "4,600 ft",
+        "highlight": false
+      },
+      {
+        "label": "Group Size",
+        "value": "14 Travellers",
+        "highlight": false
+      },
+      {
+        "label": "Starting",
+        "value": "₹26,000",
+        "highlight": false
+      },
+      {
+        "label": "Available",
+        "value": "12 Seats Left",
+        "highlight": false
+      }
     ],
     "primaryCta": {
       "enabled": true,
