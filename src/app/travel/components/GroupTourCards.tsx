@@ -152,8 +152,12 @@ export default function GroupTourCards() {
                       {isUpcoming ? (
                         /* ─── UPCOMING TRIP: ONLY TAGLINE SHOWN (DETAILS HIDDEN) ─── */
                         <div className="my-5 p-4 rounded-2xl bg-black/50 border border-white/5 space-y-2">
-                          <span className="text-[10px] uppercase tracking-wider text-amber-400/80 font-bold block">
-                            🔒 Expedition Announcement
+                          <span className="text-[10px] uppercase tracking-wider text-amber-400/80 font-bold flex items-center gap-1.5">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                            <span>Expedition Announcement</span>
                           </span>
                           <p className="text-xs sm:text-sm text-[#f5f5f5]/80 italic leading-relaxed border-l-2 border-amber-400/60 pl-3">
                             &ldquo;{tour.tagline}&rdquo;

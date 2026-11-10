@@ -93,7 +93,6 @@ export default function TravelHero() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
-  const [slideProgress, setSlideProgress] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTrip, setModalTrip] = useState<GroupTrip>(EXPEDITION_SLIDES[0].tripData || GROUP_TRIPS[0]);
@@ -152,12 +151,10 @@ export default function TravelHero() {
   // Slide navigation
   const goToNextSlide = useCallback(() => {
     setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
-    setSlideProgress(0);
   }, [slides.length]);
 
   const goToPrevSlide = useCallback(() => {
     setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length);
-    setSlideProgress(0);
   }, [slides.length]);
 
   // GSAP animation on slide change
@@ -219,24 +216,15 @@ export default function TravelHero() {
     setIsPaused(!nextState);
   };
 
-  // Auto-play progress ticker
+  // Auto-play timer
   useEffect(() => {
     if (isPaused || !isVideoPlaying) return;
 
-    const intervalStep = 50;
-    const stepIncrement = (intervalStep / SLIDE_DURATION_MS) * 100;
+    const timer = setInterval(() => {
+      goToNextSlide();
+    }, SLIDE_DURATION_MS);
 
-    const ticker = setInterval(() => {
-      setSlideProgress((prev) => {
-        if (prev >= 100) {
-          goToNextSlide();
-          return 0;
-        }
-        return prev + stepIncrement;
-      });
-    }, intervalStep);
-
-    return () => clearInterval(ticker);
+    return () => clearInterval(timer);
   }, [isPaused, isVideoPlaying, goToNextSlide]);
 
   // Keyboard navigation
@@ -515,7 +503,7 @@ export default function TravelHero() {
         </div>
       </div>
 
-      {/* ─── 4. CAROUSEL CONTROLS (Desktop Side Arrows + Floating Bar) ─ */}
+      {/* ─── 4. CAROUSEL CONTROLS (Desktop Side Arrows) ─────────────── */}
       <button
         onClick={goToPrevSlide}
         className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#111113]/80 backdrop-blur-md border border-[#f5f5f5]/15 text-[#f5f5f5]/70 hover:text-white hover:border-[#f5f5f5]/50 hover:scale-105 transition-all items-center justify-center cursor-pointer shadow-lg"
@@ -536,48 +524,7 @@ export default function TravelHero() {
         </svg>
       </button>
 
-      {/* ─── 5. FLOATING CAROUSEL CONTROLLER (Count, Progress & Pause/Play) ─ */}
-      <div className="absolute bottom-16 sm:bottom-16 left-0 right-0 z-20 px-4 flex justify-center pointer-events-none">
-        <div className="pointer-events-auto flex items-center gap-3 px-4 py-1.5 rounded-full bg-[#111113]/90 backdrop-blur-md border border-[#f5f5f5]/15 shadow-xl">
-          {/* Slide Indicator (01 / 04) */}
-          <span
-            className="text-xs font-bold text-white tabular-nums"
-            style={{ fontFamily: "var(--font-fredoka)" }}
-          >
-            0{currentSlideIndex + 1}
-            <span className="text-[#f5f5f5]/40 font-normal"> / 0{slides.length}</span>
-          </span>
-
-          {/* Animated Progress Bar */}
-          <div className="w-20 sm:w-28 h-1 bg-white/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-white rounded-full transition-all duration-75 ease-linear"
-              style={{ width: `${slideProgress}%` }}
-            />
-          </div>
-
-          {/* Pause / Resume Button */}
-          <button
-            onClick={togglePlayPause}
-            className="w-6 h-6 rounded-full bg-[#080808]/80 hover:bg-white/10 flex items-center justify-center text-[#f5f5f5] transition-colors cursor-pointer"
-            aria-label={isVideoPlaying ? "Pause slideshow and background footage" : "Resume slideshow"}
-            title={isVideoPlaying ? "Pause slideshow" : "Play slideshow"}
-          >
-            {isVideoPlaying ? (
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                <rect x="6" y="4" width="4" height="16" />
-                <rect x="14" y="4" width="4" height="16" />
-              </svg>
-            ) : (
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="5 3 19 12 5 21 5 3" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* ─── 6. BOTTOM QUICK-NAVIGATION CHIPS (Independent Homepage Section Shortcuts) ─ */}
+      {/* ─── 5. BOTTOM QUICK-NAVIGATION CHIPS (Independent Homepage Section Shortcuts) ─ */}
       <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 z-20 px-4 max-w-4xl mx-auto flex justify-center">
         <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-1 no-scrollbar">
           {QUICK_NAV_CHIPS.map((chip) => (
