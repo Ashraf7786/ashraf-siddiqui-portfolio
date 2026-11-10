@@ -10,7 +10,7 @@ const FILTERS = [
   "All Expeditions",
   "Confirmed Expeditions",
   "High Altitude",
-  "Under ₹30,000",
+  "7–8 Day Circuits",
 ];
 
 export default function TripsClient() {
@@ -36,7 +36,7 @@ export default function TripsClient() {
       let matchFilter = true;
       if (selectedFilter === "Confirmed Expeditions") matchFilter = trip.isConfirmed;
       if (selectedFilter === "High Altitude") matchFilter = trip.difficulty !== "Easy to Moderate";
-      if (selectedFilter === "Under ₹30,000") matchFilter = trip.pricePerPerson <= 30000;
+      if (selectedFilter === "7–8 Day Circuits") matchFilter = trip.durationDays >= 7;
 
       const matchQuery =
         !searchQuery.trim() ||
@@ -304,28 +304,28 @@ export default function TripsClient() {
                           </div>
                         </div>
 
-                        {/* Price and CTA */}
+                        {/* Trip Mode and CTA */}
                         <div className="flex items-center justify-between pt-3 border-t border-[#f5f5f5]/10">
                           <div>
-                            <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 block">Price per Person</span>
+                            <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 block">Expedition</span>
                             <p
-                              className="text-lg font-bold text-[#f5f5f5]"
+                              className="text-sm sm:text-base font-bold text-[#f5f5f5]"
                               style={{ fontFamily: "var(--font-fredoka)" }}
                             >
-                              ₹{trip.pricePerPerson.toLocaleString()}
+                              Curated Group Tour
                             </p>
                           </div>
 
                           <div className="flex items-center gap-2">
-                            <Link
-                              href={`/travel/trips/${trip.slug}`}
-                              className="px-3.5 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 text-xs font-semibold text-[#f5f5f5] transition-colors"
-                            >
-                              Details
-                            </Link>
                             <button
                               onClick={() => handleOpenBooking(trip)}
-                              className="px-4 py-2 rounded-full bg-[#f5f5f5] text-[#080808] text-xs font-bold hover:bg-white transition-colors shadow-md"
+                              className="px-3.5 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 text-xs font-semibold text-[#f5f5f5] transition-colors cursor-pointer"
+                            >
+                              Itinerary
+                            </button>
+                            <button
+                              onClick={() => handleOpenBooking(trip)}
+                              className="px-4 py-2 rounded-full bg-[#f5f5f5] text-[#080808] text-xs font-bold hover:bg-white transition-colors shadow-md cursor-pointer"
                             >
                               Join Trip
                             </button>

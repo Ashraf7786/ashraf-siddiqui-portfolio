@@ -234,22 +234,27 @@ export default function GroupTourCards() {
                       ) : (
                         <>
                           <div>
-                            <p className="text-[9px] text-[#f5f5f5]/30 uppercase tracking-widest">Starting from</p>
+                            <p className="text-[9px] text-[#f5f5f5]/30 uppercase tracking-widest">Expedition Mode</p>
                             <p
-                              className="text-xl sm:text-2xl font-bold text-[#f5f5f5]"
+                              className="text-base sm:text-lg font-bold text-[#f5f5f5]"
                               style={{ fontFamily: "var(--font-fredoka)" }}
                             >
-                              ₹{tour.pricePerPerson.toLocaleString()}
-                              <span className="text-xs text-[#f5f5f5]/40 font-normal"> /person</span>
+                              Curated Group Tour
+                              <span className="text-[11px] text-[#f5f5f5]/40 font-normal block font-sans">
+                                Small Group (10–12 Travellers)
+                              </span>
                             </p>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Link
-                              href={`/travel/trips/${tour.slug}`}
-                              className="px-4 py-2 rounded-full text-xs font-semibold text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-all"
+                            <button
+                              onClick={() => {
+                                setActiveModalTrip(tour);
+                                setIsModalOpen(true);
+                              }}
+                              className="px-4 py-2 rounded-full text-xs font-semibold text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/30 transition-all cursor-pointer"
                             >
-                              View Details
-                            </Link>
+                              View Itinerary
+                            </button>
                             <button
                               onClick={() => {
                                 setActiveModalTrip(tour);

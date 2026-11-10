@@ -285,7 +285,7 @@ export default function TravelHero() {
           : "4,600 ft",
     },
     { label: "Group Size", value: `${trip.maxGroupSize} Travellers` },
-    { label: "Starting", value: `₹${trip.pricePerPerson.toLocaleString("en-IN")}` },
+    { label: "Expedition", value: "Curated Group" },
     {
       label: "Available",
       value: trip.availableSeats > 0 ? `${trip.availableSeats} Seats Left` : "Past Expedition",
