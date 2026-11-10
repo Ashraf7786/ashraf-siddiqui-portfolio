@@ -1,0 +1,126 @@
+[
+  {
+    "id": "spiti-4x4-expedition",
+    "tripSlug": "spiti-valley-circuit-2026",
+    "badgeLabel": "Official Announcement · High-Altitude Expedition",
+    "titleLine1": "WINTER SPITI 4×4",
+    "titleLine2": "WHITE EXPEDITION.",
+    "subtitle": "Cross 15,000-ft frozen Himalayan passes, ancient cliff monasteries & ride across white Spiti plains with a curated small group.",
+    "posterImage": "/img/travel/ladakh.jpg",
+    "imageAlt": "Winter Spiti 4x4 high-altitude snow expedition",
+    "videoUrl": "/videos/reels/travelashraf1.mp4",
+    "metrics": [
+      { "label": "Dates", "value": "10 Jun – 18 Jun 2026" },
+      { "label": "Duration", "value": "9 Days / 8 Nights" },
+      { "label": "Altitude", "value": "15,000 ft" },
+      { "label": "Group Size", "value": "10 Travellers" },
+      { "label": "Starting", "value": "₹34,000" },
+      { "label": "Available", "value": "7 Seats Left", "highlight": true }
+    ],
+    "primaryCta": {
+      "label": "View Trip Details & Reserve",
+      "action": "openModal",
+      "target": "spiti-valley-circuit-2026"
+    },
+    "secondaryCta": {
+      "label": "Explore All Expeditions",
+      "action": "scroll",
+      "target": "#group-tours"
+    },
+    "isActive": true,
+    "sortOrder": 1
+  },
+  {
+    "id": "kashmir-winter-expedition",
+    "tripSlug": "kashmir-winter-expedition-2026",
+    "badgeLabel": "Alpine Winter · Verified Group Tour",
+    "titleLine1": "KASHMIR WINTER",
+    "titleLine2": "POWDER TRAILS.",
+    "subtitle": "From solitary shikara drifts on frozen Dal Lake to high-altitude powder at Apharwat Peak. Experience Kashmir with zero tourist rush.",
+    "posterImage": "/img/travel/kashmir_hero.jpg",
+    "imageAlt": "Kashmir winter alpine snow expedition",
+    "videoUrl": "/videos/reels/travelashraf1.mp4",
+    "metrics": [
+      { "label": "Dates", "value": "14 Feb – 21 Feb 2026" },
+      { "label": "Duration", "value": "8 Days / 7 Nights" },
+      { "label": "Altitude", "value": "14,000 ft" },
+      { "label": "Group Size", "value": "12 Travellers" },
+      { "label": "Starting", "value": "₹28,500" },
+      { "label": "Available", "value": "4 Seats Left", "highlight": true }
+    ],
+    "primaryCta": {
+      "label": "View Trip Details & Reserve",
+      "action": "openModal",
+      "target": "kashmir-winter-expedition-2026"
+    },
+    "secondaryCta": {
+      "label": "Explore All Expeditions",
+      "action": "scroll",
+      "target": "#group-tours"
+    },
+    "isActive": true,
+    "sortOrder": 2
+  },
+  {
+    "id": "ladakh-overland-expedition",
+    "tripSlug": "ladakh-high-passes-overland-2026",
+    "badgeLabel": "High Passes Circuit · 18,380 FT",
+    "titleLine1": "LADAKH OVERLAND",
+    "titleLine2": "HIGH PASSES.",
+    "subtitle": "Pangong's impossible blue, Khardung La's thin air, and star-filled night skies unpolluted by light. An overland route designed for true explorers.",
+    "posterImage": "/img/travel/ladakh.jpg",
+    "imageAlt": "Ladakh high passes overland expedition",
+    "videoUrl": "/videos/reels/travelashraf2.mp4",
+    "metrics": [
+      { "label": "Dates", "value": "18 Jul – 27 Jul 2026" },
+      { "label": "Duration", "value": "10 Days / 9 Nights" },
+      { "label": "Altitude", "value": "18,380 ft" },
+      { "label": "Group Size", "value": "12 Travellers" },
+      { "label": "Starting", "value": "₹38,500" },
+      { "label": "Available", "value": "6 Seats Left", "highlight": true }
+    ],
+    "primaryCta": {
+      "label": "View Trip Details & Reserve",
+      "action": "openModal",
+      "target": "ladakh-high-passes-overland-2026"
+    },
+    "secondaryCta": {
+      "label": "Explore All Expeditions",
+      "action": "scroll",
+      "target": "#group-tours"
+    },
+    "isActive": true,
+    "sortOrder": 3
+  },
+  {
+    "id": "meghalaya-living-roots",
+    "tripSlug": "meghalaya-living-root-bridges-2026",
+    "badgeLabel": "Northeast Trails · Ancient Bridges",
+    "titleLine1": "MEGHALAYA TRAILS",
+    "titleLine2": "ROOT BRIDGES.",
+    "subtitle": "Trek down 3,500 steps to century-old bio-engineered root bridges, swim in crystal Umngot waters, and explore sacred Khasi rainforests.",
+    "posterImage": "/img/travel/kashmir_hero.jpg",
+    "imageAlt": "Meghalaya living root bridges expedition",
+    "videoUrl": "/videos/reels/travelashraf2.mp4",
+    "metrics": [
+      { "label": "Dates", "value": "15 Oct – 21 Oct 2026" },
+      { "label": "Duration", "value": "7 Days / 6 Nights" },
+      { "label": "Altitude", "value": "4,600 ft" },
+      { "label": "Group Size", "value": "14 Travellers" },
+      { "label": "Starting", "value": "₹26,000" },
+      { "label": "Available", "value": "12 Seats Left", "highlight": false }
+    ],
+    "primaryCta": {
+      "label": "View Trip Details & Reserve",
+      "action": "openModal",
+      "target": "meghalaya-living-root-bridges-2026"
+    },
+    "secondaryCta": {
+      "label": "Explore All Expeditions",
+      "action": "scroll",
+      "target": "#group-tours"
+    },
+    "isActive": true,
+    "sortOrder": 4
+  }
+]

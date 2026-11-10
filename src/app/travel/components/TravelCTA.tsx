@@ -27,7 +27,7 @@ export default function TravelCTA() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-32 md:py-44 overflow-hidden border-t border-b border-[#f5f5f5]/5">
+    <section id="cta" ref={sectionRef} className="relative py-32 md:py-44 overflow-hidden border-t border-b border-[#f5f5f5]/5">
       <div ref={bgRef} className="absolute inset-0 w-full h-[130%] top-[-15%]">
         <Image
           src="/img/travel/rajasthan.jpg"

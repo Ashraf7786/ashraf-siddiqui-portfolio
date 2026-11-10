@@ -51,7 +51,7 @@ export default function TravelStories() {
   }, [activeCategory]);
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 bg-[#080808] border-t border-b border-[#f5f5f5]/5">
+    <section id="stories" className="py-16 sm:py-24 md:py-32 bg-[#080808] border-t border-b border-[#f5f5f5]/5">
       <div ref={sectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
         {/* Header */}
         <div className="stories-header flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">

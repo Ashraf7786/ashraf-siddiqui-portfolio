@@ -84,6 +84,7 @@ const QUICK_NAV_CHIPS = [
 ];
 
 export default function TravelHero() {
+  const [slides, setSlides] = useState<ExpeditionSlide[]>(EXPEDITION_SLIDES);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
@@ -98,7 +99,38 @@ export default function TravelHero() {
   const contentStageRef = useRef<HTMLDivElement>(null);
 
   const SLIDE_DURATION_MS = 8000;
-  const currentSlide = EXPEDITION_SLIDES[currentSlideIndex];
+
+  // Load dynamic slides from database API
+  useEffect(() => {
+    async function fetchDynamicSlides() {
+      try {
+        const res = await fetch("/api/travel/hero");
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.slides) && data.slides.length > 0) {
+            const mappedSlides: ExpeditionSlide[] = data.slides.map(
+              (s: any, idx: number) => {
+                const matchedTrip =
+                  GROUP_TRIPS.find((t) => t.slug === s.tripSlug) ||
+                  GROUP_TRIPS[idx % GROUP_TRIPS.length] ||
+                  GROUP_TRIPS[0];
+                return {
+                  ...s,
+                  tripData: matchedTrip,
+                };
+              }
+            );
+            setSlides(mappedSlides);
+          }
+        }
+      } catch {
+        // Fallback to static slides silently
+      }
+    }
+    fetchDynamicSlides();
+  }, []);
+
+  const currentSlide = slides[currentSlideIndex] || slides[0] || EXPEDITION_SLIDES[0];
   const trip = currentSlide.tripData;
 
   // Check prefers-reduced-motion
@@ -114,14 +146,14 @@ export default function TravelHero() {
 
   // Slide navigation
   const goToNextSlide = useCallback(() => {
-    setCurrentSlideIndex((prev) => (prev + 1) % EXPEDITION_SLIDES.length);
+    setCurrentSlideIndex((prev) => (prev + 1) % slides.length);
     setSlideProgress(0);
-  }, []);
+  }, [slides.length]);
 
   const goToPrevSlide = useCallback(() => {
-    setCurrentSlideIndex((prev) => (prev - 1 + EXPEDITION_SLIDES.length) % EXPEDITION_SLIDES.length);
+    setCurrentSlideIndex((prev) => (prev - 1 + slides.length) % slides.length);
     setSlideProgress(0);
-  }, []);
+  }, [slides.length]);
 
   // GSAP animation on slide change
   useEffect(() => {
@@ -244,18 +276,18 @@ export default function TravelHero() {
     setIsModalOpen(true);
   };
 
-  // Real Structured Expedition Metrics
-  const tripPills = [
+  // Structured Expedition Metrics (either from custom slide metrics or fallback from tripData)
+  const defaultPills = [
     { label: "Dates", value: `${trip.departureDate} – ${trip.returnDate}` },
     { label: "Duration", value: trip.durationLabel || `${trip.durationDays} Days` },
     {
       label: "Altitude",
       value:
-        currentSlide.tripSlug.includes("spiti")
+        currentSlide.tripSlug?.includes("spiti")
           ? "15,000 ft"
-          : currentSlide.tripSlug.includes("ladakh")
+          : currentSlide.tripSlug?.includes("ladakh")
           ? "18,380 ft"
-          : currentSlide.tripSlug.includes("kashmir")
+          : currentSlide.tripSlug?.includes("kashmir")
           ? "14,000 ft"
           : "4,600 ft",
     },
@@ -267,6 +299,10 @@ export default function TravelHero() {
       highlight: trip.availableSeats > 0 && trip.availableSeats <= 4,
     },
   ];
+
+  const tripPills = (currentSlide as any).metrics && (currentSlide as any).metrics.length > 0
+    ? (currentSlide as any).metrics
+    : defaultPills;
 
   return (
     <section
@@ -281,7 +317,7 @@ export default function TravelHero() {
       aria-label="Expedition Announcement Showcase"
     >
       {/* ─── 1. CINEMATIC BACKGROUND MEDIA (Full Visibility Video + Poster Fallback) ─── */}
-      {EXPEDITION_SLIDES.map((slide, idx) => {
+      {slides.map((slide, idx) => {
         const isActive = idx === currentSlideIndex;
         return (
           <div
@@ -342,7 +378,7 @@ export default function TravelHero() {
           </span>
           <span className="hidden sm:inline text-[#f5f5f5]/30">·</span>
           <span className="hidden sm:inline text-[10px] sm:text-[11px] text-[#f5f5f5]/60 font-medium">
-            Expedition {currentSlideIndex + 1} of {EXPEDITION_SLIDES.length}
+            Expedition {currentSlideIndex + 1} of {slides.length}
           </span>
         </div>
       </div>
@@ -392,7 +428,7 @@ export default function TravelHero() {
 
           {/* Structured Trip Information Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-6 sm:mb-8 max-w-3xl">
-            {tripPills.map((pill, pIdx) => (
+            {tripPills.map((pill: any, pIdx: number) => (
               <div
                 key={pIdx}
                 className={`hero-anim-pill px-3 sm:px-3.5 py-1.5 rounded-full backdrop-blur-md border text-center flex items-center gap-1.5 shadow-sm transition-all ${
@@ -422,7 +458,7 @@ export default function TravelHero() {
               className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-[#f5f5f5] text-[#080808] hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
               aria-label={`View details and enquire for ${currentSlide.titleLine1}`}
             >
-              <span>View Trip Details & Reserve</span>
+              <span>{(currentSlide as any).primaryCta?.label || "View Trip Details & Reserve"}</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
@@ -431,11 +467,11 @@ export default function TravelHero() {
 
             {/* Secondary Action: Explore All Group Expeditions */}
             <button
-              onClick={() => scrollToSection("#group-tours")}
+              onClick={() => scrollToSection((currentSlide as any).secondaryCta?.target || "#group-tours")}
               className="w-full sm:w-auto px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold border border-[#f5f5f5]/20 text-[#f5f5f5] hover:border-[#f5f5f5]/60 hover:bg-white/5 backdrop-blur-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
               aria-label="Explore all group expeditions section"
             >
-              <span>Explore All Expeditions</span>
+              <span>{(currentSlide as any).secondaryCta?.label || "Explore All Expeditions"}</span>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 5v14M19 12l-7 7-7-7" />
               </svg>
@@ -474,7 +510,7 @@ export default function TravelHero() {
             style={{ fontFamily: "var(--font-fredoka)" }}
           >
             0{currentSlideIndex + 1}
-            <span className="text-[#f5f5f5]/40 font-normal"> / 0{EXPEDITION_SLIDES.length}</span>
+            <span className="text-[#f5f5f5]/40 font-normal"> / 0{slides.length}</span>
           </span>
 
           {/* Animated Progress Bar */}
