@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { TravelStory, StorySection } from "@/app/travel/data/stories";
+import { CloudinaryUploadButton } from "./components/CloudinaryUploadButton";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 type AdminTab = "hero" | "gallery" | "reels" | "trips" | "stories" | "enquiries";
@@ -1483,7 +1484,17 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                                 <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/60 font-bold">
                                   Banner Photo Image URL
                                 </label>
-                                <span className="text-[10px] text-emerald-400 font-semibold">Photo-Only Mode Active</span>
+                                <div className="flex items-center gap-2">
+                                  <CloudinaryUploadButton
+                                    folder="ashraf-travel/hero"
+                                    onSuccess={(url) => {
+                                      const updated = [...slides];
+                                      updated[selectedSlideIndex].posterImage = url;
+                                      setSlides(updated);
+                                    }}
+                                  />
+                                  <span className="text-[10px] text-emerald-400 font-semibold">Photo Mode</span>
+                                </div>
                               </div>
                               <input
                                 type="text"
@@ -1533,9 +1544,19 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               </div>
 
                               <div className="space-y-2">
-                                <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/60 font-bold">
-                                  Fallback Poster Image
-                                </label>
+                                <div className="flex items-center justify-between">
+                                  <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/60 font-bold">
+                                    Fallback Poster Image
+                                  </label>
+                                  <CloudinaryUploadButton
+                                    folder="ashraf-travel/hero"
+                                    onSuccess={(url) => {
+                                      const updated = [...slides];
+                                      updated[selectedSlideIndex].posterImage = url;
+                                      setSlides(updated);
+                                    }}
+                                  />
+                                </div>
                                 <input
                                   type="text"
                                   value={currentSlide.posterImage || ""}
@@ -2036,9 +2057,19 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                         </div>
                         <div className="flex-1 w-full space-y-3">
                           <div>
-                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                              Image URL / Path
-                            </label>
+                            <div className="flex items-center justify-between mb-1.5">
+                              <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold">
+                                Image URL / Path
+                              </label>
+                              <CloudinaryUploadButton
+                                folder="ashraf-travel/gallery"
+                                onSuccess={(url) => {
+                                  const arr = [...photos];
+                                  arr[selectedPhotoIndex].src = url;
+                                  setPhotos(arr);
+                                }}
+                              />
+                            </div>
                             <input
                               type="text"
                               value={currentPhoto.src}
@@ -2948,9 +2979,19 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                       {/* Cover Image & Destination with Image Size Guide */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                            Cover Image Path
-                          </label>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold">
+                              Cover Image Path
+                            </label>
+                            <CloudinaryUploadButton
+                              folder="ashraf-travel/trips"
+                              onSuccess={(url) => {
+                                const arr = [...trips];
+                                arr[selectedTripIndex].coverImage = url;
+                                setTrips(arr);
+                              }}
+                            />
+                          </div>
                           <input
                             type="text"
                             value={currentTrip.coverImage}
@@ -3319,7 +3360,13 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                           3. Cover Imagery & Card Excerpt
                         </span>
                         <div>
-                          <label className="block text-[11px] text-[#f5f5f5]/50 mb-1">Cover Image URL</label>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="block text-[11px] text-[#f5f5f5]/50">Cover Image URL</label>
+                            <CloudinaryUploadButton
+                              folder="ashraf-travel/stories"
+                              onSuccess={(url) => updateCurrentStory((s) => ({ ...s, coverImage: url }))}
+                            />
+                          </div>
                           <input
                             type="text"
                             value={currentStory.coverImage}
