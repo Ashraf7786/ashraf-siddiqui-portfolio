@@ -9,15 +9,20 @@ import TripBookingModal from "./TripBookingModal";
 /* ─── Hero Slide Definition based on Real Structured Expeditions ─── */
 interface ExpeditionSlide {
   id: string;
-  tripSlug: string;
-  badgeLabel: string;
-  titleLine1: string;
-  titleLine2: string;
-  subtitle: string;
+  tripSlug?: string;
+  mediaType?: "photo" | "video";
+  badgeLabel?: string;
+  eyebrow?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  subtitle?: string;
   posterImage: string;
-  imageAlt: string;
+  imageAlt?: string;
   videoUrl?: string;
-  tripData: GroupTrip;
+  metrics?: { label: string; value: string; highlight?: boolean }[];
+  primaryCta?: { label?: string; action?: string; target?: string; enabled?: boolean };
+  secondaryCta?: { label?: string; action?: string; target?: string; enabled?: boolean };
+  tripData?: GroupTrip;
 }
 
 /* Sourced strictly from GROUP_TRIPS data */
@@ -91,7 +96,7 @@ export default function TravelHero() {
   const [slideProgress, setSlideProgress] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTrip, setModalTrip] = useState<GroupTrip>(EXPEDITION_SLIDES[0].tripData);
+  const [modalTrip, setModalTrip] = useState<GroupTrip>(EXPEDITION_SLIDES[0].tripData || GROUP_TRIPS[0]);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   const heroRef = useRef<HTMLElement>(null);
@@ -131,7 +136,7 @@ export default function TravelHero() {
   }, []);
 
   const currentSlide = slides[currentSlideIndex] || slides[0] || EXPEDITION_SLIDES[0];
-  const trip = currentSlide.tripData;
+  const trip = currentSlide.tripData || GROUP_TRIPS[0];
 
   // Check prefers-reduced-motion
   useEffect(() => {
@@ -272,7 +277,7 @@ export default function TravelHero() {
 
   // Open modal with current expedition data
   const handleOpenBookingModal = () => {
-    setModalTrip(currentSlide.tripData);
+    setModalTrip(currentSlide.tripData || GROUP_TRIPS[0]);
     setIsModalOpen(true);
   };
 
@@ -300,9 +305,13 @@ export default function TravelHero() {
     },
   ];
 
-  const tripPills = (currentSlide as any).metrics && (currentSlide as any).metrics.length > 0
+  // Structured Expedition Metrics
+  const tripPills = Array.isArray((currentSlide as any).metrics)
     ? (currentSlide as any).metrics
     : defaultPills;
+
+  const hasPrimaryCta = (currentSlide as any).primaryCta?.enabled !== false && Boolean((currentSlide as any).primaryCta?.label?.trim());
+  const hasSecondaryCta = (currentSlide as any).secondaryCta?.enabled !== false && Boolean((currentSlide as any).secondaryCta?.label?.trim());
 
   return (
     <section
@@ -319,6 +328,8 @@ export default function TravelHero() {
       {/* ─── 1. CINEMATIC BACKGROUND MEDIA (Full Visibility Video + Poster Fallback) ─── */}
       {slides.map((slide, idx) => {
         const isActive = idx === currentSlideIndex;
+        const isVideoMode = (slide.mediaType === "video" || (!slide.mediaType && Boolean(slide.videoUrl))) && Boolean(slide.videoUrl);
+
         return (
           <div
             key={slide.id}
@@ -327,8 +338,8 @@ export default function TravelHero() {
             }`}
             aria-hidden={!isActive}
           >
-            {/* Background Video — Full visibility, no heavy opacity */}
-            {slide.videoUrl && !prefersReducedMotion ? (
+            {/* Background Video — only rendered when video mode is active and videoUrl is provided */}
+            {isVideoMode && !prefersReducedMotion ? (
               <video
                 ref={(el) => {
                   videoRefs.current[idx] = el;
@@ -342,15 +353,15 @@ export default function TravelHero() {
                 className="absolute inset-0 w-full h-full object-cover object-center brightness-90 contrast-105"
               />
             ) : (
-              /* Poster Image fallback when no video or prefers-reduced-motion */
+              /* Photo Banner Image — rendered when photo mode, no video, or prefers-reduced-motion */
               <div
                 className={`relative w-full h-full transition-transform duration-7000 ease-out ${
                   isActive ? "scale-105" : "scale-100"
                 }`}
               >
                 <Image
-                  src={slide.posterImage}
-                  alt={slide.imageAlt}
+                  src={slide.posterImage || "/img/travel/kashmir_hero.jpg"}
+                  alt={slide.imageAlt || slide.titleLine1 || "Expedition Banner"}
                   fill
                   priority={idx === 0}
                   className="object-cover object-center brightness-90 contrast-105"
@@ -359,29 +370,31 @@ export default function TravelHero() {
               </div>
             )}
 
-            {/* Subtle cinematic gradient — minimal darkening so video stays clearly visible */}
+            {/* Subtle cinematic gradient — minimal darkening so photo/video stays clearly visible */}
             <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-[#080808]/50" />
             <div className="absolute inset-0 bg-black/20" />
           </div>
         );
       })}
 
-      {/* ─── 2. TOP EXPEDITION BADGE ─────────────────────────────────── */}
-      <div className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-4 flex justify-center pointer-events-none">
-        <div className="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111113]/85 backdrop-blur-md border border-[#f5f5f5]/20 shadow-2xl transition-all hover:border-[#f5f5f5]/40">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-          </span>
-          <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#f5f5f5]">
-            {currentSlide.badgeLabel}
-          </span>
-          <span className="hidden sm:inline text-[#f5f5f5]/30">·</span>
-          <span className="hidden sm:inline text-[10px] sm:text-[11px] text-[#f5f5f5]/60 font-medium">
-            Expedition {currentSlideIndex + 1} of {slides.length}
-          </span>
+      {/* ─── 2. TOP EXPEDITION BADGE (Optional) ─────────────────────────── */}
+      {currentSlide.badgeLabel && currentSlide.badgeLabel.trim() !== "" && (
+        <div className="absolute top-20 sm:top-24 left-1/2 -translate-x-1/2 z-20 w-full max-w-5xl px-4 flex justify-center pointer-events-none">
+          <div className="pointer-events-auto inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#111113]/85 backdrop-blur-md border border-[#f5f5f5]/20 shadow-2xl transition-all hover:border-[#f5f5f5]/40">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
+            <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#f5f5f5]">
+              {currentSlide.badgeLabel}
+            </span>
+            <span className="hidden sm:inline text-[#f5f5f5]/30">·</span>
+            <span className="hidden sm:inline text-[10px] sm:text-[11px] text-[#f5f5f5]/60 font-medium">
+              Expedition {currentSlideIndex + 1} of {slides.length}
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ─── 3. MAIN HERO CONTENT STAGE ───────────────────────────────── */}
       <div
@@ -389,94 +402,116 @@ export default function TravelHero() {
         className="relative z-10 h-full max-w-5xl mx-auto px-4 sm:px-6 md:px-10 flex flex-col justify-center items-center text-center pt-36 sm:pt-40 pb-28 sm:pb-24"
       >
         <div className="w-full flex flex-col items-center">
-          {/* Eyebrow Label — cleanly below the top badge */}
-          <p className="hero-anim-eyebrow text-[10px] sm:text-xs md:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#f5f5f5]/60 mb-3 sm:mb-4 font-semibold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-            ASHRAF SIDDIQUI &nbsp;·&nbsp; SOLO TRAVELLER &nbsp;·&nbsp; JAIPUR, INDIA
-          </p>
+          {/* Eyebrow Label (Optional per slide) */}
+          {(() => {
+            const eyebrowText = currentSlide.eyebrow !== undefined
+              ? currentSlide.eyebrow.trim()
+              : "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA";
+            if (!eyebrowText) return null;
+            return (
+              <p className="hero-anim-eyebrow text-[10px] sm:text-xs md:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#f5f5f5]/60 mb-3 sm:mb-4 font-semibold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                {eyebrowText}
+              </p>
+            );
+          })()}
 
-          {/* Solid Dominant Heading */}
-          <div className="overflow-hidden">
-            <h1
-              className="hero-anim-title-solid leading-[0.92] font-bold tracking-tight text-[#f5f5f5] drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
-              style={{
-                fontFamily: "var(--font-fredoka)",
-                fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
-              }}
-            >
-              {currentSlide.titleLine1}
-            </h1>
-          </div>
-
-          {/* Outlined Secondary Heading */}
-          <div className="overflow-hidden mb-3 sm:mb-5">
-            <h1
-              className="hero-anim-title-outline leading-[0.92] font-bold tracking-tight text-transparent drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
-              style={{
-                fontFamily: "var(--font-fredoka)",
-                fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
-                WebkitTextStroke: "1.5px rgba(245, 245, 245, 0.85)",
-              }}
-            >
-              {currentSlide.titleLine2}
-            </h1>
-          </div>
-
-          {/* Concise Supporting Description */}
-          <p className="hero-anim-desc text-xs sm:text-sm md:text-base text-[#f5f5f5]/85 max-w-2xl leading-relaxed mb-5 sm:mb-7 font-normal px-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
-            {currentSlide.subtitle}
-          </p>
-
-          {/* Structured Trip Information Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-6 sm:mb-8 max-w-3xl">
-            {tripPills.map((pill: any, pIdx: number) => (
-              <div
-                key={pIdx}
-                className={`hero-anim-pill px-3 sm:px-3.5 py-1.5 rounded-full backdrop-blur-md border text-center flex items-center gap-1.5 shadow-sm transition-all ${
-                  pill.highlight
-                    ? "bg-white/10 border-white/25 text-[#f5f5f5]"
-                    : "bg-[#111113]/85 border-[#f5f5f5]/10 text-[#f5f5f5]/60"
-                }`}
+          {/* Solid Dominant Heading (Optional) */}
+          {currentSlide.titleLine1 && currentSlide.titleLine1.trim() !== "" && (
+            <div className="overflow-hidden">
+              <h1
+                className="hero-anim-title-solid leading-[0.92] font-bold tracking-tight text-[#f5f5f5] drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
+                style={{
+                  fontFamily: "var(--font-fredoka)",
+                  fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
+                }}
               >
-                <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 font-medium">
-                  {pill.label}:
-                </span>
-                <span
-                  className="text-xs sm:text-xs font-bold text-[#f5f5f5]"
-                  style={{ fontFamily: "var(--font-fredoka)" }}
+                {currentSlide.titleLine1}
+              </h1>
+            </div>
+          )}
+
+          {/* Outlined Secondary Heading (Optional) */}
+          {currentSlide.titleLine2 && currentSlide.titleLine2.trim() !== "" && (
+            <div className="overflow-hidden mb-3 sm:mb-5">
+              <h1
+                className="hero-anim-title-outline leading-[0.92] font-bold tracking-tight text-transparent drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
+                style={{
+                  fontFamily: "var(--font-fredoka)",
+                  fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
+                  WebkitTextStroke: "1.5px rgba(245, 245, 245, 0.85)",
+                }}
+              >
+                {currentSlide.titleLine2}
+              </h1>
+            </div>
+          )}
+
+          {/* Concise Supporting Description (Optional) */}
+          {currentSlide.subtitle && currentSlide.subtitle.trim() !== "" && (
+            <p className="hero-anim-desc text-xs sm:text-sm md:text-base text-[#f5f5f5]/85 max-w-2xl leading-relaxed mb-5 sm:mb-7 font-normal px-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+              {currentSlide.subtitle}
+            </p>
+          )}
+
+          {/* Structured Trip Information Pills (Optional) */}
+          {tripPills.length > 0 && (
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-6 sm:mb-8 max-w-3xl">
+              {tripPills.map((pill: any, pIdx: number) => (
+                <div
+                  key={pIdx}
+                  className={`hero-anim-pill px-3 sm:px-3.5 py-1.5 rounded-full backdrop-blur-md border text-center flex items-center gap-1.5 shadow-sm transition-all ${
+                    pill.highlight
+                      ? "bg-white/10 border-white/25 text-[#f5f5f5]"
+                      : "bg-[#111113]/85 border-[#f5f5f5]/10 text-[#f5f5f5]/60"
+                  }`}
                 >
-                  {pill.value}
-                </span>
-              </div>
-            ))}
-          </div>
+                  <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 font-medium">
+                    {pill.label}:
+                  </span>
+                  <span
+                    className="text-xs sm:text-xs font-bold text-[#f5f5f5]"
+                    style={{ fontFamily: "var(--font-fredoka)" }}
+                  >
+                    {pill.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
 
-          {/* Dual Action CTAs */}
-          <div className="hero-anim-cta flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md sm:max-w-none">
-            {/* Primary Action: View Expedition / Reserve */}
-            <button
-              onClick={handleOpenBookingModal}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-[#f5f5f5] text-[#080808] hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
-              aria-label={`View details and enquire for ${currentSlide.titleLine1}`}
-            >
-              <span>{(currentSlide as any).primaryCta?.label || "View Trip Details & Reserve"}</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </button>
+          {/* Dual Action CTAs (Optional) */}
+          {(hasPrimaryCta || hasSecondaryCta) && (
+            <div className="hero-anim-cta flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md sm:max-w-none">
+              {/* Primary Action: View Expedition / Reserve */}
+              {hasPrimaryCta && (
+                <button
+                  onClick={handleOpenBookingModal}
+                  className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-[#f5f5f5] text-[#080808] hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                  aria-label={`View details and enquire for ${currentSlide.titleLine1 || "Expedition"}`}
+                >
+                  <span>{(currentSlide as any).primaryCta?.label || "View Trip Details & Reserve"}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </button>
+              )}
 
-            {/* Secondary Action: Explore All Group Expeditions */}
-            <button
-              onClick={() => scrollToSection((currentSlide as any).secondaryCta?.target || "#group-tours")}
-              className="w-full sm:w-auto px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold border border-[#f5f5f5]/20 text-[#f5f5f5] hover:border-[#f5f5f5]/60 hover:bg-white/5 backdrop-blur-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
-              aria-label="Explore all group expeditions section"
-            >
-              <span>{(currentSlide as any).secondaryCta?.label || "Explore All Expeditions"}</span>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 5v14M19 12l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
+              {/* Secondary Action: Explore All Group Expeditions */}
+              {hasSecondaryCta && (
+                <button
+                  onClick={() => scrollToSection((currentSlide as any).secondaryCta?.target || "#group-tours")}
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold border border-[#f5f5f5]/20 text-[#f5f5f5] hover:border-[#f5f5f5]/60 hover:bg-white/5 backdrop-blur-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  aria-label="Explore all group expeditions section"
+                >
+                  <span>{(currentSlide as any).secondaryCta?.label || "Explore All Expeditions"}</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 5v14M19 12l-7 7-7-7" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

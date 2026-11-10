@@ -16,21 +16,25 @@ interface MetricPill {
 
 interface BannerSlide {
   id: string;
-  tripSlug: string;
-  badgeLabel: string;
-  titleLine1: string;
-  titleLine2: string;
-  subtitle: string;
+  tripSlug?: string;
+  mediaType?: "photo" | "video";
+  eyebrow?: string;
+  badgeLabel?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  subtitle?: string;
   posterImage: string;
-  imageAlt: string;
+  imageAlt?: string;
   videoUrl?: string;
   metrics: MetricPill[];
-  primaryCta: {
+  primaryCta?: {
+    enabled?: boolean;
     label: string;
     action: string;
     target: string;
   };
-  secondaryCta: {
+  secondaryCta?: {
+    enabled?: boolean;
     label: string;
     action: string;
     target: string;
@@ -504,7 +508,27 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
 
         if (heroRes.ok) {
           const d = await heroRes.json();
-          if (d.slides) setSlides(d.slides);
+          if (Array.isArray(d.slides)) {
+            const normalized = d.slides.map((s: any) => ({
+              ...s,
+              mediaType: s.mediaType || (s.videoUrl ? "video" : "photo"),
+              eyebrow: s.eyebrow !== undefined ? s.eyebrow : "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA",
+              metrics: Array.isArray(s.metrics) ? s.metrics : [],
+              primaryCta: {
+                enabled: s.primaryCta?.enabled !== false,
+                label: s.primaryCta?.label ?? "View Trip Details & Reserve",
+                action: s.primaryCta?.action ?? "openModal",
+                target: s.primaryCta?.target ?? "",
+              },
+              secondaryCta: {
+                enabled: s.secondaryCta?.enabled !== false,
+                label: s.secondaryCta?.label ?? "Explore All Expeditions",
+                action: s.secondaryCta?.action ?? "scroll",
+                target: s.secondaryCta?.target ?? "#group-tours",
+              },
+            }));
+            setSlides(normalized);
+          }
         }
         if (galRes.ok) {
           const d = await galRes.json();
@@ -1117,13 +1141,15 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                           const newSlide: BannerSlide = {
                             id: `slide-${Date.now()}`,
                             tripSlug: "",
+                            mediaType: "photo",
                             badgeLabel: "NEW EXPEDITION",
+                            eyebrow: "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA",
                             titleLine1: "NEW EXPEDITION",
                             titleLine2: "EXPLORATION.",
                             subtitle: "Experience high-altitude beauty with Ashraf Siddiqui.",
                             posterImage: "/img/travel/kashmir_hero.jpg",
                             imageAlt: "New Expedition",
-                            videoUrl: "/videos/reels/travelashraf1.mp4",
+                            videoUrl: "",
                             metrics: [
                               { label: "DATES", value: "TBA 2026" },
                               { label: "DURATION", value: "7 Days" },
@@ -1132,8 +1158,8 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                               { label: "STARTING", value: "₹25,000", highlight: true },
                               { label: "AVAILABLE", value: "12 Seats Left", highlight: true },
                             ],
-                            primaryCta: { label: "View Trip Details & Reserve", action: "openModal", target: "" },
-                            secondaryCta: { label: "Explore All Expeditions", action: "scroll", target: "#group-tours" },
+                            primaryCta: { enabled: true, label: "View Trip Details & Reserve", action: "openModal", target: "" },
+                            secondaryCta: { enabled: true, label: "Explore All Expeditions", action: "scroll", target: "#group-tours" },
                             isActive: true,
                             sortOrder: slides.length + 1,
                           };
@@ -1226,215 +1252,630 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                   {currentSlide && (
                     <>
                       {/* Mini Preview Box */}
-                      <div className="relative rounded-3xl overflow-hidden border border-white/15 bg-black h-64 sm:h-72 shadow-2xl flex flex-col justify-end p-6 text-center">
-                        {currentSlide.videoUrl ? (
-                          <video
-                            key={currentSlide.videoUrl}
-                            src={currentSlide.videoUrl}
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            className="absolute inset-0 w-full h-full object-cover brightness-75 contrast-105"
-                          />
-                        ) : (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={currentSlide.posterImage}
-                            alt=""
-                            className="absolute inset-0 w-full h-full object-cover brightness-75"
-                          />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-black/40" />
+                      {(() => {
+                        const isPhoto = (currentSlide.mediaType === "photo") || (!currentSlide.mediaType && !currentSlide.videoUrl);
+                        const hasBadge = Boolean(currentSlide.badgeLabel?.trim());
+                        const eyebrowText = currentSlide.eyebrow !== undefined ? currentSlide.eyebrow.trim() : "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA";
+                        const hasTitle1 = Boolean(currentSlide.titleLine1?.trim());
+                        const hasTitle2 = Boolean(currentSlide.titleLine2?.trim());
+                        const hasSubtitle = Boolean(currentSlide.subtitle?.trim());
+                        const hasPrimary = currentSlide.primaryCta?.enabled !== false && Boolean(currentSlide.primaryCta?.label?.trim());
+                        const hasSecondary = currentSlide.secondaryCta?.enabled !== false && Boolean(currentSlide.secondaryCta?.label?.trim());
 
-                        <div className="relative z-10 max-w-xl mx-auto space-y-2">
-                          <span className="inline-block text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/80">
-                            {currentSlide.badgeLabel}
-                          </span>
-                          <h3
-                            className="text-2xl sm:text-3xl font-extrabold text-white tracking-wide leading-none"
-                            style={{ fontFamily: "var(--font-fredoka)" }}
-                          >
-                            <div>{currentSlide.titleLine1}</div>
-                            <div className="banner-outline-text text-transparent">{currentSlide.titleLine2}</div>
-                          </h3>
-                          <p className="text-[11px] text-[#f5f5f5]/70 line-clamp-2 max-w-md mx-auto">
-                            {currentSlide.subtitle}
-                          </p>
-                        </div>
-                      </div>
+                        return (
+                          <>
+                            <div className="relative rounded-3xl overflow-hidden border border-white/15 bg-black min-h-[300px] sm:min-h-[340px] shadow-2xl flex flex-col justify-end p-6 text-center">
+                              {!isPhoto && currentSlide.videoUrl ? (
+                                <video
+                                  key={currentSlide.videoUrl}
+                                  src={currentSlide.videoUrl}
+                                  autoPlay
+                                  muted
+                                  loop
+                                  playsInline
+                                  className="absolute inset-0 w-full h-full object-cover brightness-75 contrast-105"
+                                />
+                              ) : (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={currentSlide.posterImage || "/img/travel/kashmir_hero.jpg"}
+                                  alt=""
+                                  className="absolute inset-0 w-full h-full object-cover brightness-75"
+                                />
+                              )}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-black/50" />
 
-                      {/* Video Responsiveness Inspector Alert */}
-                      {currentSlide.videoUrl && (
-                        <VideoInspectorBadge videoUrl={currentSlide.videoUrl} targetType="hero" />
-                      )}
+                              <div className="relative z-10 max-w-xl mx-auto space-y-2 py-4">
+                                {/* Live Media Badge */}
+                                <div className="flex items-center justify-center gap-2 mb-1">
+                                  <span className="inline-flex items-center gap-1.5 text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90">
+                                    <span className={`w-1.5 h-1.5 rounded-full ${isPhoto ? "bg-sky-400" : "bg-emerald-400"}`} />
+                                    {isPhoto ? "Photo Banner Mode" : "Video Background Mode"}
+                                  </span>
+                                </div>
 
-                      {/* Form Fields */}
-                      <div className="p-6 rounded-3xl bg-[#111113] border border-white/10 space-y-5">
-                        <div className="flex items-center justify-between pb-3 border-b border-white/5">
-                          <h3 className="text-sm font-bold uppercase tracking-wider text-[#f5f5f5]/70">
-                            Editing Slide #{selectedSlideIndex + 1}
-                          </h3>
-                          <label className="flex items-center gap-2 cursor-pointer text-xs text-[#f5f5f5]/80">
-                            <input
-                              type="checkbox"
-                              checked={currentSlide.isActive}
-                              onChange={(e) => {
-                                const updated = [...slides];
-                                updated[selectedSlideIndex].isActive = e.target.checked;
-                                setSlides(updated);
-                              }}
-                              className="rounded bg-black border-white/20 text-white focus:ring-0"
-                            />
-                            <span>Active on Live Site</span>
-                          </label>
-                        </div>
+                                {hasBadge && (
+                                  <span className="inline-block text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/80">
+                                    {currentSlide.badgeLabel}
+                                  </span>
+                                )}
 
-                        {/* Title Lines */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                              Title Line 1 (Solid White)
-                            </label>
-                            <input
-                              type="text"
-                              value={currentSlide.titleLine1}
-                              onChange={(e) => {
-                                const updated = [...slides];
-                                updated[selectedSlideIndex].titleLine1 = e.target.value;
-                                setSlides(updated);
-                              }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
-                            />
+                                {eyebrowText && (
+                                  <p className="text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-[#f5f5f5]/60 font-semibold">
+                                    {eyebrowText}
+                                  </p>
+                                )}
+
+                                {(hasTitle1 || hasTitle2) && (
+                                  <h3
+                                    className="text-2xl sm:text-3xl font-extrabold text-white tracking-wide leading-none"
+                                    style={{ fontFamily: "var(--font-fredoka)" }}
+                                  >
+                                    {hasTitle1 && <div>{currentSlide.titleLine1}</div>}
+                                    {hasTitle2 && <div className="banner-outline-text text-transparent">{currentSlide.titleLine2}</div>}
+                                  </h3>
+                                )}
+
+                                {hasSubtitle && (
+                                  <p className="text-[11px] text-[#f5f5f5]/70 line-clamp-2 max-w-md mx-auto">
+                                    {currentSlide.subtitle}
+                                  </p>
+                                )}
+
+                                {/* Metric Pills in Preview */}
+                                {currentSlide.metrics && currentSlide.metrics.length > 0 && (
+                                  <div className="flex flex-wrap items-center justify-center gap-1.5 pt-1">
+                                    {currentSlide.metrics.slice(0, 4).map((m, i) => (
+                                      <span key={i} className="text-[9px] px-2 py-0.5 rounded-full bg-black/50 border border-white/10 text-white/80">
+                                        <span className="text-white/40">{m.label}:</span> <strong className="text-white">{m.value}</strong>
+                                      </span>
+                                    ))}
+                                    {currentSlide.metrics.length > 4 && (
+                                      <span className="text-[9px] px-1.5 py-0.5 text-white/40">+{currentSlide.metrics.length - 4} more</span>
+                                    )}
+                                  </div>
+                                )}
+
+                                {/* CTAs in Preview */}
+                                {(hasPrimary || hasSecondary) && (
+                                  <div className="flex items-center justify-center gap-2 pt-2">
+                                    {hasPrimary && (
+                                      <span className="text-[10px] font-bold px-3 py-1 rounded-full bg-white text-black">
+                                        {currentSlide.primaryCta?.label}
+                                      </span>
+                                    )}
+                                    {hasSecondary && (
+                                      <span className="text-[10px] font-semibold px-3 py-1 rounded-full border border-white/20 text-white">
+                                        {currentSlide.secondaryCta?.label}
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Video Responsiveness Inspector Alert — ONLY shown when video mode is active */}
+                            {!isPhoto && currentSlide.videoUrl && (
+                              <VideoInspectorBadge videoUrl={currentSlide.videoUrl} targetType="hero" />
+                            )}
+                          </>
+                        );
+                      })()}
+
+                      {/* Form Fields Container */}
+                      <div className="p-6 rounded-3xl bg-[#111113] border border-white/10 space-y-6">
+                        {/* Header with active toggle */}
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/5">
+                          <div className="flex items-center gap-3">
+                            <span className="px-2.5 py-1 rounded-lg bg-white/10 text-white font-mono text-xs font-bold">
+                              Slide #{selectedSlideIndex + 1}
+                            </span>
+                            <h3 className="text-sm font-bold text-white" style={{ fontFamily: "var(--font-fredoka)" }}>
+                              {currentSlide.titleLine1 || "Untitled Slide"}
+                            </h3>
                           </div>
 
-                          <div>
-                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                              Title Line 2 (Outlined Text)
+                          <div className="flex items-center gap-4">
+                            <label className="flex items-center gap-2 cursor-pointer text-xs text-[#f5f5f5]/80">
+                              <input
+                                type="checkbox"
+                                checked={currentSlide.isActive}
+                                onChange={(e) => {
+                                  const updated = [...slides];
+                                  updated[selectedSlideIndex].isActive = e.target.checked;
+                                  setSlides(updated);
+                                }}
+                                className="rounded bg-black border-white/20 text-white focus:ring-0 cursor-pointer"
+                              />
+                              <span className="font-medium">Active on Live Site</span>
                             </label>
-                            <input
-                              type="text"
-                              value={currentSlide.titleLine2}
-                              onChange={(e) => {
-                                const updated = [...slides];
-                                updated[selectedSlideIndex].titleLine2 = e.target.value;
-                                setSlides(updated);
-                              }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
-                            />
                           </div>
                         </div>
 
-                        {/* Badge & Subtitle */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                          <div>
-                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                              Top Badge Pill
+                        {/* 1. MEDIA FORMAT SELECTION (Photo Only vs Video) */}
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/60 font-bold">
+                              Background Media Format
                             </label>
-                            <input
-                              type="text"
-                              value={currentSlide.badgeLabel}
-                              onChange={(e) => {
-                                const updated = [...slides];
-                                updated[selectedSlideIndex].badgeLabel = e.target.value;
-                                setSlides(updated);
-                              }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
-                            />
+                            <span className="text-[10px] text-white/40">Select Photo or Video for this slide</span>
                           </div>
 
-                          <div className="sm:col-span-2">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...slides];
+                                updated[selectedSlideIndex].mediaType = "photo";
+                                setSlides(updated);
+                              }}
+                              className={`p-3.5 rounded-2xl border text-left transition-all flex items-center gap-3.5 cursor-pointer ${
+                                (currentSlide.mediaType || (!currentSlide.videoUrl ? "photo" : "video")) === "photo"
+                                  ? "bg-white text-black border-white shadow-xl"
+                                  : "bg-[#080808] text-[#f5f5f5]/70 border-white/10 hover:border-white/30 hover:text-white"
+                              }`}
+                            >
+                              <div
+                                className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                                  (currentSlide.mediaType || (!currentSlide.videoUrl ? "photo" : "video")) === "photo"
+                                    ? "bg-black text-white"
+                                    : "bg-white/10 text-white"
+                                }`}
+                              >
+                                <CameraIcon />
+                              </div>
+                              <div>
+                                <div className="text-xs font-bold">Photo Only (Image Banner)</div>
+                                <div
+                                  className={`text-[10px] ${
+                                    (currentSlide.mediaType || (!currentSlide.videoUrl ? "photo" : "video")) === "photo"
+                                      ? "text-black/70"
+                                      : "text-white/40"
+                                  }`}
+                                >
+                                  Fastest load · High-res photo · No video warnings
+                                </div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...slides];
+                                updated[selectedSlideIndex].mediaType = "video";
+                                setSlides(updated);
+                              }}
+                              className={`p-3.5 rounded-2xl border text-left transition-all flex items-center gap-3.5 cursor-pointer ${
+                                (currentSlide.mediaType || (!currentSlide.videoUrl ? "photo" : "video")) === "video"
+                                  ? "bg-white text-black border-white shadow-xl"
+                                  : "bg-[#080808] text-[#f5f5f5]/70 border-white/10 hover:border-white/30 hover:text-white"
+                              }`}
+                            >
+                              <div
+                                className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                                  (currentSlide.mediaType || (!currentSlide.videoUrl ? "photo" : "video")) === "video"
+                                    ? "bg-black text-white"
+                                    : "bg-white/10 text-white"
+                                }`}
+                              >
+                                <FilmIcon />
+                              </div>
+                              <div>
+                                <div className="text-xs font-bold">Video Background</div>
+                                <div
+                                  className={`text-[10px] ${
+                                    (currentSlide.mediaType || (!currentSlide.videoUrl ? "photo" : "video")) === "video"
+                                      ? "text-black/70"
+                                      : "text-white/40"
+                                  }`}
+                                >
+                                  Cinematic looped MP4 footage + Fallback poster
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* Conditional Media Inputs */}
+                          {((currentSlide.mediaType || (!currentSlide.videoUrl ? "photo" : "video")) === "photo") ? (
+                            /* PHOTO ONLY INPUTS */
+                            <div className="p-4 rounded-2xl bg-[#080808] border border-white/10 space-y-3">
+                              <div className="flex items-center justify-between">
+                                <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/60 font-bold">
+                                  Banner Photo Image URL
+                                </label>
+                                <span className="text-[10px] text-emerald-400 font-semibold">Photo-Only Mode Active</span>
+                              </div>
+                              <input
+                                type="text"
+                                value={currentSlide.posterImage || ""}
+                                onChange={(e) => {
+                                  const updated = [...slides];
+                                  updated[selectedSlideIndex].posterImage = e.target.value;
+                                  setSlides(updated);
+                                }}
+                                placeholder="/img/travel/kashmir_hero.jpg"
+                                className="w-full bg-[#111113] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
+                              />
+                              <ImageInspectorBadge
+                                src={currentSlide.posterImage || "/img/travel/kashmir_hero.jpg"}
+                                suggestedSize="< 500 KB"
+                                suggestedDimensions="1920×1080 (16:9 Landscape)"
+                                expectedRatio="landscape"
+                              />
+                            </div>
+                          ) : (
+                            /* VIDEO BACKGROUND INPUTS */
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-[#080808] border border-white/10">
+                              <div className="space-y-2">
+                                <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/60 font-bold">
+                                  Background Video URL (.mp4)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={currentSlide.videoUrl || ""}
+                                  onChange={(e) => {
+                                    const updated = [...slides];
+                                    updated[selectedSlideIndex].videoUrl = e.target.value;
+                                    setSlides(updated);
+                                  }}
+                                  placeholder="/videos/reels/travelashraf1.mp4"
+                                  className="w-full bg-[#111113] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none font-mono"
+                                />
+                                <div className="p-2.5 rounded-xl bg-[#111113] border border-white/10 space-y-1 text-[11px]">
+                                  <div className="flex justify-between text-white/50">
+                                    <span>Suggested Video Specs:</span>
+                                    <span className="text-emerald-400 font-mono font-bold">&lt; 15 MB</span>
+                                  </div>
+                                  <p className="text-white/70">
+                                    Resolution: <strong className="text-white">1920×1080 (16:9 Landscape)</strong> · 30 fps MP4
+                                  </p>
+                                </div>
+                              </div>
+
+                              <div className="space-y-2">
+                                <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/60 font-bold">
+                                  Fallback Poster Image
+                                </label>
+                                <input
+                                  type="text"
+                                  value={currentSlide.posterImage || ""}
+                                  onChange={(e) => {
+                                    const updated = [...slides];
+                                    updated[selectedSlideIndex].posterImage = e.target.value;
+                                    setSlides(updated);
+                                  }}
+                                  placeholder="/img/travel/kashmir_hero.jpg"
+                                  className="w-full bg-[#111113] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
+                                />
+                                <ImageInspectorBadge
+                                  src={currentSlide.posterImage || "/img/travel/kashmir_hero.jpg"}
+                                  suggestedSize="< 400 KB"
+                                  suggestedDimensions="1920×1080 (16:9 Landscape)"
+                                  expectedRatio="landscape"
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* 2. HEADINGS & LABELS (ALL OPTIONAL) */}
+                        <div className="space-y-4 pt-4 border-t border-white/5">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-[#f5f5f5]/70">
+                              Slide Typography & Badges
+                            </h4>
+                            <span className="text-[10px] text-white/40">All fields are optional</span>
+                          </div>
+
+                          {/* Top Badge & Eyebrow */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
+                                Top Badge Pill <span className="text-white/30 lowercase">(optional)</span>
+                              </label>
+                              <input
+                                type="text"
+                                value={currentSlide.badgeLabel || ""}
+                                onChange={(e) => {
+                                  const updated = [...slides];
+                                  updated[selectedSlideIndex].badgeLabel = e.target.value;
+                                  setSlides(updated);
+                                }}
+                                placeholder="e.g. Official Announcement · High-Altitude Expedition"
+                                className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
+                                Slide Eyebrow Text <span className="text-white/30 lowercase">(optional)</span>
+                              </label>
+                              <input
+                                type="text"
+                                value={currentSlide.eyebrow ?? "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA"}
+                                onChange={(e) => {
+                                  const updated = [...slides];
+                                  updated[selectedSlideIndex].eyebrow = e.target.value;
+                                  setSlides(updated);
+                                }}
+                                placeholder="ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA"
+                                className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Title Lines */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
+                                Title Line 1 (Solid White) <span className="text-white/30 lowercase">(optional)</span>
+                              </label>
+                              <input
+                                type="text"
+                                value={currentSlide.titleLine1 || ""}
+                                onChange={(e) => {
+                                  const updated = [...slides];
+                                  updated[selectedSlideIndex].titleLine1 = e.target.value;
+                                  setSlides(updated);
+                                }}
+                                placeholder="e.g. WINTER SPITI 4×4"
+                                className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
+                                Title Line 2 (Outlined Text) <span className="text-white/30 lowercase">(optional)</span>
+                              </label>
+                              <input
+                                type="text"
+                                value={currentSlide.titleLine2 || ""}
+                                onChange={(e) => {
+                                  const updated = [...slides];
+                                  updated[selectedSlideIndex].titleLine2 = e.target.value;
+                                  setSlides(updated);
+                                }}
+                                placeholder="e.g. WHITE EXPEDITION."
+                                className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Subtitle / Description */}
+                          <div>
                             <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                              Slide Subtitle / Description
+                              Slide Subtitle / Description <span className="text-white/30 lowercase">(optional)</span>
                             </label>
-                            <input
-                              type="text"
-                              value={currentSlide.subtitle}
+                            <textarea
+                              rows={2}
+                              value={currentSlide.subtitle || ""}
                               onChange={(e) => {
                                 const updated = [...slides];
                                 updated[selectedSlideIndex].subtitle = e.target.value;
                                 setSlides(updated);
                               }}
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
+                              placeholder="e.g. Cross 15,000-ft frozen Himalayan passes, ancient cliff monasteries & ride across white Spiti plains."
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none resize-none"
                             />
+                          </div>
+
+                          {/* Linked Group Trip */}
+                          <div>
+                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
+                              Associated Group Trip <span className="text-white/30 lowercase">(optional - for reservation modal)</span>
+                            </label>
+                            <select
+                              value={currentSlide.tripSlug || ""}
+                              onChange={(e) => {
+                                const updated = [...slides];
+                                updated[selectedSlideIndex].tripSlug = e.target.value;
+                                setSlides(updated);
+                              }}
+                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none cursor-pointer"
+                            >
+                              <option value="">No linked trip (Manual or General Slide)</option>
+                              {trips.map((t) => (
+                                <option key={t.slug} value={t.slug}>
+                                  {t.title} ({t.departureDate}) — ₹{t.pricePerPerson.toLocaleString("en-IN")}
+                                </option>
+                              ))}
+                            </select>
                           </div>
                         </div>
 
-                        {/* Video & Poster Media with Size Guides */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                              Background Video URL (.mp4)
-                            </label>
-                            <input
-                              type="text"
-                              value={currentSlide.videoUrl || ""}
-                              onChange={(e) => {
-                                const updated = [...slides];
-                                updated[selectedSlideIndex].videoUrl = e.target.value;
-                                setSlides(updated);
-                              }}
-                              placeholder="/videos/reels/travelashraf1.mp4"
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none font-mono"
-                            />
-                            <div className="p-2.5 rounded-xl bg-[#080808] border border-white/10 space-y-1 text-[11px]">
-                              <div className="flex justify-between text-white/50">
-                                <span>Suggested Video Specs:</span>
-                                <span className="text-emerald-400 font-mono font-bold">&lt; 15 MB</span>
-                              </div>
-                              <p className="text-white/70">
-                                Resolution: <strong className="text-white">1920×1080 (16:9 Landscape)</strong> · 30 fps MP4 (H.264)
+                        {/* 3. METRIC PILLS MANAGER (DYNAMIC & OPTIONAL) */}
+                        <div className="space-y-3 pt-4 border-t border-white/5">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h4 className="text-xs font-bold uppercase tracking-wider text-[#f5f5f5]/70">
+                                Slide Metric Pills ({currentSlide.metrics?.length || 0})
+                              </h4>
+                              <p className="text-[10px] text-white/40">
+                                Add, edit or remove pills (Dates, Duration, Altitude, Price, Seats). Entirely optional.
                               </p>
                             </div>
-                          </div>
-
-                          <div className="space-y-2">
-                            <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                              Fallback Poster Image
-                            </label>
-                            <input
-                              type="text"
-                              value={currentSlide.posterImage}
-                              onChange={(e) => {
+                            <button
+                              type="button"
+                              onClick={() => {
                                 const updated = [...slides];
-                                updated[selectedSlideIndex].posterImage = e.target.value;
+                                const existing = updated[selectedSlideIndex].metrics || [];
+                                updated[selectedSlideIndex].metrics = [
+                                  ...existing,
+                                  { label: "LABEL", value: "Value", highlight: false },
+                                ];
                                 setSlides(updated);
                               }}
-                              placeholder="/img/travel/kashmir_hero.jpg"
-                              className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white focus:border-white/40 outline-none"
-                            />
-                            <ImageInspectorBadge
-                              src={currentSlide.posterImage}
-                              suggestedSize="< 400 KB"
-                              suggestedDimensions="1920×1080 (16:9 Landscape)"
-                              expectedRatio="landscape"
-                            />
+                              className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold flex items-center gap-1 transition-all cursor-pointer"
+                            >
+                              <PlusIcon />
+                              <span>Add Metric Pill</span>
+                            </button>
                           </div>
+
+                          {currentSlide.metrics && currentSlide.metrics.length > 0 ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                              {currentSlide.metrics.map((m, mIdx) => (
+                                <div key={mIdx} className="p-3 rounded-2xl bg-[#080808] border border-white/10 space-y-2 relative group">
+                                  <div className="flex items-center justify-between">
+                                    <input
+                                      type="text"
+                                      value={m.label}
+                                      onChange={(e) => {
+                                        const updated = [...slides];
+                                        updated[selectedSlideIndex].metrics[mIdx].label = e.target.value;
+                                        setSlides(updated);
+                                      }}
+                                      placeholder="LABEL"
+                                      className="text-[10px] uppercase font-mono font-bold bg-transparent text-[#f5f5f5]/50 border-b border-transparent focus:border-white/30 outline-none w-24"
+                                    />
+                                    <div className="flex items-center gap-2">
+                                      <label className="text-[9px] text-white/40 flex items-center gap-1 cursor-pointer">
+                                        <input
+                                          type="checkbox"
+                                          checked={Boolean(m.highlight)}
+                                          onChange={(e) => {
+                                            const updated = [...slides];
+                                            updated[selectedSlideIndex].metrics[mIdx].highlight = e.target.checked;
+                                            setSlides(updated);
+                                          }}
+                                          className="rounded bg-black border-white/20 text-emerald-400 focus:ring-0"
+                                        />
+                                        <span>Highlight</span>
+                                      </label>
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          const updated = [...slides];
+                                          updated[selectedSlideIndex].metrics = updated[selectedSlideIndex].metrics.filter((_, i) => i !== mIdx);
+                                          setSlides(updated);
+                                        }}
+                                        className="text-white/30 hover:text-red-400 p-0.5 transition-colors cursor-pointer"
+                                        title="Remove Pill"
+                                      >
+                                        <TrashIcon />
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <input
+                                    type="text"
+                                    value={m.value}
+                                    onChange={(e) => {
+                                      const updated = [...slides];
+                                      updated[selectedSlideIndex].metrics[mIdx].value = e.target.value;
+                                      setSlides(updated);
+                                    }}
+                                    placeholder="e.g. 10 Jun – 18 Jun 2026"
+                                    className="w-full bg-[#111113] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white font-semibold focus:border-white/30 outline-none"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="p-4 rounded-2xl bg-[#080808]/50 border border-dashed border-white/10 text-center text-xs text-white/40">
+                              No metric pills added for this slide. Click &quot;Add Metric Pill&quot; above to add any stat pill.
+                            </div>
+                          )}
                         </div>
 
-                        {/* Metric Pills */}
-                        <div className="pt-2 border-t border-white/5 space-y-3">
-                          <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold">
-                            Trip Metric Pills (Dates, Altitude, Price, Seats)
-                          </label>
-                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            {currentSlide.metrics.map((m, mIdx) => (
-                              <div key={mIdx} className="p-2.5 rounded-xl bg-[#080808] border border-white/10 space-y-1">
-                                <span className="text-[10px] text-[#f5f5f5]/40 uppercase font-mono font-bold block">
-                                  {m.label}
-                                </span>
-                                <input
-                                  type="text"
-                                  value={m.value}
-                                  onChange={(e) => {
-                                    const updated = [...slides];
-                                    updated[selectedSlideIndex].metrics[mIdx].value = e.target.value;
-                                    setSlides(updated);
-                                  }}
-                                  className="w-full bg-transparent border-b border-white/15 text-sm sm:text-xs text-white font-semibold focus:border-white/40 outline-none pb-0.5"
-                                />
+                        {/* 4. CALL-TO-ACTION BUTTONS (DYNAMIC & OPTIONAL) */}
+                        <div className="space-y-4 pt-4 border-t border-white/5">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-[#f5f5f5]/70">
+                              Slide Action Buttons (CTAs)
+                            </h4>
+                            <span className="text-[10px] text-white/40">Enable, disable, or customize buttons</span>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {/* Primary Button */}
+                            <div className="p-4 rounded-2xl bg-[#080808] border border-white/10 space-y-3">
+                              <div className="flex items-center justify-between pb-2 border-b border-white/5">
+                                <span className="text-xs font-bold text-white">Primary Button (Solid)</span>
+                                <label className="flex items-center gap-1.5 text-xs text-white/70 cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={currentSlide.primaryCta?.enabled !== false}
+                                    onChange={(e) => {
+                                      const updated = [...slides];
+                                      if (!updated[selectedSlideIndex].primaryCta) {
+                                        updated[selectedSlideIndex].primaryCta = { label: "View Trip Details & Reserve", action: "openModal", target: "" };
+                                      }
+                                      updated[selectedSlideIndex].primaryCta!.enabled = e.target.checked;
+                                      setSlides(updated);
+                                    }}
+                                    className="rounded bg-black border-white/20 text-white focus:ring-0 cursor-pointer"
+                                  />
+                                  <span>Enabled</span>
+                                </label>
                               </div>
-                            ))}
+
+                              <div className="space-y-2">
+                                <div>
+                                  <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-1">
+                                    Button Label
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={currentSlide.primaryCta?.label ?? "View Trip Details & Reserve"}
+                                    onChange={(e) => {
+                                      const updated = [...slides];
+                                      if (!updated[selectedSlideIndex].primaryCta) {
+                                        updated[selectedSlideIndex].primaryCta = { label: "", action: "openModal", target: "" };
+                                      }
+                                      updated[selectedSlideIndex].primaryCta!.label = e.target.value;
+                                      setSlides(updated);
+                                    }}
+                                    placeholder="View Trip Details & Reserve"
+                                    className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:border-white/40 outline-none"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Secondary Button */}
+                            <div className="p-4 rounded-2xl bg-[#080808] border border-white/10 space-y-3">
+                              <div className="flex items-center justify-between pb-2 border-b border-white/5">
+                                <span className="text-xs font-bold text-white">Secondary Button (Outlined)</span>
+                                <label className="flex items-center gap-1.5 text-xs text-white/70 cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={currentSlide.secondaryCta?.enabled !== false}
+                                    onChange={(e) => {
+                                      const updated = [...slides];
+                                      if (!updated[selectedSlideIndex].secondaryCta) {
+                                        updated[selectedSlideIndex].secondaryCta = { label: "Explore All Expeditions", action: "scroll", target: "#group-tours" };
+                                      }
+                                      updated[selectedSlideIndex].secondaryCta!.enabled = e.target.checked;
+                                      setSlides(updated);
+                                    }}
+                                    className="rounded bg-black border-white/20 text-white focus:ring-0 cursor-pointer"
+                                  />
+                                  <span>Enabled</span>
+                                </label>
+                              </div>
+
+                              <div className="space-y-2">
+                                <div>
+                                  <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-1">
+                                    Button Label
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={currentSlide.secondaryCta?.label ?? "Explore All Expeditions"}
+                                    onChange={(e) => {
+                                      const updated = [...slides];
+                                      if (!updated[selectedSlideIndex].secondaryCta) {
+                                        updated[selectedSlideIndex].secondaryCta = { label: "", action: "scroll", target: "#group-tours" };
+                                      }
+                                      updated[selectedSlideIndex].secondaryCta!.label = e.target.value;
+                                      setSlides(updated);
+                                    }}
+                                    placeholder="Explore All Expeditions"
+                                    className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:border-white/40 outline-none"
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

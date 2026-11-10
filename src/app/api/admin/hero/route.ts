@@ -30,34 +30,38 @@ export async function POST(req: NextRequest) {
     }
 
     const sanitizedSlides = slides.map((slide, idx) => {
-      if (!slide.titleLine1 || !slide.titleLine2) {
-        throw new Error(`Slide #${idx + 1} is missing title lines.`);
-      }
+      const mediaType = slide.mediaType === "photo" ? "photo" : slide.mediaType === "video" ? "video" : (slide.videoUrl ? "video" : "photo");
 
       return {
         id: String(slide.id || `slide-${Date.now()}-${idx}`).trim(),
         tripSlug: String(slide.tripSlug || "").trim(),
-        badgeLabel: String(slide.badgeLabel || "Expedition Announcement").trim(),
-        titleLine1: String(slide.titleLine1).trim(),
-        titleLine2: String(slide.titleLine2).trim(),
+        mediaType,
+        badgeLabel: String(slide.badgeLabel || "").trim(),
+        eyebrow: slide.eyebrow !== undefined ? String(slide.eyebrow).trim() : "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA",
+        titleLine1: String(slide.titleLine1 || "").trim(),
+        titleLine2: String(slide.titleLine2 || "").trim(),
         subtitle: String(slide.subtitle || "").trim(),
         posterImage: String(slide.posterImage || "/img/travel/kashmir_hero.jpg").trim(),
-        imageAlt: String(slide.imageAlt || slide.titleLine1).trim(),
-        videoUrl: slide.videoUrl ? String(slide.videoUrl).trim() : undefined,
+        imageAlt: String(slide.imageAlt || slide.titleLine1 || "Expedition Banner").trim(),
+        videoUrl: mediaType === "video" && slide.videoUrl ? String(slide.videoUrl).trim() : undefined,
         metrics: Array.isArray(slide.metrics)
-          ? slide.metrics.map((m: { label: string; value: string; highlight?: boolean }) => ({
-              label: String(m.label || "").trim(),
-              value: String(m.value || "").trim(),
-              highlight: Boolean(m.highlight),
-            }))
+          ? slide.metrics
+              .filter((m: any) => m && (m.label || m.value))
+              .map((m: { label: string; value: string; highlight?: boolean }) => ({
+                label: String(m.label || "").trim(),
+                value: String(m.value || "").trim(),
+                highlight: Boolean(m.highlight),
+              }))
           : [],
         primaryCta: {
-          label: String(slide.primaryCta?.label || "View Trip Details & Reserve").trim(),
+          enabled: slide.primaryCta?.enabled !== false,
+          label: String(slide.primaryCta?.label || "").trim(),
           action: String(slide.primaryCta?.action || "openModal").trim(),
           target: String(slide.primaryCta?.target || "").trim(),
         },
         secondaryCta: {
-          label: String(slide.secondaryCta?.label || "Explore All Expeditions").trim(),
+          enabled: slide.secondaryCta?.enabled !== false,
+          label: String(slide.secondaryCta?.label || "").trim(),
           action: String(slide.secondaryCta?.action || "scroll").trim(),
           target: String(slide.secondaryCta?.target || "#group-tours").trim(),
         },
