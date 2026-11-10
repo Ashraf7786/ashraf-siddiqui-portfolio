@@ -30,10 +30,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const existingTrips = getCachedJson<any[]>("trips.json", GROUP_TRIPS);
+
     const sanitizedTrips = trips.map((trip, idx) => {
       if (!trip.title) {
         throw new Error(`Trip #${idx + 1} is missing a title.`);
       }
+
+      const existingTrip = existingTrips.find((et) => et.id === trip.id || et.slug === trip.slug);
 
       return {
         id: String(trip.id || `trip-${Date.now()}-${idx}`).trim(),
@@ -75,8 +79,21 @@ export async function POST(req: NextRequest) {
           : typeof trip.exclusions === "string"
           ? (trip.exclusions as string).split("\n").map((e) => e.trim()).filter(Boolean)
           : [],
-        itinerary: Array.isArray(trip.itinerary) ? trip.itinerary : [],
-        faqs: Array.isArray(trip.faqs) ? trip.faqs : [],
+        dayWiseItinerary: Array.isArray(trip.dayWiseItinerary) && trip.dayWiseItinerary.length > 0
+          ? trip.dayWiseItinerary
+          : (existingTrip?.dayWiseItinerary || []),
+        faqs: Array.isArray(trip.faqs) && trip.faqs.length > 0
+          ? trip.faqs
+          : (existingTrip?.faqs || []),
+        host: trip.host && trip.host.name
+          ? trip.host
+          : (existingTrip?.host || {
+              name: "Ashraf Siddiqui",
+              role: "Expedition Leader",
+              experience: "24 Indian states explored",
+              avatar: "/img/travel/kashmir_hero.jpg",
+              message: "I personally lead every minute of this journey."
+            }),
       };
     });
 

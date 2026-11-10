@@ -31,19 +31,11 @@ export default function GroupTourCards() {
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".group-header", {
-        y: 50,
+        y: 35,
         opacity: 0,
-        duration: 1.0,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-      });
-      gsap.from(".group-card", {
-        scale: 0.95,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        stagger: 0.2,
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 85%" },
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -83,29 +75,28 @@ export default function GroupTourCards() {
                 key={tour.id}
                 className={`group-card group relative rounded-3xl overflow-hidden border transition-all duration-300 ${
                   isUpcoming
-                    ? "opacity-75 hover:opacity-90 border-amber-500/20 bg-[#0d0d0f]"
-                    : "border-[#f5f5f5]/10 bg-[#111113] hover:border-[#f5f5f5]/25"
+                    ? "border-amber-500/30 bg-[#111113] hover:border-amber-500/50 shadow-[0_4px_30px_rgba(245,158,11,0.06)]"
+                    : "border-[#f5f5f5]/10 bg-[#111113] hover:border-[#f5f5f5]/25 shadow-xl"
                 }`}
               >
                 <div className="md:grid md:grid-cols-2">
                   {/* Left: Cover Image */}
-                  <div className="relative h-64 sm:h-80 md:h-auto overflow-hidden">
+                  <div className="relative h-64 sm:h-80 md:h-auto min-h-[280px] overflow-hidden">
                     <Image
                       src={tour.coverImage}
                       alt={tour.title}
                       fill
-                      className={`object-cover transition-transform duration-700 group-hover:scale-105 ${
-                        isUpcoming ? "grayscale-[25%]" : ""
-                      }`}
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#111113] hidden md:block" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#111113]/25 to-[#111113] hidden md:block" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#111113] via-transparent to-transparent md:hidden" />
 
                     {/* Lock Icon Center Overlay for Upcoming Trips */}
                     {isUpcoming && (
-                      <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex items-center justify-center">
-                        <div className="w-14 h-14 rounded-full bg-black/80 border border-amber-400/40 text-amber-300 flex items-center justify-center shadow-2xl">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <div className="absolute inset-0 bg-black/25 backdrop-blur-[1px] flex items-center justify-center pointer-events-none">
+                        <div className="w-14 h-14 rounded-full bg-black/85 backdrop-blur-md border border-amber-400/50 text-amber-300 flex items-center justify-center shadow-2xl">
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                           </svg>
@@ -116,7 +107,7 @@ export default function GroupTourCards() {
                     {/* Status Badge */}
                     <div className="absolute top-4 left-4">
                       {isUpcoming ? (
-                        <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1.5 backdrop-blur-md">
+                        <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
                           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -124,7 +115,7 @@ export default function GroupTourCards() {
                           <span>Upcoming Expedition</span>
                         </span>
                       ) : (
-                        <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1.5 backdrop-blur-md">
+                        <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
                           <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2c1.5 3 4 5.5 4 8.5 0 3.5-2.5 6.5-6 6.5s-6-3-6-6.5C4 7.5 6.5 5 8 2c.5 2 1.5 3.5 2 4.5.5-1 1.5-2.5 2-4.5z" />
                           </svg>
@@ -137,9 +128,11 @@ export default function GroupTourCards() {
                   {/* Right: Content */}
                   <div className="p-6 sm:p-8 md:p-10 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center gap-2 mb-3 sm:mb-4">
-                        <span className="w-2 h-2 rounded-full bg-white/60" />
-                        <span className="text-xs tracking-widest uppercase text-[#f5f5f5]/40">{tour.destination}, {tour.state}</span>
+                      <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                        <span className={`w-2 h-2 rounded-full ${isUpcoming ? "bg-amber-400" : "bg-white/60"}`} />
+                        <span className="text-xs tracking-widest uppercase text-[#f5f5f5]/50">
+                          {tour.destination}, {tour.state}
+                        </span>
                       </div>
 
                       <h3
@@ -150,18 +143,58 @@ export default function GroupTourCards() {
                       </h3>
 
                       {isUpcoming ? (
-                        /* ─── UPCOMING TRIP: ONLY TAGLINE SHOWN (DETAILS HIDDEN) ─── */
-                        <div className="my-5 p-4 rounded-2xl bg-black/50 border border-white/5 space-y-2">
-                          <span className="text-[10px] uppercase tracking-wider text-amber-400/80 font-bold flex items-center gap-1.5">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                            </svg>
-                            <span>Expedition Announcement</span>
-                          </span>
-                          <p className="text-xs sm:text-sm text-[#f5f5f5]/80 italic leading-relaxed border-l-2 border-amber-400/60 pl-3">
-                            &ldquo;{tour.tagline}&rdquo;
-                          </p>
+                        /* ─── UPCOMING TRIP: RICH TEASER & TAGLINE (NO EMPTY SPACES) ─── */
+                        <div className="space-y-3.5 my-4">
+                          {/* Tagline Announcement Box */}
+                          <div className="p-4 rounded-2xl bg-amber-500/[0.06] border border-amber-500/20 space-y-1.5">
+                            <span className="text-[10px] uppercase tracking-wider text-amber-400 font-bold flex items-center gap-1.5">
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                              </svg>
+                              <span>Expedition Announcement</span>
+                            </span>
+                            <p className="text-xs sm:text-sm text-[#f5f5f5]/90 italic leading-relaxed border-l-2 border-amber-400/60 pl-3">
+                              &ldquo;{tour.tagline}&rdquo;
+                            </p>
+                          </div>
+
+                          {/* Key Highlights Teaser (Eliminates Empty Space) */}
+                          {tour.highlights && tour.highlights.length > 0 && (
+                            <div>
+                              <span className="text-[10px] uppercase tracking-wider text-white/40 font-bold block mb-2">
+                                Route Highlights in Scouting
+                              </span>
+                              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                                {tour.highlights.slice(0, 3).map((h) => (
+                                  <span
+                                    key={h}
+                                    className="text-[11px] sm:text-xs px-2.5 sm:px-3 py-1 rounded-full bg-white/5 text-[#f5f5f5]/70 border border-white/10 flex items-center gap-1.5"
+                                  >
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                                    <span>{h}</span>
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Reconnaissance Progress Indicator */}
+                          <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/5 space-y-1.5">
+                            <div className="flex items-center justify-between text-xs text-[#f5f5f5]/60">
+                              <span className="flex items-center gap-1.5 text-amber-400 font-medium">
+                                <span className="relative flex h-2 w-2">
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
+                                  <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400" />
+                                </span>
+                                Scouting in Progress
+                              </span>
+                              <span className="text-white/40 text-[11px]">Dates & Pricing Dropping Soon</span>
+                            </div>
+                            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                              <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-300 w-4/5 animate-pulse" />
+                            </div>
+                          </div>
                         </div>
                       ) : (
                         /* ─── LIVE TRIP: FULL DATES, HIGHLIGHTS & SEATS REMAINING ─── */
@@ -200,23 +233,26 @@ export default function GroupTourCards() {
                       {isUpcoming ? (
                         <>
                           <div className="flex items-center gap-2 text-white/50 text-xs">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-400">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-amber-400 shrink-0">
                               <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                               <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                             </svg>
-                            <span className="text-xs uppercase tracking-wider text-white/50 font-medium">
-                              Route in Reconnaissance · Dates TBA
+                            <span className="text-xs uppercase tracking-wider text-white/60 font-medium">
+                              Estimated Window: {tour.departureDate || "Autumn 2026"} · {tour.durationLabel || "Multi-day"}
                             </span>
                           </div>
                           <button
-                            onClick={() =>
-                              alert(
-                                `"${tour.title}" will open for registration soon! Follow @ashraf._siddiqui on Instagram for announcement drops.`
-                              )
-                            }
-                            className="px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all flex items-center gap-2 cursor-pointer"
+                            onClick={() => {
+                              setActiveModalTrip(tour);
+                              setIsModalOpen(true);
+                            }}
+                            className="px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm font-bold bg-white text-black hover:bg-[#eaeaea] transition-all flex items-center gap-2 cursor-pointer shadow-lg"
                           >
                             <span>Notify When Dates Drop</span>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                              <line x1="5" y1="12" x2="19" y2="12" />
+                              <polyline points="12 5 19 12 12 19" />
+                            </svg>
                           </button>
                         </>
                       ) : (
