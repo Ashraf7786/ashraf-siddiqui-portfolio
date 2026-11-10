@@ -15,23 +15,49 @@ export default function NewsletterPreview() {
   const sectionRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState("");
   const [touched, setTouched] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [serverMsg, setServerMsg] = useState("");
 
   const isValid = validateEmail(email);
   const showError = touched && !isValid && email.length > 0;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
-    if (!isValid) return;
-    setSubmitted(true);
-    gsap.from(".nl-success", { y: 20, opacity: 0, duration: 0.6, ease: "power3.out" });
+    if (!isValid || isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/travel/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setServerMsg(data.message || "Next dispatch will find its way to your inbox. Safe travels.");
+        setSubmitted(true);
+        setTimeout(() => {
+          gsap.from(".nl-success", { y: 20, opacity: 0, duration: 0.6, ease: "power3.out" });
+        }, 50);
+      } else {
+        alert(data.error || "Subscription failed. Please check your email and try again.");
+      }
+    } catch {
+      alert("Network error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".nl-content", {
-        y: 50, opacity: 0, duration: 1.0, ease: "power3.out",
+        y: 50,
+        opacity: 0,
+        duration: 1.0,
+        ease: "power3.out",
         scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
       });
     }, sectionRef);
@@ -66,13 +92,14 @@ export default function NewsletterPreview() {
                 <input
                   type="email"
                   value={email}
+                  disabled={isSubmitting}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={() => setTouched(true)}
                   placeholder="your@email.com"
                   aria-label="Email address"
                   className={`w-full px-5 py-3 rounded-full text-xs sm:text-sm text-[#f5f5f5] placeholder-[#f5f5f5]/30 bg-[#111113] border transition-all duration-200 outline-none ${
                     showError ? "border-red-400/60" : "border-[#f5f5f5]/10 focus:border-[#f5f5f5]/30"
-                  }`}
+                  } disabled:opacity-50`}
                 />
                 {showError && (
                   <p role="alert" className="absolute -bottom-5 left-4 text-[10px] text-red-400">
@@ -82,9 +109,10 @@ export default function NewsletterPreview() {
               </div>
               <button
                 type="submit"
-                className="px-6 py-3 border border-[#f5f5f5]/20 rounded-full text-xs sm:text-sm text-[#f5f5f5]/80 hover:border-[#f5f5f5]/60 hover:text-[#f5f5f5] transition-all backdrop-blur-sm hover:bg-white/5 whitespace-nowrap flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className="px-6 py-3 border border-[#f5f5f5]/20 rounded-full text-xs sm:text-sm text-[#f5f5f5]/80 hover:border-[#f5f5f5]/60 hover:text-[#f5f5f5] transition-all backdrop-blur-sm hover:bg-white/5 whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
-                <span>Subscribe</span>
+                <span>{isSubmitting ? "Subscribing..." : "Subscribe"}</span>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="22" y1="2" x2="11" y2="13"/>
                   <polygon points="22 2 15 22 11 13 2 9 22 2"/>
@@ -99,12 +127,12 @@ export default function NewsletterPreview() {
                 </svg>
               </div>
               <p className="text-sm font-semibold text-[#f5f5f5] mb-1">You&apos;re on the list!</p>
-              <p className="text-xs text-[#f5f5f5]/40 max-w-sm">
-                Next dispatch will find its way to your inbox. Safe travels.
+              <p className="text-xs text-[#f5f5f5]/50 max-w-sm">
+                {serverMsg || "Next dispatch will find its way to your inbox. Safe travels."}
               </p>
             </div>
           )}
-          <p className="mt-5 sm:mt-6 text-[10px] text-[#f5f5f5]/20">UI only · Email storage connects in Phase 7</p>
+          <p className="mt-5 sm:mt-6 text-[10px] text-[#f5f5f5]/30">Direct dispatches from the road · Unsubscribe anytime with one click</p>
         </div>
       </div>
     </section>
