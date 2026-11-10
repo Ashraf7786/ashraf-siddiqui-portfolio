@@ -23,6 +23,26 @@ export default function InteractiveIndiaMap() {
   const cardRef = useRef<HTMLDivElement>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
 
+  const [statesData, setStatesData] = useState<Record<string, IndiaStateData>>(INDIA_STATES_DATA);
+
+  // Load dynamic state updates from API
+  React.useEffect(() => {
+    async function loadDynamicStates() {
+      try {
+        const res = await fetch("/api/travel/states");
+        if (res.ok) {
+          const d = await res.json();
+          if (d.states && Object.keys(d.states).length > 0) {
+            setStatesData(d.states);
+          }
+        }
+      } catch {
+        // Fallback silently to static data
+      }
+    }
+    loadDynamicStates();
+  }, []);
+
   // Default selection: Rajasthan (the home state)
   const [selectedId, setSelectedId] = useState<string>("rj");
   const [hoveredLocation, setHoveredLocation] = useState<MapLocation | null>(null);
@@ -33,13 +53,36 @@ export default function InteractiveIndiaMap() {
   const [activeFilter, setActiveFilter] = useState<"all" | "visited" | "unvisited" | "uts">("all");
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
 
-  const summary = useMemo(() => getStatesSummary(), []);
+  const summary = useMemo(() => {
+    const allEntries = Object.values(statesData);
+    const statesOnly = allEntries.filter((s) => !s.isUT);
+    const utOnly = allEntries.filter((s) => s.isUT);
+
+    const visitedStates = statesOnly.filter((s) => s.visited);
+    const remainingStates = statesOnly.filter((s) => !s.visited);
+    const visitedUTs = utOnly.filter((s) => s.visited);
+
+    const totalStates = statesOnly.length || 28;
+    const visitedCount = visitedStates.length;
+    const percentage = Math.round((visitedCount / totalStates) * 100);
+
+    return {
+      totalStates,
+      visitedCount,
+      remainingCount: remainingStates.length,
+      percentage,
+      visitedStates,
+      remainingStates,
+      visitedUTsCount: visitedUTs.length,
+      totalUTsCount: utOnly.length,
+    };
+  }, [statesData]);
 
   // Filtered locations
   const filteredLocationIds = useMemo(() => {
     return new Set(
       INDIA_MAP_LOCATIONS.filter((loc) => {
-        const data = INDIA_STATES_DATA[loc.id];
+        const data = statesData[loc.id];
         if (!data) return true;
 
         // Status Filter
@@ -64,9 +107,9 @@ export default function InteractiveIndiaMap() {
         return true;
       }).map((l) => l.id)
     );
-  }, [activeFilter, selectedRegion, searchQuery]);
+  }, [statesData, activeFilter, selectedRegion, searchQuery]);
 
-  const selectedData: IndiaStateData | undefined = INDIA_STATES_DATA[selectedId];
+  const selectedData: IndiaStateData | undefined = statesData[selectedId];
 
   // Animate panel when selection changes
   useIsomorphicLayoutEffect(() => {

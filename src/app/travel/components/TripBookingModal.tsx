@@ -281,6 +281,24 @@ export default function TripBookingModal({
                 </div>
               )}
 
+              {/* Refund Policy Guarantee Badge */}
+              <div className="p-3 rounded-xl bg-black/40 border border-white/10 text-[11px] text-[#f5f5f5]/70 flex items-start gap-2.5">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400 shrink-0 mt-0.5">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                </svg>
+                <div className="leading-relaxed">
+                  <strong className="text-white">Fair Refund Guarantee:</strong> 100% full refund if cancelled by us · 100% refund 28+ days before · 50% refund 1 week before · 10% refund 1 day before.{" "}
+                  <a
+                    href="/travel/refund-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-400 underline hover:text-emerald-300 font-medium"
+                  >
+                    View Refund Policy
+                  </a>
+                </div>
+              </div>
+
               {/* Submit Button */}
               <div className="pt-2 sticky bottom-0 bg-[#111113] pb-1">
                 <button
