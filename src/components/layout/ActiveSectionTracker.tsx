@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect } from 'react';
-import { useLenis } from '@studio-freight/react-lenis';
 
 export default function ActiveSectionTracker() {
-    const lenis = useLenis();
 
     useEffect(() => {
         const sections = document.querySelectorAll('section[id]');

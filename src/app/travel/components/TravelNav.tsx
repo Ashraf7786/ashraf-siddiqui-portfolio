@@ -21,8 +21,13 @@ export default function TravelNav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
+    let isScrolled = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const nextScrolled = window.scrollY > 20;
+      if (nextScrolled !== isScrolled) {
+        isScrolled = nextScrolled;
+        setScrolled(nextScrolled);
+      }
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });

@@ -31,12 +31,7 @@ export default function AboutTraveller() {
       });
     }, sectionRef);
 
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
-
     return () => {
-      clearTimeout(timer);
       ctx.revert();
     };
   }, []);

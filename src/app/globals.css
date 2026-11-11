@@ -38,9 +38,16 @@
     /* Adjust depending on branding, royal blue/purple fits tech */
   }
 
+  html {
+    scroll-behavior: auto !important;
+  }
+
   body {
-    @apply bg-background text-foreground bg-black text-white antialiased overflow-x-hidden;
+    @apply bg-background text-foreground bg-black text-white antialiased;
+    overflow-x: clip;
     font-family: var(--font-inter), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 

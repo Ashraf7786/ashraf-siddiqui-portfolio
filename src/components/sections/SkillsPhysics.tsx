@@ -152,7 +152,8 @@ export default function SkillsPhysics() {
         let triggered = false;
         const st = ScrollTrigger.create({
             trigger: containerRef.current,
-            start: 'top 70%',
+            start: 'top 85%',
+            end: 'bottom -20%',
             onEnter: () => {
                 if (!triggered) {
                     triggered = true;
@@ -164,15 +165,28 @@ export default function SkillsPhysics() {
 
                     // Intro animation for the container
                     gsap.fromTo(containerRef.current,
-                        { y: 100, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
+                        { y: 60, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
                     );
 
                     // Delay pills spawn slightly until layout stabilizes
                     requestAnimationFrame(() => {
                         spawnPills('CORE CAPABILITIES');
                     });
+                } else if (runner && engineRef.current) {
+                    Matter.Runner.run(runner, engineRef.current);
                 }
+            },
+            onLeave: () => {
+                if (runner) Matter.Runner.stop(runner);
+            },
+            onEnterBack: () => {
+                if (runner && engineRef.current) {
+                    Matter.Runner.run(runner, engineRef.current);
+                }
+            },
+            onLeaveBack: () => {
+                if (runner) Matter.Runner.stop(runner);
             }
         });
 

@@ -97,6 +97,7 @@ export default function TravelHero() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTrip, setModalTrip] = useState<GroupTrip>(EXPEDITION_SLIDES[0].tripData || GROUP_TRIPS[0]);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isHeroInView, setIsHeroInView] = useState(true);
 
   const heroRef = useRef<HTMLElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
@@ -197,17 +198,30 @@ export default function TravelHero() {
     return () => ctx.revert();
   }, [currentSlideIndex, prefersReducedMotion]);
 
-  // Video play/pause management
+  // Viewport intersection observer: completely halt background video decoding when scrolled out of view
+  useEffect(() => {
+    if (!heroRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 }
+    );
+    observer.observe(heroRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Video play/pause management: only decode/play when slide is active AND hero is in viewport
   useEffect(() => {
     videoRefs.current.forEach((vid, idx) => {
       if (!vid) return;
-      if (idx === currentSlideIndex && isVideoPlaying && !prefersReducedMotion) {
+      if (idx === currentSlideIndex && isVideoPlaying && !prefersReducedMotion && isHeroInView) {
         vid.play().catch(() => {});
       } else {
         vid.pause();
       }
     });
-  }, [currentSlideIndex, isVideoPlaying, prefersReducedMotion]);
+  }, [currentSlideIndex, isVideoPlaying, prefersReducedMotion, isHeroInView]);
 
   // Toggle video & carousel play/pause
   const togglePlayPause = () => {
@@ -216,16 +230,16 @@ export default function TravelHero() {
     setIsPaused(!nextState);
   };
 
-  // Auto-play timer
+  // Auto-play timer: pause interval when scrolled out of view to avoid background re-renders
   useEffect(() => {
-    if (isPaused || !isVideoPlaying) return;
+    if (isPaused || !isVideoPlaying || !isHeroInView) return;
 
     const timer = setInterval(() => {
       goToNextSlide();
     }, SLIDE_DURATION_MS);
 
     return () => clearInterval(timer);
-  }, [isPaused, isVideoPlaying, goToNextSlide]);
+  }, [isPaused, isVideoPlaying, isHeroInView, goToNextSlide]);
 
   // Keyboard navigation
   useEffect(() => {

@@ -4,7 +4,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 import Link from 'next/link';
-import { useLenis } from '@studio-freight/react-lenis';
+import { useLenis } from '@/components/layout/SmoothScroll';
 
 export default function Header() {
     const headerRef = useRef<HTMLElement>(null);
@@ -13,8 +13,13 @@ export default function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
 
     useEffect(() => {
+        let isScrolled = false;
         const handleScroll = () => {
-            setScrolled(window.scrollY > 40);
+            const nextScrolled = window.scrollY > 40;
+            if (nextScrolled !== isScrolled) {
+                isScrolled = nextScrolled;
+                setScrolled(nextScrolled);
+            }
         };
         handleScroll();
         window.addEventListener('scroll', handleScroll, { passive: true });

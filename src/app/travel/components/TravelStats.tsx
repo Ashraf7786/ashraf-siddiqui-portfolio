@@ -26,6 +26,7 @@ export default function TravelStats() {
         stagger: 0.1,
         ease: "power3.out",
         scrollTrigger: { trigger: sectionRef.current, start: "top 85%" },
+        clearProps: "all",
       });
     }, sectionRef);
     return () => ctx.revert();

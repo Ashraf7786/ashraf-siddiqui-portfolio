@@ -58,12 +58,7 @@ export default function TravelReels() {
       });
     }, sectionRef);
 
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 200);
-
     return () => {
-      clearTimeout(timer);
       ctx.revert();
     };
   }, [reelsList]);

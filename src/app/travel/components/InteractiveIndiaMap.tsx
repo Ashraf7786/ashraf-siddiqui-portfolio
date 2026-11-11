@@ -143,16 +143,22 @@ export default function InteractiveIndiaMap() {
     return () => ctx.revert();
   }, []);
 
+  const rafRef = useRef<number | null>(null);
+
   const handleMouseMove = (e: React.MouseEvent<SVGElement>, loc: MapLocation) => {
     if (!mapContainerRef.current) return;
-    const containerRect = mapContainerRef.current.getBoundingClientRect();
+    const clientX = e.clientX;
+    const clientY = e.clientY;
 
-    // Position relative to map card container
-    const x = e.clientX - containerRect.left;
-    const y = e.clientY - containerRect.top;
-
-    setTooltipPos({ x, y });
-    setHoveredLocation(loc);
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      if (!mapContainerRef.current) return;
+      const containerRect = mapContainerRef.current.getBoundingClientRect();
+      const x = clientX - containerRect.left;
+      const y = clientY - containerRect.top;
+      setTooltipPos({ x, y });
+      setHoveredLocation(loc);
+    });
   };
 
   const handleSelectState = (id: string) => {
