@@ -122,9 +122,9 @@ export default function AboutTraveller() {
 
   return (
     <section id="about" ref={sectionRef} className="py-20 sm:py-24 md:py-32 bg-[#09090c] border-t border-[#f5f5f5]/5 relative overflow-hidden">
-      {/* Subtle ambient gradient */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Subtle ambient lighting matching site theme */}
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
         <div className="grid md:grid-cols-12 gap-8 sm:gap-12 md:gap-14 items-center">
@@ -147,7 +147,7 @@ export default function AboutTraveller() {
               {/* Top Status Pill */}
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-medium shadow-lg">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
                   <span>On The Road · Jaipur Based</span>
                 </div>
                 <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/80">
@@ -161,7 +161,7 @@ export default function AboutTraveller() {
                   <p className="text-white font-bold text-sm tracking-tight" style={{ fontFamily: "var(--font-fredoka)" }}>
                     Ashraf Siddiqui
                   </p>
-                  <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-400 font-semibold">
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-white/70 font-semibold">
                     Leader &amp; Explorer
                   </span>
                 </div>
@@ -183,7 +183,7 @@ export default function AboutTraveller() {
                 States Explored
               </p>
               <div className="w-28 h-1.5 bg-white/10 rounded-full mt-2 overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-emerald-400 to-blue-400 rounded-full" style={{ width: "86%" }} />
+                <div className="h-full bg-gradient-to-r from-white/90 to-white/40 rounded-full" style={{ width: "86%" }} />
               </div>
               <p className="text-[9px] text-white/40 font-mono mt-1 text-right">86% of India</p>
             </div>
@@ -194,7 +194,7 @@ export default function AboutTraveller() {
             {/* Header Badge */}
             <div>
               <div className="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-400">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/60">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
@@ -253,7 +253,7 @@ export default function AboutTraveller() {
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/10 text-white/90 border border-white/10 font-bold uppercase tracking-wider">
                     {activeMode.tag}
                   </span>
-                  <span className="text-xs font-bold text-emerald-400 font-mono">
+                  <span className="text-xs font-bold text-white font-mono">
                     {activeMode.stat}
                   </span>
                 </div>
@@ -267,7 +267,7 @@ export default function AboutTraveller() {
                 </p>
 
                 <div className="pt-2 border-t border-white/5 flex items-center gap-2 text-[11px] text-white/50 font-medium">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-emerald-400 shrink-0">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="text-white/60 shrink-0">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                   <span className="truncate">{activeMode.highlight}</span>
@@ -322,15 +322,14 @@ export default function AboutTraveller() {
               </button>
 
               <a
-                href="https://wa.me/919876543210?text=Hi%20Ashraf,%20loved%20your%20travel%20stories!%20Wanted%20to%20ask%20you%20about%20traveling%20in%20India."
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:ashrafsiddiquitravel@gmail.com?subject=Travel%20Question%20for%20Ashraf"
                 className="w-full sm:w-auto px-5 py-3 rounded-full border border-white/20 text-white/80 hover:text-white hover:border-white/50 hover:bg-white/5 text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
                 </svg>
-                <span>Ask Ashraf a Question</span>
+                <span>Email Ashraf a Question</span>
               </a>
             </div>
 
