@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
       fullName,
       email,
       whatsapp,
+      gender,
       travelersCount,
       cityOfOrigin,
       dietPreference,
@@ -42,13 +43,67 @@ export async function POST(req: NextRequest) {
       pricePerPerson,
       collabType,
       subject,
+      agreeTerms,
     } = body;
 
-    if (!fullName || !email) {
+    const isTripRegistration = Boolean(tripTitle && !collabType);
+
+    if (!fullName || !String(fullName).trim() || String(fullName).trim().length < 2) {
       return NextResponse.json(
-        { success: false, error: "Full name and email are required." },
+        { success: false, error: "Full name is required (minimum 2 characters)." },
         { status: 400 }
       );
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(String(email).trim())) {
+      return NextResponse.json(
+        { success: false, error: "A valid email address is required." },
+        { status: 400 }
+      );
+    }
+
+    if (isTripRegistration) {
+      const cleanPhone = String(whatsapp || "").replace(/\D/g, "");
+      if (!cleanPhone || cleanPhone.length < 10) {
+        return NextResponse.json(
+          { success: false, error: "Valid 10-digit WhatsApp phone number is required." },
+          { status: 400 }
+        );
+      }
+
+      const cleanEmergency = String(emergencyContact || "").replace(/\D/g, "");
+      if (!cleanEmergency || cleanEmergency.length < 10) {
+        return NextResponse.json(
+          { success: false, error: "Valid 10-digit emergency contact phone number is required." },
+          { status: 400 }
+        );
+      }
+
+      if (!gender || !String(gender).trim()) {
+        return NextResponse.json(
+          { success: false, error: "Gender selection is required for expedition safety records." },
+          { status: 400 }
+        );
+      }
+
+      if (!cityOfOrigin || !String(cityOfOrigin).trim()) {
+        return NextResponse.json(
+          { success: false, error: "City of departure is required." },
+          { status: 400 }
+        );
+      }
+
+      if (!agreeTerms) {
+        return NextResponse.json(
+          {
+            success: false,
+            error:
+              "You must agree to the Terms & Conditions and Safety Disclaimer (travel at own risk & follow leader instructions) to proceed.",
+          },
+          { status: 400 }
+        );
+      }
     }
 
     const title = tripTitle
@@ -63,10 +118,12 @@ export async function POST(req: NextRequest) {
       fullName: String(fullName).trim(),
       email: String(email).trim().toLowerCase(),
       whatsapp: String(whatsapp || "").trim().replace(/\s+/g, ""),
+      gender: String(gender || "").trim(),
       travelersCount: Number(travelersCount) || 1,
       cityOfOrigin: String(cityOfOrigin || "").trim(),
       dietPreference: String(dietPreference || "Vegetarian").trim(),
       emergencyContact: String(emergencyContact || "").trim(),
+      termsAccepted: Boolean(agreeTerms),
       message: String(message || "").trim(),
       tripTitle: title,
       tripSlug: String(tripSlug || "").trim(),
@@ -87,10 +144,12 @@ export async function POST(req: NextRequest) {
         fullName: newEnquiry.fullName,
         email: newEnquiry.email,
         whatsapp: newEnquiry.whatsapp,
+        gender: newEnquiry.gender,
         travelersCount: newEnquiry.travelersCount,
         cityOfOrigin: newEnquiry.cityOfOrigin,
         dietPreference: newEnquiry.dietPreference,
         emergencyContact: newEnquiry.emergencyContact,
+        termsAccepted: newEnquiry.termsAccepted,
         message: newEnquiry.message,
         tripTitle: newEnquiry.tripTitle,
         tripSlug: newEnquiry.tripSlug,

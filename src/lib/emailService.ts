@@ -6,10 +6,12 @@ export interface InquiryEmailData {
   fullName: string;
   email: string;
   whatsapp?: string;
+  gender?: string;
   travelersCount?: number;
   cityOfOrigin?: string;
   dietPreference?: string;
   emergencyContact?: string;
+  termsAccepted?: boolean;
   message?: string;
   tripTitle?: string;
   tripSlug?: string;
@@ -205,11 +207,26 @@ export function buildInquiryHtml(data: InquiryEmailData): string {
                 }
 
                 ${
+                  data.gender
+                    ? `
+                <tr>
+                  <td width="38%" style="padding: 10px 14px; background-color: #131b2a; border-radius: 8px 0 0 8px; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase;">
+                    Gender
+                  </td>
+                  <td width="62%" style="padding: 10px 14px; background-color: #131b2a; border-radius: 0 8px 8px 0; font-size: 13px; font-weight: 600; color: #ffffff;">
+                    ${data.gender}
+                  </td>
+                </tr>
+                `
+                    : ""
+                }
+
+                ${
                   data.emergencyContact
                     ? `
                 <tr>
                   <td width="38%" style="padding: 10px 14px; background-color: #131b2a; border-radius: 8px 0 0 8px; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase;">
-                    Emergency Contact
+                    Emergency Phone
                   </td>
                   <td width="62%" style="padding: 10px 14px; background-color: #131b2a; border-radius: 0 8px 8px 0; font-size: 13px; font-weight: 600; color: #ffffff;">
                     ${data.emergencyContact}
@@ -218,6 +235,15 @@ export function buildInquiryHtml(data: InquiryEmailData): string {
                 `
                     : ""
                 }
+
+                <tr>
+                  <td width="38%" style="padding: 10px 14px; background-color: #131b2a; border-radius: 8px 0 0 8px; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase;">
+                    Safety & Risk Disclaimer
+                  </td>
+                  <td width="62%" style="padding: 10px 14px; background-color: #131b2a; border-radius: 0 8px 8px 0; font-size: 12px; font-weight: 600; color: #10b981;">
+                    ✓ Accepted (Travel at own risk & commit to leader instructions)
+                  </td>
+                </tr>
               </table>
 
               ${
@@ -352,3 +378,4 @@ export async function sendInquiryNotification(data: InquiryEmailData): Promise<{
     error: "No SMTP or Resend credentials configured. Add GMAIL_APP_PASSWORD or RESEND_API_KEY to receive emails.",
   };
 }
+

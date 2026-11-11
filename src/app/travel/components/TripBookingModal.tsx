@@ -21,10 +21,12 @@ export default function TripBookingModal({
     fullName: "",
     email: "",
     whatsapp: "",
+    gender: "",
     travelersCount: "1",
     cityOfOrigin: "",
     dietPreference: "Vegetarian",
     emergencyContact: "",
+    agreeTerms: false,
     message: "",
   });
 
@@ -36,12 +38,38 @@ export default function TripBookingModal({
 
   const validate = () => {
     const errs: Record<string, string> = {};
-    if (!formData.fullName.trim()) errs.fullName = "Full name is required";
-    if (!formData.email.trim() || !formData.email.includes("@"))
-      errs.email = "Valid email address is required";
-    if (!formData.whatsapp.trim() || formData.whatsapp.length < 10)
-      errs.whatsapp = "Valid 10-digit phone / WhatsApp number is required";
-    if (!formData.cityOfOrigin.trim()) errs.cityOfOrigin = "City of departure is required";
+
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
+      errs.fullName = "Full name is required (minimum 2 characters)";
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailPattern.test(formData.email.trim())) {
+      errs.email = "Valid email address is required (e.g. name@example.com)";
+    }
+
+    const phoneDigits = formData.whatsapp.replace(/\D/g, "");
+    if (!phoneDigits || phoneDigits.length < 10) {
+      errs.whatsapp = "Valid 10-digit WhatsApp number is required";
+    }
+
+    if (!formData.gender) {
+      errs.gender = "Please select your gender";
+    }
+
+    if (!formData.cityOfOrigin.trim()) {
+      errs.cityOfOrigin = "City of departure is required";
+    }
+
+    const emergencyDigits = formData.emergencyContact.replace(/\D/g, "");
+    if (!emergencyDigits || emergencyDigits.length < 10) {
+      errs.emergencyContact = "Valid 10-digit emergency contact phone number is required";
+    }
+
+    if (!formData.agreeTerms) {
+      errs.agreeTerms = "You must agree to the Terms & Conditions and Safety Disclaimer to register";
+    }
+
     return errs;
   };
 
@@ -88,12 +116,15 @@ export default function TripBookingModal({
       fullName: "",
       email: "",
       whatsapp: "",
+      gender: "",
       travelersCount: "1",
       cityOfOrigin: "",
       dietPreference: "Vegetarian",
       emergencyContact: "",
+      agreeTerms: false,
       message: "",
     });
+    setErrors({});
     onClose();
   };
 
@@ -342,7 +373,10 @@ export default function TripBookingModal({
                       autoComplete="name"
                       placeholder="e.g. Rahul Sharma"
                       value={formData.fullName}
-                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, fullName: e.target.value });
+                        if (errors.fullName) setErrors({ ...errors, fullName: "" });
+                      }}
                       className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
                     />
                     {errors.fullName && <p className="text-[11px] text-rose-400 mt-1">{errors.fullName}</p>}
@@ -359,7 +393,10 @@ export default function TripBookingModal({
                         autoComplete="email"
                         placeholder="e.g. rahul@example.com"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onChange={(e) => {
+                          setFormData({ ...formData, email: e.target.value });
+                          if (errors.email) setErrors({ ...errors, email: "" });
+                        }}
                         className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
                       />
                       {errors.email && <p className="text-[11px] text-rose-400 mt-1">{errors.email}</p>}
@@ -374,29 +411,37 @@ export default function TripBookingModal({
                         autoComplete="tel"
                         placeholder="e.g. +91 9876543210"
                         value={formData.whatsapp}
-                        onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+                        onChange={(e) => {
+                          setFormData({ ...formData, whatsapp: e.target.value });
+                          if (errors.whatsapp) setErrors({ ...errors, whatsapp: "" });
+                        }}
                         className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
                       />
                       {errors.whatsapp && <p className="text-[11px] text-rose-400 mt-1">{errors.whatsapp}</p>}
                     </div>
                   </div>
 
-                  {/* Travelers & City Grid */}
+                  {/* Gender & Departure City Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[#f5f5f5]/70 font-medium mb-1">
-                        Number of Travelers
+                        Gender <span className="text-rose-400">*</span>
                       </label>
                       <select
-                        value={formData.travelersCount}
-                        onChange={(e) => setFormData({ ...formData, travelersCount: e.target.value })}
-                        className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] outline-none focus:border-[#f5f5f5]/40"
+                        value={formData.gender}
+                        onChange={(e) => {
+                          setFormData({ ...formData, gender: e.target.value });
+                          if (errors.gender) setErrors({ ...errors, gender: "" });
+                        }}
+                        className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] outline-none focus:border-[#f5f5f5]/40 cursor-pointer"
                       >
-                        <option value="1">1 Person (Solo Explorer)</option>
-                        <option value="2">2 Persons (Couple / Friends)</option>
-                        <option value="3">3 Persons</option>
-                        <option value="4">4 Persons (Small Group)</option>
+                        <option value="">Select Gender *</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                        <option value="Prefer not to say">Prefer not to say</option>
                       </select>
+                      {errors.gender && <p className="text-[11px] text-rose-400 mt-1">{errors.gender}</p>}
                     </div>
 
                     <div>
@@ -407,15 +452,34 @@ export default function TripBookingModal({
                         type="text"
                         placeholder="e.g. Mumbai, Jaipur, Delhi"
                         value={formData.cityOfOrigin}
-                        onChange={(e) => setFormData({ ...formData, cityOfOrigin: e.target.value })}
+                        onChange={(e) => {
+                          setFormData({ ...formData, cityOfOrigin: e.target.value });
+                          if (errors.cityOfOrigin) setErrors({ ...errors, cityOfOrigin: "" });
+                        }}
                         className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
                       />
                       {errors.cityOfOrigin && <p className="text-[11px] text-rose-400 mt-1">{errors.cityOfOrigin}</p>}
                     </div>
                   </div>
 
-                  {/* Diet & Emergency Contact */}
+                  {/* Travelers & Diet Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[#f5f5f5]/70 font-medium mb-1">
+                        Number of Travelers
+                      </label>
+                      <select
+                        value={formData.travelersCount}
+                        onChange={(e) => setFormData({ ...formData, travelersCount: e.target.value })}
+                        className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] outline-none focus:border-[#f5f5f5]/40 cursor-pointer"
+                      >
+                        <option value="1">1 Person (Solo Explorer)</option>
+                        <option value="2">2 Persons (Couple / Friends)</option>
+                        <option value="3">3 Persons</option>
+                        <option value="4">4 Persons (Small Group)</option>
+                      </select>
+                    </div>
+
                     <div>
                       <label className="block text-[#f5f5f5]/70 font-medium mb-1">
                         Diet Preference
@@ -423,7 +487,7 @@ export default function TripBookingModal({
                       <select
                         value={formData.dietPreference}
                         onChange={(e) => setFormData({ ...formData, dietPreference: e.target.value })}
-                        className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] outline-none focus:border-[#f5f5f5]/40"
+                        className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] outline-none focus:border-[#f5f5f5]/40 cursor-pointer"
                       >
                         <option value="Vegetarian">Vegetarian</option>
                         <option value="Non-Vegetarian">Non-Vegetarian (Kashmiri Wazwan)</option>
@@ -431,19 +495,28 @@ export default function TripBookingModal({
                         <option value="Vegan">Vegan</option>
                       </select>
                     </div>
+                  </div>
 
-                    <div>
-                      <label className="block text-[#f5f5f5]/70 font-medium mb-1">
-                        Emergency Contact (Optional)
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder="e.g. Kin/Friend +91..."
-                        value={formData.emergencyContact}
-                        onChange={(e) => setFormData({ ...formData, emergencyContact: e.target.value })}
-                        className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
-                      />
-                    </div>
+                  {/* Emergency Contact Phone Number (Required) */}
+                  <div>
+                    <label className="block text-[#f5f5f5]/70 font-medium mb-1">
+                      Emergency Contact Phone Number <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      autoComplete="tel"
+                      placeholder="e.g. +91 98765 43210 (Kin / Friend / Guardian)"
+                      value={formData.emergencyContact}
+                      onChange={(e) => {
+                        setFormData({ ...formData, emergencyContact: e.target.value });
+                        if (errors.emergencyContact) setErrors({ ...errors, emergencyContact: "" });
+                      }}
+                      className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
+                    />
+                    <p className="text-[10px] text-[#f5f5f5]/40 mt-1">
+                      Mandatory for high-altitude expeditions. Direct phone line of a family member or trusted emergency contact.
+                    </p>
+                    {errors.emergencyContact && <p className="text-[11px] text-rose-400 mt-1">{errors.emergencyContact}</p>}
                   </div>
 
                   {/* Message */}
@@ -453,11 +526,66 @@ export default function TripBookingModal({
                     </label>
                     <textarea
                       rows={2}
-                      placeholder="Any health notes, questions about altitude, gear queries, etc."
+                      placeholder="Any medical notes, altitude concerns, gear queries, etc."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       className="w-full bg-[#080808] border border-[#f5f5f5]/15 rounded-xl px-3.5 py-2.5 text-xs text-[#f5f5f5] placeholder-[#f5f5f5]/30 outline-none focus:border-[#f5f5f5]/40"
                     />
+                  </div>
+
+                  {/* Terms & Conditions and Safety Disclaimer Card */}
+                  <div
+                    className={`p-4 rounded-2xl border transition-all ${
+                      errors.agreeTerms
+                        ? "bg-rose-500/[0.06] border-rose-500/40"
+                        : "bg-white/[0.03] border-white/10"
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-xl bg-white/5 border border-white/10 text-white/80 shrink-0 mt-0.5">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                          <path d="m9 12 2 2 4-4" />
+                        </svg>
+                      </div>
+                      <div className="space-y-1.5 flex-1">
+                        <h4 className="text-xs font-bold text-white tracking-wide uppercase">
+                          Terms &amp; Safety Disclaimer
+                        </h4>
+                        <p className="text-[11px] text-white/70 leading-relaxed">
+                          <strong>Travel at Your Own Risk:</strong> You acknowledge that you will travel at your own risk during this expedition, including transit across alpine passes and varying weather conditions.
+                        </p>
+                        <p className="text-[11px] text-white/70 leading-relaxed">
+                          <strong>Our Logistics &amp; Safety Protocol:</strong> We will manage all ground logistics, route scouting, stays, and expedition arrangements. For a safe and memorable journey, you agree to follow all instructions from Ashraf and the expedition team at all times.
+                        </p>
+                      </div>
+                    </div>
+
+                    <label className="mt-3.5 pt-3.5 border-t border-white/10 flex items-start gap-3 cursor-pointer select-none group">
+                      <input
+                        type="checkbox"
+                        checked={formData.agreeTerms}
+                        onChange={(e) => {
+                          setFormData({ ...formData, agreeTerms: e.target.checked });
+                          if (errors.agreeTerms) setErrors({ ...errors, agreeTerms: "" });
+                        }}
+                        className="mt-0.5 w-4 h-4 rounded border-white/30 bg-black text-white focus:ring-0 focus:ring-offset-0 cursor-pointer accent-white"
+                      />
+                      <span className="text-[11px] text-white/90 group-hover:text-white leading-normal font-medium">
+                        I agree to the Terms &amp; Conditions and Safety Disclaimer. I understand that I travel at my own risk, and I agree to follow all leader instructions for a safe journey. <span className="text-rose-400">*</span>
+                      </span>
+                    </label>
+
+                    {errors.agreeTerms && (
+                      <p className="text-[11px] text-rose-400 mt-2 font-medium flex items-center gap-1.5">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <circle cx="12" cy="12" r="10" />
+                          <line x1="12" y1="8" x2="12" y2="12" />
+                          <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                        <span>{errors.agreeTerms}</span>
+                      </p>
+                    )}
                   </div>
 
                   {errors.submit && (
@@ -476,7 +604,7 @@ export default function TripBookingModal({
                       {isSubmitting ? (
                         <>
                           <div className="w-3.5 h-3.5 border-2 border-[#080808]/30 border-t-[#080808] rounded-full animate-spin" />
-                          <span>Transmitting Registration...</span>
+                          <span>Verifying &amp; Transmitting Registration...</span>
                         </>
                       ) : (
                         <>
@@ -513,7 +641,7 @@ export default function TripBookingModal({
             </h3>
 
             <p className="text-xs text-[#f5f5f5]/70 max-w-sm mx-auto leading-relaxed">
-              Thank you, <strong className="text-white">{formData.fullName}</strong>. Your enquiry for{" "}
+              Thank you, <strong className="text-white">{formData.fullName}</strong>. Your registration for{" "}
               <strong className="text-white">{trip.title}</strong> has been logged in our expedition roster.
             </p>
 
@@ -527,12 +655,20 @@ export default function TripBookingModal({
                 <span className="text-white font-mono">{formData.whatsapp}</span>
               </div>
               <div className="flex justify-between">
+                <span className="text-[#f5f5f5]/40">Gender:</span>
+                <span className="text-white">{formData.gender}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#f5f5f5]/40">Emergency Phone:</span>
+                <span className="text-white font-mono">{formData.emergencyContact}</span>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-[#f5f5f5]/40">Departure:</span>
-                <span className="text-white">{trip.departureDate} ({trip.departureCity})</span>
+                <span className="text-white">{formData.cityOfOrigin} &rarr; {trip.departureDate}</span>
               </div>
               <div className="flex justify-between border-t border-[#f5f5f5]/10 pt-2">
-                <span className="text-[#f5f5f5]/40">Expedition Mode:</span>
-                <span className="text-white font-medium">Curated Small Group (10–12 Explorers)</span>
+                <span className="text-[#f5f5f5]/40">Safety Disclaimer:</span>
+                <span className="text-emerald-400 font-medium">✓ Accepted</span>
               </div>
             </div>
 
