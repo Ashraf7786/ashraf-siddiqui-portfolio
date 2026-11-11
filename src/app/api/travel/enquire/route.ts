@@ -1,16 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { extractClientIp } from "@/lib/adminAuth";
-
-const ENQUIRIES_FILE_PATH = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "travel",
-  "data",
-  "enquiries.json"
-);
+import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
 
 // Simple in-memory spam preventer: max 5 submissions per 10 mins per IP
 const submissionTracker = new Map<string, { count: number; firstAt: number }>();
@@ -83,18 +73,9 @@ export async function POST(req: NextRequest) {
       status: "New" as "New" | "Contacted" | "Confirmed" | "Archived",
     };
 
-    let existing: any[] = [];
-    if (fs.existsSync(ENQUIRIES_FILE_PATH)) {
-      try {
-        const content = fs.readFileSync(ENQUIRIES_FILE_PATH, "utf-8");
-        existing = JSON.parse(content);
-      } catch {
-        existing = [];
-      }
-    }
-
+    const existing = getCachedJson<any[]>("enquiries.json", []);
     existing.unshift(newEnquiry); // newest first
-    fs.writeFileSync(ENQUIRIES_FILE_PATH, JSON.stringify(existing, null, 2), "utf-8");
+    writeCachedJson("enquiries.json", existing);
 
     return NextResponse.json({
       success: true,

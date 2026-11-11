@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import os from "os";
 
 interface CacheEntry<T> {
   data: T;
@@ -8,30 +9,50 @@ interface CacheEntry<T> {
 
 const cacheStore = new Map<string, CacheEntry<any>>();
 
+function getPaths(fileName: string) {
+  const localDir = path.join(process.cwd(), "src", "app", "travel", "data");
+  const localFile = path.join(localDir, fileName);
+  const localBackup = path.join(localDir, fileName.replace(/\.json$/, ".backup.json"));
+
+  const tmpDir = path.join(os.tmpdir(), "ashraf-travel-data");
+  const tmpFile = path.join(tmpDir, fileName);
+
+  return { localDir, localFile, localBackup, tmpDir, tmpFile };
+}
+
 export function getCachedJson<T>(fileName: string, fallback: T): T {
-  const filePath = path.join(process.cwd(), "src", "app", "travel", "data", fileName);
+  const { localFile, tmpFile } = getPaths(fileName);
 
   try {
-    if (!fs.existsSync(filePath)) {
-      return fallback;
-    }
-
-    const stat = fs.statSync(filePath);
+    // 1. Check in-memory cache first (fastest)
     const cached = cacheStore.get(fileName);
-
-    if (cached && cached.mtimeMs === stat.mtimeMs) {
+    if (cached) {
       return cached.data as T;
     }
 
-    const raw = fs.readFileSync(filePath, "utf-8");
-    const parsed = JSON.parse(raw);
+    // 2. Check /tmp filesystem (active on serverless/Vercel)
+    if (fs.existsSync(tmpFile)) {
+      try {
+        const raw = fs.readFileSync(tmpFile, "utf-8");
+        const parsed = JSON.parse(raw);
+        const stat = fs.statSync(tmpFile);
+        cacheStore.set(fileName, { data: parsed, mtimeMs: stat.mtimeMs });
+        return parsed as T;
+      } catch (err) {
+        console.warn(`[DataCache] Error reading from /tmp for ${fileName}:`, err);
+      }
+    }
 
-    cacheStore.set(fileName, {
-      data: parsed,
-      mtimeMs: stat.mtimeMs,
-    });
+    // 3. Check bundled repository file
+    if (fs.existsSync(localFile)) {
+      const raw = fs.readFileSync(localFile, "utf-8");
+      const parsed = JSON.parse(raw);
+      const stat = fs.statSync(localFile);
+      cacheStore.set(fileName, { data: parsed, mtimeMs: stat.mtimeMs });
+      return parsed as T;
+    }
 
-    return parsed as T;
+    return fallback;
   } catch (err) {
     console.error(`[DataCache] Error reading ${fileName}:`, err);
     return fallback;
@@ -39,40 +60,44 @@ export function getCachedJson<T>(fileName: string, fallback: T): T {
 }
 
 export function writeCachedJson<T>(fileName: string, data: T, backup = true): boolean {
-  const filePath = path.join(process.cwd(), "src", "app", "travel", "data", fileName);
-  const backupPath = path.join(
-    process.cwd(),
-    "src",
-    "app",
-    "travel",
-    "data",
-    fileName.replace(/\.json$/, ".backup.json")
-  );
+  const { localFile, localBackup, tmpDir, tmpFile } = getPaths(fileName);
+  const jsonStr = JSON.stringify(data, null, 2);
+  let writeSucceeded = false;
 
+  // 1. Try writing to local project disk (works on localhost development)
   try {
-    const jsonStr = JSON.stringify(data, null, 2);
-
-    if (backup && fs.existsSync(filePath)) {
+    if (backup && fs.existsSync(localFile)) {
       try {
-        fs.copyFileSync(filePath, backupPath);
+        fs.copyFileSync(localFile, localBackup);
       } catch {
-        // backup failure non-fatal
+        // non-fatal backup error
       }
     }
-
-    fs.writeFileSync(filePath, jsonStr, "utf-8");
-
-    // Update in-memory cache directly
-    const stat = fs.statSync(filePath);
-    cacheStore.set(fileName, {
-      data,
-      mtimeMs: stat.mtimeMs,
-    });
-
-    return true;
-  } catch (err) {
-    console.error(`[DataCache] Error writing ${fileName}:`, err);
-    return false;
+    fs.writeFileSync(localFile, jsonStr, "utf-8");
+    writeSucceeded = true;
+  } catch (err: any) {
+    // Expected on Vercel / serverless environments where root filesystem is read-only (EROFS)
+    console.info(`[DataCache] Standard filesystem read-only (${err?.code || err?.message}). Falling back to /tmp and memory.`);
   }
-}
 
+  // 2. If local filesystem was read-only, write to serverless /tmp
+  if (!writeSucceeded) {
+    try {
+      if (!fs.existsSync(tmpDir)) {
+        fs.mkdirSync(tmpDir, { recursive: true });
+      }
+      fs.writeFileSync(tmpFile, jsonStr, "utf-8");
+      writeSucceeded = true;
+    } catch (tmpErr) {
+      console.warn(`[DataCache] /tmp write failed for ${fileName}:`, tmpErr);
+    }
+  }
+
+  // 3. Always update in-memory cache so subsequent requests in this runtime see the updated data
+  cacheStore.set(fileName, {
+    data,
+    mtimeMs: Date.now(),
+  });
+
+  return true;
+}

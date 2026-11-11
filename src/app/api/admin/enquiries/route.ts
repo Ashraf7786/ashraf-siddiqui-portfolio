@@ -1,16 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { getAdminSessionFromCookies } from "@/lib/adminAuth";
-
-const ENQUIRIES_FILE_PATH = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "travel",
-  "data",
-  "enquiries.json"
-);
+import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
 
 export async function GET() {
   const session = await getAdminSessionFromCookies();
@@ -19,11 +9,7 @@ export async function GET() {
   }
 
   try {
-    if (!fs.existsSync(ENQUIRIES_FILE_PATH)) {
-      return NextResponse.json({ success: true, enquiries: [] });
-    }
-    const content = fs.readFileSync(ENQUIRIES_FILE_PATH, "utf-8");
-    const enquiries = JSON.parse(content);
+    const enquiries = getCachedJson<any[]>("enquiries.json", []);
     return NextResponse.json({ success: true, enquiries });
   } catch (error) {
     return NextResponse.json({ success: false, error: "Failed to read enquiries." }, { status: 500 });
@@ -42,20 +28,14 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Missing enquiry id or status." }, { status: 400 });
     }
 
-    if (!fs.existsSync(ENQUIRIES_FILE_PATH)) {
-      return NextResponse.json({ success: false, error: "No enquiries found." }, { status: 404 });
-    }
-
-    const content = fs.readFileSync(ENQUIRIES_FILE_PATH, "utf-8");
-    const enquiries = JSON.parse(content);
-
+    const enquiries = getCachedJson<any[]>("enquiries.json", []);
     const index = enquiries.findIndex((e: any) => e.id === id);
     if (index === -1) {
       return NextResponse.json({ success: false, error: "Enquiry not found." }, { status: 404 });
     }
 
     enquiries[index].status = status;
-    fs.writeFileSync(ENQUIRIES_FILE_PATH, JSON.stringify(enquiries, null, 2), "utf-8");
+    writeCachedJson("enquiries.json", enquiries);
 
     return NextResponse.json({ success: true, enquiry: enquiries[index] });
   } catch (error) {
@@ -76,13 +56,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Missing enquiry id parameter." }, { status: 400 });
     }
 
-    if (!fs.existsSync(ENQUIRIES_FILE_PATH)) {
-      return NextResponse.json({ success: false, error: "No enquiries database." }, { status: 404 });
-    }
-
-    const content = fs.readFileSync(ENQUIRIES_FILE_PATH, "utf-8");
-    let enquiries = JSON.parse(content);
-
+    let enquiries = getCachedJson<any[]>("enquiries.json", []);
     const initialLength = enquiries.length;
     enquiries = enquiries.filter((e: any) => e.id !== id);
 
@@ -90,10 +64,9 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Enquiry not found." }, { status: 404 });
     }
 
-    fs.writeFileSync(ENQUIRIES_FILE_PATH, JSON.stringify(enquiries, null, 2), "utf-8");
+    writeCachedJson("enquiries.json", enquiries);
     return NextResponse.json({ success: true, message: "Enquiry deleted successfully." });
   } catch (error) {
     return NextResponse.json({ success: false, error: "Failed to delete enquiry." }, { status: 500 });
   }
 }
-
