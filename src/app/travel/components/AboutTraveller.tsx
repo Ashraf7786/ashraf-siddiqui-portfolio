@@ -23,12 +23,12 @@ const TRAVEL_MODES: TravelModeStory[] = [
   {
     id: "trains",
     label: "Train Journeys",
-    tag: "IRCTC & Sleeper Coaches",
-    stat: "18,000+ KM by Rail",
+    tag: "Indian Railways",
+    stat: "18,000+ KM by Train",
     title: "The real India lives on railway tracks",
     story:
-      "From waking up to early morning chai calls on the Konkan Railway to crossing the Dudhsagar waterfall mist from an open sleeper coach door. Train travel teaches you patience and gives you conversations you never forget.",
-    highlight: "Favorite Route: Mandovi Express through the Western Ghats tunnels",
+      "Waking up to hot morning chai on the train, feeling the cool wind, and watching waterfalls from the open door. Train travel is peaceful, slow, and gives you great memories with people you meet along the way.",
+    highlight: "Favorite Route: Mandovi Express through the green mountain tunnels of Goa",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <rect x="4" y="3" width="16" height="16" rx="2" />
@@ -41,13 +41,13 @@ const TRAVEL_MODES: TravelModeStory[] = [
   },
   {
     id: "mountains",
-    label: "High Passes",
-    tag: "Alpine Snow & Trails",
-    stat: "18,380 FT Highest Altitude",
-    title: "Quiet peaks and sub-zero winter trails",
+    label: "Mountains & Snow",
+    tag: "High Peaks",
+    stat: "18,380 FT Highest Point",
+    title: "Quiet peaks and fresh winter snow",
     story:
-      "Crossing Khardung La in freezing winds, camping under the clear Milky Way at Chandratal Lake, and exploring frozen waterfalls in Kashmir at -15°C. The mountains strip away stress and show you how grand nature truly is.",
-    highlight: "Memorable Moment: Standing alone on Apharwat Peak in fresh winter snow",
+      "Crossing high mountain roads in cold wind, camping under the stars near quiet lakes, and walking in fresh snow in Kashmir. Mountains help you slow down, breathe clean air, and forget daily stress.",
+    highlight: "Favorite Moment: Standing in fresh snow on top of Gulmarg mountain",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M8 3l4 8 5-5 5 15H2L8 3z" />
@@ -57,12 +57,12 @@ const TRAVEL_MODES: TravelModeStory[] = [
   {
     id: "food",
     label: "Local Food",
-    tag: "Street Flavors & Dhabas",
-    stat: "500+ Kulhad Chais",
-    title: "Finding the soul of a state through its food",
+    tag: "Street Food & Dhabas",
+    stat: "500+ Cups of Chai",
+    title: "Eating like a local in every state",
     story:
-      "Skipping fancy tourist cafes for highway dhabas, local family kitchens, and bustling street stalls. From traditional Kashmiri Wazwan in Srinagar to spicy Ker Sangri in the Thar desert and hot momos in Meghalaya.",
-    highlight: "Top Recommendation: Noon Chai with freshly baked Girda bread in Srinagar",
+      "I skip big tourist cafes to eat at small road dhabas and family kitchens. From hot Kashmiri food in Srinagar to fresh rotis in Rajasthan and steamed momos in the hills.",
+    highlight: "Must Try: Hot pink tea (Noon Chai) with fresh bread in Srinagar",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
@@ -76,12 +76,12 @@ const TRAVEL_MODES: TravelModeStory[] = [
   {
     id: "roads",
     label: "Road Trips",
-    tag: "Highways & Hidden Trails",
+    tag: "Open Roads",
     stat: "40,000+ KM Driven",
-    title: "The journey is just as exciting as the destination",
+    title: "The drive is just as fun as reaching the place",
     story:
-      "Navigating dirt switchbacks in Himachal, endless straight tarmac across Rajasthan's salt flats, and coastal drives along the Arabian Sea. Having your own wheels means you can stop wherever a village market or river calls.",
-    highlight: "Favorite Highway: The desolate stretch between Jaisalmer and Longewala",
+      "Driving through mountain curves in Himachal, long straight open roads in the Rajasthan desert, and peaceful sea routes. When you drive, you can stop anytime you see a small tea stall or a pretty view.",
+    highlight: "Favorite Road: The quiet desert road between Jaisalmer and Longewala",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="12" cy="12" r="10" />
@@ -121,7 +121,7 @@ export default function AboutTraveller() {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-20 sm:py-24 md:py-32 bg-[#09090c] border-t border-[#f5f5f5]/5 relative overflow-hidden">
+    <section id="about" ref={sectionRef} className="py-20 sm:py-24 md:py-32 bg-[#080808] border-t border-[#f5f5f5]/5 relative overflow-hidden">
       {/* Subtle ambient lighting matching site theme */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
@@ -131,10 +131,10 @@ export default function AboutTraveller() {
           
           {/* ─── LEFT: Cinematic Photo with Live Floating Badges ─── */}
           <div className="md:col-span-5 about-photo relative max-w-md mx-auto md:max-w-none w-full">
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] border border-white/15 bg-[#111113] shadow-2xl group">
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] border border-white/10 bg-[#111113] shadow-2xl group">
               <Image
                 src="/img/travel/ashraf.jpeg"
-                alt="Ashraf Siddiqui - Solo Traveller & Trip Leader"
+                alt="Ashraf Siddiqui - Solo Traveler and Trip Leader"
                 fill
                 className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 40vw"
@@ -162,11 +162,11 @@ export default function AboutTraveller() {
                     Ashraf Siddiqui
                   </p>
                   <span className="text-[10px] uppercase font-mono tracking-wider text-white/70 font-semibold">
-                    Leader &amp; Explorer
+                    Solo Explorer
                   </span>
                 </div>
                 <p className="text-[11px] text-white/70 leading-relaxed">
-                  Solo traveller exploring mountain passes, quiet train routes, and authentic stories across India.
+                  Exploring mountain trails, scenic train lines, and authentic local life across India.
                 </p>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function AboutTraveller() {
                   <circle cx="12" cy="7" r="4" />
                 </svg>
                 <span className="text-[11px] tracking-[0.2em] uppercase text-white/60 font-semibold">
-                  Meet The Traveller
+                  About The Traveler
                 </span>
               </div>
 
@@ -215,13 +215,13 @@ export default function AboutTraveller() {
             </div>
 
             <p className="text-[#f5f5f5]/75 text-xs sm:text-sm leading-relaxed max-w-xl">
-              I don&apos;t travel to take posed photos or promote sponsored hotels. Over 4+ years across 24 Indian states, I travel to discover real people, mountain villages, and authentic stories.
+              I travel to see real places, meet kind people, and share honest experiences. Over 4+ years across 24 Indian states, I keep every journey simple, safe, and true.
             </p>
 
             {/* ─── INTERACTIVE TRAVEL MODE TABS ─── */}
             <div className="space-y-3">
               <div className="flex items-center justify-between text-[11px] text-white/40 uppercase tracking-wider font-semibold">
-                <span>Select a travel style to explore:</span>
+                <span>Select a travel style to see stories:</span>
                 <span className="text-white/60 font-mono">{activeMode.stat}</span>
               </div>
 
@@ -248,7 +248,7 @@ export default function AboutTraveller() {
               </div>
 
               {/* Dynamic Interactive Story Card */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/15 space-y-2.5 animate-in fade-in duration-300">
+              <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5 animate-in fade-in duration-300">
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/10 text-white/90 border border-white/10 font-bold uppercase tracking-wider">
                     {activeMode.tag}
@@ -279,17 +279,17 @@ export default function AboutTraveller() {
             <div className="grid grid-cols-3 gap-2.5 sm:gap-3 text-center">
               <div className="p-2.5 sm:p-3 rounded-xl bg-white/[0.02] border border-white/10">
                 <span className="text-[10px] uppercase text-white/40 tracking-wider block font-semibold">
-                  Pack Weight
+                  Bag Weight
                 </span>
                 <span className="text-xs sm:text-sm font-bold text-white mt-0.5 block" style={{ fontFamily: "var(--font-fredoka)" }}>
                   8.5 KG
                 </span>
-                <span className="text-[9px] text-white/40">14-day gear</span>
+                <span className="text-[9px] text-white/40">2-week gear</span>
               </div>
 
               <div className="p-2.5 sm:p-3 rounded-xl bg-white/[0.02] border border-white/10">
                 <span className="text-[10px] uppercase text-white/40 tracking-wider block font-semibold">
-                  Rule of Travel
+                  Simple Rule
                 </span>
                 <span className="text-xs sm:text-sm font-bold text-white mt-0.5 block" style={{ fontFamily: "var(--font-fredoka)" }}>
                   Zero Fake Ads
@@ -299,12 +299,12 @@ export default function AboutTraveller() {
 
               <div className="p-2.5 sm:p-3 rounded-xl bg-white/[0.02] border border-white/10">
                 <span className="text-[10px] uppercase text-white/40 tracking-wider block font-semibold">
-                  Next Milestone
+                  Next Goal
                 </span>
                 <span className="text-xs sm:text-sm font-bold text-white mt-0.5 block" style={{ fontFamily: "var(--font-fredoka)" }}>
                   All 28 States
                 </span>
-                <span className="text-[9px] text-white/40">4 remaining</span>
+                <span className="text-[9px] text-white/40">4 left to visit</span>
               </div>
             </div>
 
@@ -329,7 +329,7 @@ export default function AboutTraveller() {
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                <span>Email Ashraf a Question</span>
+                <span>Send Ashraf an Email</span>
               </a>
             </div>
 

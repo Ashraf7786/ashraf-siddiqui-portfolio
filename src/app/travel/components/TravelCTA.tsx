@@ -21,39 +21,39 @@ interface TripVibe {
 const TRIP_VIBES: TripVibe[] = [
   {
     id: "snow",
-    name: "Snow & Alpine Peaks",
-    badge: "Winter Expedition",
+    name: "Snow & Mountains",
+    badge: "Winter Trips",
     destinations: "Kashmir · Gulmarg · Sonmarg",
-    highlights: ["Frozen Dal Lake & cedar houseboats", "14,000-ft Apharwat gondola ride", "Hot saffron Kehwa by pine fires"],
-    bestTime: "Dec to March",
-    idealFor: "Snow lovers, solo explorers, small groups",
+    highlights: ["Frozen Dal Lake & cozy houseboats", "Cable car ride up snowy mountains in Gulmarg", "Hot tea by the wood fire on cold evenings"],
+    bestTime: "December to March",
+    idealFor: "Snow lovers, solo travelers, small groups",
   },
   {
     id: "desert",
     name: "Desert & Starlight",
-    badge: "Desert Trails",
-    destinations: "Jaisalmer · Sam Dunes · Longewala",
-    highlights: ["Sleeping under clear desert skies", "Golden sandstone fort walks", "Fresh Ker Sangri & bajra roti dhabas"],
-    bestTime: "Oct to March",
-    idealFor: "Stargazers, photographers, road-trippers",
+    badge: "Desert Trips",
+    destinations: "Jaisalmer · Sam Sand Dunes · Longewala",
+    highlights: ["Sleeping under clear desert skies", "Walking inside old golden forts", "Hot fresh food at roadside dhabas"],
+    bestTime: "October to March",
+    idealFor: "Stargazers, road trippers, photo lovers",
   },
   {
     id: "monsoon",
-    name: "Rainforests & Waterfalls",
-    badge: "Lush Green Trails",
+    name: "Green Hills & Waterfalls",
+    badge: "Nature Trips",
     destinations: "Meghalaya · Cherrapunji · Dawki",
-    highlights: ["3,000-step living root bridges", "Crystal clear river boating", "Hidden natural rock pools"],
+    highlights: ["Walking on natural living root bridges", "Boating on crystal clear water", "Swimming in clean rock pools"],
     bestTime: "July to November",
     idealFor: "Trekkers, nature seekers, explorers",
   },
   {
     id: "rail",
-    name: "Heritage & Coastal Rail",
-    badge: "Iconic Rail Journey",
+    name: "Scenic Train Routes",
+    badge: "Train Trips",
     destinations: "Konkan Route · Goa · Gokarna",
-    highlights: ["Dudhsagar waterfall spray from train door", "Sunset Arabian sea cliff walks", "Authentic coastal cuisine"],
+    highlights: ["Seeing big waterfalls from the train door", "Sunset walks along sea cliffs", "Fresh local food by the beach"],
     bestTime: "All Year Round",
-    idealFor: "Train enthusiasts, quiet wanderers",
+    idealFor: "Train lovers, peaceful travelers",
   },
 ];
 
@@ -101,21 +101,21 @@ export default function TravelCTA() {
           <div className="text-center max-w-3xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 backdrop-blur-md border border-white/10 text-white/80 text-xs font-medium">
               <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
-              <span>Small-Group Expeditions · 10 to 12 Travelers Max</span>
+              <span>Small Groups · 10 to 12 People Only</span>
             </div>
 
             <h2
               className="text-3xl sm:text-5xl md:text-6xl font-bold text-[#f5f5f5] tracking-tight leading-[1.08]"
               style={{ fontFamily: "var(--font-fredoka)" }}
             >
-              Stop waiting for the perfect time.
+              Stop waiting for the perfect day.
               <span className="block text-white/50 font-light text-2xl sm:text-4xl md:text-5xl mt-1">
                 Your next journey starts here.
               </span>
             </h2>
 
             <p className="text-sm sm:text-base text-[#f5f5f5]/70 leading-relaxed max-w-2xl mx-auto">
-              Whether you want to climb alpine passes, sleep under desert stars, or take scenic trains through the hills — you don&apos;t have to figure it all out alone.
+              Whether you want to see snow in the mountains, sleep under desert stars, or take a peaceful train ride — you don&apos;t have to plan it alone.
             </p>
           </div>
 
@@ -124,14 +124,14 @@ export default function TravelCTA() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
               <div>
                 <p className="text-xs uppercase tracking-wider text-white/50 font-semibold font-mono">
-                  Pick your travel style
+                  Pick what kind of trip you like
                 </p>
                 <p className="text-sm text-[#f5f5f5] font-medium">
-                  See where we explore and what the journey feels like:
+                  See where we go and what the trip feels like:
                 </p>
               </div>
               <span className="text-[11px] text-white/40 font-mono">
-                Click any tab below
+                Click any option below
               </span>
             </div>
 
@@ -166,7 +166,7 @@ export default function TravelCTA() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                   <span className="text-xs text-white/40 uppercase tracking-wider font-semibold font-mono">
-                    Destinations
+                    Places We Visit
                   </span>
                   <p className="text-base sm:text-lg font-bold text-[#f5f5f5]" style={{ fontFamily: "var(--font-fredoka)" }}>
                     {activeVibe.destinations}
@@ -194,7 +194,7 @@ export default function TravelCTA() {
 
               <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/10 text-xs">
                 <span className="text-white/60">
-                  <strong className="text-white">Ideal For:</strong> {activeVibe.idealFor}
+                  <strong className="text-white">Best For:</strong> {activeVibe.idealFor}
                 </span>
 
                 <button
@@ -202,7 +202,7 @@ export default function TravelCTA() {
                   onClick={() => document.querySelector("#group-tours")?.scrollIntoView({ behavior: "smooth" })}
                   className="inline-flex items-center gap-1.5 text-white hover:text-white/80 font-semibold cursor-pointer underline-offset-4 hover:underline"
                 >
-                  <span>View upcoming group dates for this</span>
+                  <span>See upcoming dates for this trip</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
@@ -220,10 +220,10 @@ export default function TravelCTA() {
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
-                  <span>10–12 Travelers Only</span>
+                  <span>10–12 People Only</span>
                 </div>
                 <p className="text-[11px] text-white/50 leading-relaxed">
-                  No huge crowds or rushed buses. Just real people making genuine travel memories.
+                  No crowded tour buses. Just friendly people traveling together like friends.
                 </p>
               </div>
 
@@ -233,10 +233,10 @@ export default function TravelCTA() {
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                     <polyline points="9 22 9 12 15 12 15 22" />
                   </svg>
-                  <span>Handpicked Local Stays</span>
+                  <span>Clean Local Stays</span>
                 </div>
                 <p className="text-[11px] text-white/50 leading-relaxed">
-                  Warm family homestays, cedar houseboats, and mountain lodges with home-cooked meals.
+                  Handpicked family homestays, houseboats, and mountain rooms with hot home-cooked meals.
                 </p>
               </div>
 
@@ -247,22 +247,22 @@ export default function TravelCTA() {
                     <path d="M12 8v4" />
                     <path d="M12 16h.01" />
                   </svg>
-                  <span>Zero Fake Gimmicks</span>
+                  <span>No Hidden Rules</span>
                 </div>
                 <p className="text-[11px] text-white/50 leading-relaxed">
-                  Clear day-by-day plans, honest guidance, and complete freedom to enjoy your journey.
+                  Clear day-by-day plan, honest advice, and zero forced shopping stops.
                 </p>
               </div>
             </div>
 
-            {/* ─── CALL TO ACTION BUTTONS (EMAIL ONLY, NO WHATSAPP) ─── */}
+            {/* ─── CALL TO ACTION BUTTONS ─── */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
               <button
                 type="button"
                 onClick={() => document.querySelector("#group-tours")?.scrollIntoView({ behavior: "smooth" })}
                 className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white text-black font-bold text-xs sm:text-sm hover:bg-[#eaeaea] transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>Browse Upcoming Group Trips</span>
+                <span>See Upcoming Trips</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -284,7 +284,7 @@ export default function TravelCTA() {
                 onClick={() => document.querySelector("#interactive-map")?.scrollIntoView({ behavior: "smooth" })}
                 className="w-full sm:w-auto px-5 py-3.5 rounded-full border border-white/10 text-white/60 hover:text-white hover:border-white/30 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <span>View 28 States Map</span>
+                <span>See 28 States Map</span>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M12 5v14M19 12l-7 7-7-7" />
                 </svg>
