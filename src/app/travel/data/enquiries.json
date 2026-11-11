@@ -1,5 +1,22 @@
 [
   {
+    "id": "enq-1794425319875-wqd4c",
+    "createdAt": "2026-11-11T19:28:39.875Z",
+    "fullName": "Vinit Swami",
+    "email": "ashrafsiddiqui6378@gmail.com",
+    "whatsapp": "+918233095730",
+    "gender": "Male",
+    "travelersCount": 2,
+    "cityOfOrigin": "Jaipur",
+    "dietPreference": "Non-Vegetarian",
+    "emergencyContact": "+916377560861",
+    "termsAccepted": true,
+    "message": "",
+    "tripTitle": "Kashmir Winter & Alpine Powder Expedition",
+    "tripSlug": "kashmir-winter-expedition-2026",
+    "status": "New"
+  },
+  {
     "id": "enq-1794425141609-yxqx4",
     "createdAt": "2026-11-11T19:25:41.609Z",
     "fullName": "Karan Mehra",

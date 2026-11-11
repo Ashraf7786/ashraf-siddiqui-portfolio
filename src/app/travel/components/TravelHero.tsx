@@ -30,62 +30,62 @@ const EXPEDITION_SLIDES: ExpeditionSlide[] = [
   {
     id: "spiti-4x4-expedition",
     tripSlug: "spiti-valley-circuit-2026",
-    badgeLabel: "Official Announcement · High-Altitude Expedition",
+    badgeLabel: "Winter Group Trip · Snow 4x4",
     titleLine1: "WINTER SPITI 4×4",
-    titleLine2: "WHITE EXPEDITION.",
+    titleLine2: "SNOW ROAD TRIP.",
     subtitle:
-      "Cross 15,000-ft frozen Himalayan passes, ancient cliff monasteries & ride across white Spiti plains with a curated small group.",
+      "Cross snow-covered Himalayan passes, visit ancient cliff monasteries, and explore frozen Spiti Valley with a small, friendly group.",
     posterImage: "/img/travel/ladakh.jpg",
-    imageAlt: "Winter Spiti 4x4 high-altitude snow expedition",
+    imageAlt: "Winter Spiti 4x4 snow trip",
     videoUrl: "/videos/reels/travelashraf1.mp4",
     tripData: GROUP_TRIPS.find((t) => t.slug === "spiti-valley-circuit-2026") || GROUP_TRIPS[1] || GROUP_TRIPS[0],
   },
   {
     id: "kashmir-winter-expedition",
     tripSlug: "kashmir-winter-expedition-2026",
-    badgeLabel: "Alpine Winter · Verified Group Tour",
+    badgeLabel: "Winter Snow Trip · Kashmir",
     titleLine1: "KASHMIR WINTER",
-    titleLine2: "POWDER TRAILS.",
+    titleLine2: "SNOW TRAILS.",
     subtitle:
-      "From solitary shikara drifts on frozen Dal Lake to high-altitude powder at Apharwat Peak. Experience Kashmir with zero tourist rush.",
+      "Enjoy quiet shikara boat rides on Dal Lake, walk in fresh snow at Gulmarg, and see the best of Kashmir without crowded tourist rush.",
     posterImage: "/img/travel/kashmir_hero.jpg",
-    imageAlt: "Kashmir winter alpine snow expedition",
+    imageAlt: "Kashmir winter snow trip",
     videoUrl: "/videos/reels/travelashraf1.mp4",
     tripData: GROUP_TRIPS.find((t) => t.slug === "kashmir-winter-expedition-2026") || GROUP_TRIPS[0],
   },
   {
     id: "ladakh-overland-expedition",
     tripSlug: "ladakh-high-passes-overland-2026",
-    badgeLabel: "High Passes Circuit · 18,380 FT",
-    titleLine1: "LADAKH OVERLAND",
+    badgeLabel: "Mountain Road Trip · Ladakh",
+    titleLine1: "LADAKH ROAD TRIP",
     titleLine2: "HIGH PASSES.",
     subtitle:
-      "Pangong's impossible blue, Khardung La's thin air, and star-filled night skies unpolluted by light. An overland route designed for true explorers.",
+      "Clear blue lakes, high mountain roads, and stunning starry night skies. A road trip made for people who love nature and open roads.",
     posterImage: "/img/travel/ladakh.jpg",
-    imageAlt: "Ladakh high passes overland expedition",
+    imageAlt: "Ladakh high passes road trip",
     videoUrl: "/videos/reels/travelashraf2.mp4",
     tripData: GROUP_TRIPS.find((t) => t.slug === "ladakh-high-passes-overland-2026") || GROUP_TRIPS[2] || GROUP_TRIPS[0],
   },
   {
     id: "meghalaya-living-roots",
     tripSlug: "meghalaya-living-root-bridges-2026",
-    badgeLabel: "Northeast Trails · Ancient Bridges",
+    badgeLabel: "Northeast Hills · Living Root Bridges",
     titleLine1: "MEGHALAYA TRAILS",
     titleLine2: "ROOT BRIDGES.",
     subtitle:
-      "Trek down 3,500 steps to century-old bio-engineered root bridges, swim in crystal Umngot waters, and explore sacred Khasi rainforests.",
+      "Walk down to ancient living root bridges, see crystal-clear rivers, and explore the waterfalls and green valleys of Meghalaya.",
     posterImage: "/img/travel/kashmir_hero.jpg",
-    imageAlt: "Meghalaya living root bridges expedition",
+    imageAlt: "Meghalaya root bridges trip",
     tripData: GROUP_TRIPS.find((t) => t.slug === "meghalaya-living-root-bridges-2026") || GROUP_TRIPS[3] || GROUP_TRIPS[0],
   },
 ];
 
 /* Quick Navigation Chips (Homepage Section Shortcuts) */
 const QUICK_NAV_CHIPS = [
-  { label: "Group Expeditions", href: "#group-tours" },
-  { label: "Cinematic Reels", href: "#reels" },
-  { label: "Destination Guides", href: "#destinations" },
-  { label: "24/28 States Journey", href: "#journey" },
+  { label: "Group Trips", href: "#group-tours" },
+  { label: "Short Videos", href: "#reels" },
+  { label: "Travel Guides", href: "#destinations" },
+  { label: "My Journey (24 States)", href: "#journey" },
 ];
 
 export default function TravelHero() {
@@ -392,7 +392,7 @@ export default function TravelHero() {
             </span>
             <span className="hidden sm:inline text-[#f5f5f5]/30">·</span>
             <span className="hidden sm:inline text-[10px] sm:text-[11px] text-[#f5f5f5]/60 font-medium">
-              Expedition {currentSlideIndex + 1} of {slides.length}
+              Trip {currentSlideIndex + 1} of {slides.length}
             </span>
           </div>
         </div>
@@ -489,9 +489,9 @@ export default function TravelHero() {
                 <button
                   onClick={handleOpenBookingModal}
                   className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-[#f5f5f5] text-[#080808] hover:bg-white hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
-                  aria-label={`View details and enquire for ${currentSlide.titleLine1 || "Expedition"}`}
+                  aria-label={`View details and enquire for ${currentSlide.titleLine1 || "Trip"}`}
                 >
-                  <span>{(currentSlide as any).primaryCta?.label || "View Trip Details & Reserve"}</span>
+                  <span>{(currentSlide as any).primaryCta?.label || "View Trip Plan & Book"}</span>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <line x1="5" y1="12" x2="19" y2="12" />
                     <polyline points="12 5 19 12 12 19" />
@@ -504,9 +504,9 @@ export default function TravelHero() {
                 <button
                   onClick={() => scrollToSection((currentSlide as any).secondaryCta?.target || "#group-tours")}
                   className="w-full sm:w-auto px-6 py-3.5 rounded-full text-xs sm:text-sm font-semibold border border-[#f5f5f5]/20 text-[#f5f5f5] hover:border-[#f5f5f5]/60 hover:bg-white/5 backdrop-blur-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  aria-label="Explore all group expeditions section"
+                  aria-label="Explore all group trips section"
                 >
-                  <span>{(currentSlide as any).secondaryCta?.label || "Explore All Expeditions"}</span>
+                  <span>{(currentSlide as any).secondaryCta?.label || "See All Group Trips"}</span>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M12 5v14M19 12l-7 7-7-7" />
                   </svg>

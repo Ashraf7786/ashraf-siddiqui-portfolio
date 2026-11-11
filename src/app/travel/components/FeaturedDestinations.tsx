@@ -27,7 +27,7 @@ const DESTINATIONS = [
     tagline: "Land of High Passes",
     region: "North India",
     image: "/img/travel/ladakh.jpg",
-    description: "Pangong's impossible blue, Khardung La's thin air, and skies unpolluted by light. Ladakh obliterates your sense of scale.",
+    description: "Pangong's deep blue waters, Khardung La's fresh mountain air, and clear starry night skies. Ladakh shows you the true scale and beauty of the Himalayas.",
     tags: ["High Altitude", "Monasteries", "Desert"],
   },
   {
@@ -37,7 +37,7 @@ const DESTINATIONS = [
     tagline: "The Land of Kings",
     region: "West India",
     image: "/img/travel/rajasthan.jpg",
-    description: "Camel rides at Jaisalmer, echoing corridors of Mehrangarh, and the blue city of Jodhpur — Rajasthan is India at its most vivid.",
+    description: "Desert safaris in Jaisalmer, historical forts, and the colorful streets of Jodhpur and Jaipur — Rajasthan is full of culture and warmth.",
     tags: ["Desert", "Forts", "Culture"],
   },
   {
@@ -47,7 +47,7 @@ const DESTINATIONS = [
     tagline: "Abode of the Clouds",
     region: "Northeast India",
     image: "/img/travel/kashmir_hero.jpg",
-    description: "Living root bridges of Cherrapunji, crystal waters of the Umngot River in Dawki, and endless waterfalls tumbling through deep emerald canyons.",
+    description: "Living root bridges of Cherrapunji, crystal-clear water of Umngot River in Dawki, and beautiful waterfalls everywhere you look.",
     tags: ["Waterfalls", "Root Bridges", "Caves"],
   },
 ];
@@ -92,7 +92,7 @@ export default function FeaturedDestinations() {
         <div className="dest-header flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div>
             <p className="text-xs tracking-[0.3em] uppercase text-[#f5f5f5]/40 mb-3 font-semibold">
-              Curated Field Guides &amp; Itineraries
+              Travel Guides &amp; Trip Plans
             </p>
             <h2
               className="font-bold text-[#f5f5f5] leading-[1.05]"
@@ -103,13 +103,13 @@ export default function FeaturedDestinations() {
           </div>
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <p className="text-[#f5f5f5]/50 text-sm leading-relaxed max-w-sm">
-              Detailed guides, transport options, itineraries, and real travel notes.
+              Simple guides, routes, stay recommendations, and honest travel notes.
             </p>
             <Link
               href="/travel/destinations"
               className="text-xs px-4 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 text-[#f5f5f5] hover:bg-white/5 transition-all whitespace-nowrap self-start"
             >
-              All Guides &amp; Timeline &rarr;
+              See All Guides &rarr;
             </Link>
           </div>
         </div>

@@ -114,7 +114,7 @@ export default function TravelReels() {
             href="/travel/reels"
             className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#f5f5f5] hover:text-white transition-all self-start md:self-auto px-4 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 bg-transparent hover:bg-white/5"
           >
-            <span>Explore All Reels Feed</span>
+            <span>See All Travel Videos</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="5" y1="12" x2="19" y2="12"/>
               <polyline points="12 5 19 12 12 19"/>

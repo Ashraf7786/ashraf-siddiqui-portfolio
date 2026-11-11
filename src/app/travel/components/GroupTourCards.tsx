@@ -58,10 +58,10 @@ export default function GroupTourCards() {
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f5f5f5]"
             style={{ fontFamily: "var(--font-fredoka)" }}
           >
-            Group Expeditions
+            Upcoming Group Trips
           </h2>
           <p className="mt-2 text-[#f5f5f5]/50 max-w-lg text-xs sm:text-sm leading-relaxed">
-            Travel slowly with a close-knit group of 10 to 12 explorers. Personally led by Ashraf Siddiqui across India’s wildest routes.
+            Travel with a friendly group of 10 to 12 people. Guided personally by Ashraf Siddiqui across India’s most scenic routes.
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export default function GroupTourCards() {
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                           </svg>
-                          <span>Upcoming Expedition</span>
+                          <span>Upcoming Trip</span>
                         </span>
                       ) : (
                         <span className="text-[10px] sm:text-[11px] font-semibold px-3 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1.5 backdrop-blur-md shadow-lg">
@@ -160,7 +160,7 @@ export default function GroupTourCards() {
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                               </svg>
-                              <span>Official Expedition Vision</span>
+                              <span>Trip Highlights</span>
                             </div>
 
                             {/* Highlighted Tagline */}
@@ -169,7 +169,7 @@ export default function GroupTourCards() {
                             </blockquote>
 
                             <p className="text-[11px] text-[#f5f5f5]/40 font-mono pt-1">
-                              Itinerary &amp; confirmed seats dropping soon
+                              Dates and full plan coming soon
                             </p>
                           </div>
                         </div>
@@ -224,7 +224,7 @@ export default function GroupTourCards() {
                             }}
                             className="px-5 py-2.5 rounded-full text-xs font-bold bg-white text-black hover:bg-[#eaeaea] transition-all flex items-center gap-2 cursor-pointer shadow-md"
                           >
-                            <span>Notify When Dates Drop</span>
+                            <span>Get Notified When Dates Open</span>
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                               <line x1="5" y1="12" x2="19" y2="12" />
                               <polyline points="12 5 19 12 12 19" />
@@ -234,14 +234,14 @@ export default function GroupTourCards() {
                       ) : (
                         <>
                           <div>
-                            <p className="text-[9px] text-[#f5f5f5]/30 uppercase tracking-widest">Expedition Mode</p>
+                            <p className="text-[9px] text-[#f5f5f5]/30 uppercase tracking-widest">Trip Type</p>
                             <p
                               className="text-base sm:text-lg font-bold text-[#f5f5f5]"
                               style={{ fontFamily: "var(--font-fredoka)" }}
                             >
-                              Curated Group Tour
+                              Small Group Trip
                               <span className="text-[11px] text-[#f5f5f5]/40 font-normal block font-sans">
-                                Small Group (10–12 Travellers)
+                                10–12 Travellers
                               </span>
                             </p>
                           </div>
@@ -253,16 +253,16 @@ export default function GroupTourCards() {
                               }}
                               className="px-4 py-2 rounded-full text-xs font-semibold text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/30 transition-all cursor-pointer"
                             >
-                              View Itinerary
+                              See Day-by-Day Plan
                             </button>
                             <button
                               onClick={() => {
                                 setActiveModalTrip(tour);
                                 setIsModalOpen(true);
                               }}
-                              className="px-5 py-2 rounded-full text-xs font-bold text-black bg-white hover:bg-[#eaeaea] transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
+                              className="px-5 py-2.5 rounded-full text-xs font-bold text-black bg-white hover:bg-[#eaeaea] transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
                             >
-                              <span>Reserve Seat</span>
+                              <span>Book Spot</span>
                               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                 <line x1="5" y1="12" x2="19" y2="12" />
                                 <polyline points="12 5 19 12 12 19" />

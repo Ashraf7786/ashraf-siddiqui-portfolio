@@ -38,8 +38,8 @@ export default function AboutTraveller() {
 
   const PHILOSOPHY_PILLARS = [
     {
-      label: "Rail Journeys",
-      desc: "India's rail network is the journey itself.",
+      label: "Train Journeys",
+      desc: "Traveling across India by train is an adventure of its own.",
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/80">
           <rect x="4" y="3" width="16" height="16" rx="2" />
@@ -51,8 +51,8 @@ export default function AboutTraveller() {
       ),
     },
     {
-      label: "Mountains & Altitude",
-      desc: "The thin air strips away everything unnecessary.",
+      label: "Mountains & Passes",
+      desc: "Quiet trails, cool mountain air, and snowy peaks.",
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-400">
           <path d="M8 3l4 8 5-5 5 15H2L8 3z" />
@@ -60,8 +60,8 @@ export default function AboutTraveller() {
       ),
     },
     {
-      label: "Cultural Exploration",
-      desc: "Every state speaks a different dialect of India.",
+      label: "Culture & Local Food",
+      desc: "Every Indian state has unique food, stories, and warm people.",
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-rose-400">
           <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" />
@@ -72,7 +72,7 @@ export default function AboutTraveller() {
     },
     {
       label: "Road Trips",
-      desc: "The route is never secondary to the destination.",
+      desc: "The road itself is just as exciting as the destination.",
       icon: (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-emerald-400">
           <circle cx="12" cy="12" r="10" />
@@ -121,7 +121,7 @@ export default function AboutTraveller() {
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
-              <p className="text-[11px] sm:text-xs tracking-[0.25em] uppercase text-[#f5f5f5]/30">The Traveller Behind The Stories</p>
+              <p className="text-[11px] sm:text-xs tracking-[0.25em] uppercase text-[#f5f5f5]/40 font-semibold">About Ashraf</p>
             </div>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f5f5f5] mb-4 sm:mb-6"
@@ -129,11 +129,11 @@ export default function AboutTraveller() {
             >
               Ashraf Siddiqui
             </h2>
-            <p className="text-[#f5f5f5]/60 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
-              Based in Jaipur, Rajasthan — Ashraf is a full-stack developer by profession and a storyteller by calling. Over 4+ years of travel across India, he has explored 24 of 28 Indian states, chasing rail journeys, mountain passes, and hidden cultural corners.
+            <p className="text-[#f5f5f5]/70 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+              Based in Jaipur, Rajasthan — Ashraf is a software engineer and an active traveler. Over 4+ years of traveling across India, he has explored 24 of 28 Indian states, taking scenic train routes, driving through mountain passes, and meeting local communities.
             </p>
-            <p className="text-[#f5f5f5]/60 text-xs sm:text-sm leading-relaxed mb-6 sm:mb-8">
-              His travel philosophy is built on authenticity — no manufactured itineraries, no sponsored perfection. Just honest journeys, real conversations and the belief that every horizon has something new to teach.
+            <p className="text-[#f5f5f5]/70 text-xs sm:text-sm leading-relaxed mb-6 sm:mb-8">
+              He believes in real, honest travel — no fake plans, no paid promotions. Just simple journeys, good conversations, and exploring India the way it truly is.
             </p>
 
             <div className="flex flex-col gap-2 sm:gap-2.5 mb-6 sm:mb-8">

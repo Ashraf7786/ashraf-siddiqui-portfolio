@@ -27,7 +27,7 @@ const PRIMARY_DESTINATION = "ashrafsiddiquitravel@gmail.com";
  */
 export function buildInquiryHtml(data: InquiryEmailData): string {
   const isTrip = data.type === "trip_booking" || Boolean(data.tripTitle && !data.collabType);
-  const badgeText = isTrip ? "EXPEDITION REGISTRATION" : "BRAND & COLLABORATION INQUIRY";
+  const badgeText = isTrip ? "NEW TRIP BOOKING REQUEST" : "BRAND & COLLABORATION INQUIRY";
   const badgeColor = isTrip ? "#10b981" : "#38bdf8";
   const badgeBg = isTrip ? "rgba(16, 185, 129, 0.15)" : "rgba(56, 189, 248, 0.15)";
   const cleanWhatsapp = (data.whatsapp || "").replace(/[^\d+]/g, "");
@@ -238,10 +238,10 @@ export function buildInquiryHtml(data: InquiryEmailData): string {
 
                 <tr>
                   <td width="38%" style="padding: 10px 14px; background-color: #131b2a; border-radius: 8px 0 0 8px; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase;">
-                    Safety & Risk Disclaimer
+                    Trip Safety Guidelines
                   </td>
                   <td width="62%" style="padding: 10px 14px; background-color: #131b2a; border-radius: 0 8px 8px 0; font-size: 12px; font-weight: 600; color: #10b981;">
-                    ✓ Accepted (Travel at own risk & commit to leader instructions)
+                    ✓ Agreed to follow trip leader instructions
                   </td>
                 </tr>
               </table>
@@ -252,7 +252,7 @@ export function buildInquiryHtml(data: InquiryEmailData): string {
               <!-- Message Quotation -->
               <div style="margin-top: 20px; padding: 18px 20px; background-color: #131b2a; border-left: 3px solid #10b981; border-radius: 0 10px 10px 0;">
                 <p style="margin: 0 0 6px 0; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em;">
-                  Traveller's Message / Notes:
+                  Traveller Notes &amp; Questions:
                 </p>
                 <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #f1f5f9; font-style: italic;">
                   "${data.message.replace(/\n/g, "<br/>")}"

@@ -5,15 +5,15 @@ import Link from "next/link";
 
 const QUICK_LINKS = [
   { label: "Home", href: "/travel" },
-  { label: "Group Expeditions", href: "/travel/trips" },
+  { label: "Group Trips", href: "/travel/trips" },
   { label: "My India Journey", href: "/travel#journey" },
-  { label: "Visual Gallery", href: "/travel/gallery" },
-  { label: "Destinations Hub", href: "/travel/destinations" },
+  { label: "Photo Gallery", href: "/travel/gallery" },
+  { label: "Travel Guides", href: "/travel/destinations" },
   { label: "Travel Stories", href: "/travel/stories" },
-  { label: "Reels Dispatches", href: "/travel/reels" },
-  { label: "Field Tools & Utilities", href: "/travel/tools" },
+  { label: "Videos & Reels", href: "/travel/reels" },
+  { label: "Travel Tools", href: "/travel/tools" },
   { label: "Cancellation & Refund Policy", href: "/travel/refund-policy" },
-  { label: "Collaborate & Contact", href: "/travel/contact" },
+  { label: "Contact & Collaborate", href: "/travel/contact" },
   { label: "About Ashraf", href: "/travel#about" },
 ];
 
@@ -157,15 +157,15 @@ export default function TravelFooter() {
             </div>
 
             <div className="mt-6 p-4 rounded-xl border border-[#f5f5f5]/10 bg-[#111113]">
-              <p className="text-xs font-semibold text-[#f5f5f5] mb-1">Plan a Group Trip</p>
+              <p className="text-xs font-semibold text-[#f5f5f5] mb-1">Join a Group Trip</p>
               <p className="text-[11px] text-[#f5f5f5]/50 leading-relaxed">
-                Interested in joining the next expedition? Drop a message and I&apos;ll send details once dates are confirmed.
+                Want to join the next group trip? Send a message and I&apos;ll share details as soon as dates open.
               </p>
               <Link
                 href="/travel/contact"
                 className="mt-3 text-[11px] font-semibold text-[#f5f5f5]/70 hover:text-[#f5f5f5] transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
-                <span>Plan an Expedition</span>
+                <span>Get in Touch</span>
                 <span>&rarr;</span>
               </Link>
             </div>

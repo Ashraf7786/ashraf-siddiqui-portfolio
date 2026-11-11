@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     if (!fullName || !String(fullName).trim() || String(fullName).trim().length < 2) {
       return NextResponse.json(
-        { success: false, error: "Full name is required (minimum 2 characters)." },
+        { success: false, error: "Please enter your full name (at least 2 letters)." },
         { status: 400 }
       );
     }
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(String(email).trim())) {
       return NextResponse.json(
-        { success: false, error: "A valid email address is required." },
+        { success: false, error: "Please enter a valid email address." },
         { status: 400 }
       );
     }
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
       const cleanPhone = String(whatsapp || "").replace(/\D/g, "");
       if (!cleanPhone || cleanPhone.length < 10) {
         return NextResponse.json(
-          { success: false, error: "Valid 10-digit WhatsApp phone number is required." },
+          { success: false, error: "Please enter a valid 10-digit WhatsApp phone number." },
           { status: 400 }
         );
       }
@@ -75,21 +75,21 @@ export async function POST(req: NextRequest) {
       const cleanEmergency = String(emergencyContact || "").replace(/\D/g, "");
       if (!cleanEmergency || cleanEmergency.length < 10) {
         return NextResponse.json(
-          { success: false, error: "Valid 10-digit emergency contact phone number is required." },
+          { success: false, error: "Please enter a valid 10-digit emergency contact phone number." },
           { status: 400 }
         );
       }
 
       if (!gender || !String(gender).trim()) {
         return NextResponse.json(
-          { success: false, error: "Gender selection is required for expedition safety records." },
+          { success: false, error: "Please select your gender." },
           { status: 400 }
         );
       }
 
       if (!cityOfOrigin || !String(cityOfOrigin).trim()) {
         return NextResponse.json(
-          { success: false, error: "City of departure is required." },
+          { success: false, error: "Please enter your city of departure." },
           { status: 400 }
         );
       }
@@ -98,8 +98,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(
           {
             success: false,
-            error:
-              "You must agree to the Terms & Conditions and Safety Disclaimer (travel at own risk & follow leader instructions) to proceed.",
+            error: "Please agree to the trip safety guidelines to proceed.",
           },
           { status: 400 }
         );
@@ -164,7 +163,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "Enquiry submitted successfully. Ashraf will contact you within 24 hours.",
+      message: "Request received! Ashraf will message you on WhatsApp within 24 hours.",
       enquiryId: newEnquiry.id,
       emailDispatched,
     });

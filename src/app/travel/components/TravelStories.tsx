@@ -89,16 +89,16 @@ export default function TravelStories() {
             >
               Every journey has a story
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-[#f5f5f5]/50 max-w-lg">
-              Real accounts from the road — no embellishments, no commercial filters.
+            <p className="mt-2 text-xs sm:text-sm text-[#f5f5f5]/60 max-w-lg">
+              Real memories from the road — honest stories, simple moments, and genuine experiences.
             </p>
           </div>
 
           <Link
             href="/travel/stories"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#f5f5f5] hover:text-white transition-all self-start md:self-auto px-4 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 bg-transparent hover:bg-white/5"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#f5f5f5] hover:text-white transition-all self-start md:self-auto px-4 py-2 rounded-full border border-[#f5f5f5]/20 hover:border-[#f5f5f5]/60 bg-transparent hover:bg-white/5 cursor-pointer"
           >
-            <span>Browse All Stories</span>
+            <span>Read All Stories</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="5" y1="12" x2="19" y2="12"/>
               <polyline points="12 5 19 12 12 19"/>

@@ -48,21 +48,21 @@ export default function TravelCTA() {
           >
             Your Next Journey Starts Somewhere.
           </h2>
-          <p className="text-[#f5f5f5]/60 text-sm md:text-base leading-relaxed mb-10 max-w-xl mx-auto">
-            Whether it&apos;s a solo rail adventure across India or a guided group expedition through the Himalayas — the first step is deciding to go.
+          <p className="text-[#f5f5f5]/70 text-sm md:text-base leading-relaxed mb-10 max-w-xl mx-auto">
+            Whether you want to travel by train across India or join a small group trip to the mountains — the first step is simply deciding to go.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => document.querySelector("#destinations")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-6 py-3 border border-[#f5f5f5]/20 rounded-full text-sm text-[#f5f5f5]/80 hover:border-[#f5f5f5]/60 hover:text-[#f5f5f5] transition-all backdrop-blur-sm hover:bg-white/5 w-full sm:w-auto"
+              className="px-6 py-3 border border-[#f5f5f5]/20 rounded-full text-sm text-[#f5f5f5]/80 hover:border-[#f5f5f5]/60 hover:text-[#f5f5f5] transition-all backdrop-blur-sm hover:bg-white/5 w-full sm:w-auto cursor-pointer"
             >
               Explore Travel Guides
             </button>
             <button
               onClick={() => document.querySelector("#group-tours")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-6 py-3 border border-[#f5f5f5]/10 rounded-full text-sm text-[#f5f5f5]/50 hover:border-[#f5f5f5]/30 hover:text-[#f5f5f5]/80 transition-all backdrop-blur-sm w-full sm:w-auto"
+              className="px-6 py-3 border border-[#f5f5f5]/10 rounded-full text-sm text-[#f5f5f5]/50 hover:border-[#f5f5f5]/30 hover:text-[#f5f5f5]/80 transition-all backdrop-blur-sm w-full sm:w-auto cursor-pointer"
             >
-              Discover Group Tours
+              See Upcoming Trips
             </button>
           </div>
         </div>
