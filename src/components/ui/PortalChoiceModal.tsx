@@ -100,22 +100,6 @@ export default function PortalChoiceModal() {
 
   return (
     <>
-      {/* ─── Compact Floating Switcher Button (Bottom Left) ─── */}
-      {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-5 left-5 z-[8000] px-3 py-1.5 rounded-full bg-[#111114]/85 hover:bg-[#1a1a20] border border-white/15 hover:border-white/30 backdrop-blur-xl text-xs text-[#f5f5f5] shadow-[0_8px_24px_rgba(0,0,0,0.6)] flex items-center gap-2 transition-all duration-300 hover:scale-105 group cursor-pointer"
-          title="Switch between Portfolio & Travel"
-          aria-label="Switch between Portfolio & Travel"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[11px] font-medium text-white/80 group-hover:text-white">
-            {pathname?.startsWith("/travel") ? "Work Portfolio" : "Travel Diaries"}
-          </span>
-          <span className="text-[10px] text-white/40 uppercase font-mono">&bull; Switch</span>
-        </button>
-      )}
-
       {/* ─── Minimal, Small Dialog Box ─── */}
       {isOpen && (
         <div

@@ -118,19 +118,6 @@ export default function TravelNav() {
 
           {/* Right Action: Plan a Trip with Me + Mobile Toggle */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-            {/* Developer Portfolio Quick Switcher */}
-            <Link
-              href="/"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-medium text-white/70 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-white/25 transition-all"
-              title="Switch to Web Developer Portfolio"
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polyline points="16 18 22 12 16 6" />
-                <polyline points="8 6 2 12 8 18" />
-              </svg>
-              <span>Work Portfolio</span>
-            </Link>
-
             {/* Custom CTA: "Plan a Trip with Me" */}
             <button
               onClick={() => handleNav("/travel/contact")}
