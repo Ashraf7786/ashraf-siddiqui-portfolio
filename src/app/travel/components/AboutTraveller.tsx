@@ -166,7 +166,7 @@ export default function AboutTraveller() {
                   </span>
                 </div>
                 <p className="text-[11px] text-white/70 leading-relaxed">
-                  Software engineer during weekdays, wandering remote mountain passes and rail routes on weekends.
+                  Solo traveller exploring mountain passes, quiet train routes, and authentic stories across India.
                 </p>
               </div>
             </div>
@@ -207,9 +207,9 @@ export default function AboutTraveller() {
                 className="text-2xl sm:text-4xl md:text-5xl font-bold text-[#f5f5f5] leading-tight"
                 style={{ fontFamily: "var(--font-fredoka)" }}
               >
-                Software Engineer by day.
+                Traveling real India,
                 <span className="block text-white/50 font-light text-xl sm:text-3xl md:text-4xl mt-1">
-                  Explorer of real India by heart.
+                  one honest story at a time.
                 </span>
               </h2>
             </div>
