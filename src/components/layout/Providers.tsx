@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/layout/SmoothScroll";
 import CustomCursor from "@/components/ui/CustomCursor";
 import Preloader from "@/components/ui/Preloader";
 import PortalChoiceModal from "@/components/ui/PortalChoiceModal";
+import SecurityGuard from "@/components/common/SecurityGuard";
 
 export default function Providers({ children }: { children: React.ReactNode }) {
     const [mounted, setMounted] = useState(false);
@@ -14,11 +15,17 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     }, []);
 
     if (!mounted) {
-        return <>{children}</>;
+        return (
+            <>
+                <SecurityGuard />
+                {children}
+            </>
+        );
     }
 
     return (
         <>
+            <SecurityGuard />
             <Preloader />
             <CustomCursor />
             <PortalChoiceModal />
