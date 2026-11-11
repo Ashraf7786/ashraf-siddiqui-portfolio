@@ -83,9 +83,9 @@ const EXPEDITION_SLIDES: ExpeditionSlide[] = [
 /* Quick Navigation Chips (Homepage Section Shortcuts) */
 const QUICK_NAV_CHIPS = [
   { label: "Group Expeditions", href: "#group-tours" },
-  { label: "My Journey 24/28", href: "#journey" },
-  { label: "Travel Reels", href: "#reels" },
-  { label: "Travel Guides", href: "#destinations" },
+  { label: "Cinematic Reels", href: "#reels" },
+  { label: "Destination Guides", href: "#destinations" },
+  { label: "24/28 States Journey", href: "#journey" },
 ];
 
 export default function TravelHero() {

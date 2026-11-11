@@ -6,12 +6,13 @@ import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
   { label: "Home", href: "/travel" },
-  { label: "Expeditions", href: "/travel/trips" },
+  { label: "Expeditions", href: "/travel#group-tours" },
+  { label: "Reels", href: "/travel#reels" },
+  { label: "Guides", href: "/travel#destinations" },
   { label: "India Map", href: "/travel#interactive-map" },
-  { label: "Stories", href: "/travel/stories" },
-  { label: "Gallery", href: "/travel/gallery" },
-  { label: "Reels", href: "/travel/reels" },
-  { label: "Tools", href: "/travel/tools" },
+  { label: "Gallery", href: "/travel#gallery" },
+  { label: "Stories", href: "/travel#stories" },
+  { label: "Tools", href: "/travel#tools" },
   { label: "Contact", href: "/travel/contact" },
 ];
 

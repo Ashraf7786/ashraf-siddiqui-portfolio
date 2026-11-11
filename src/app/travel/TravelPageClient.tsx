@@ -23,17 +23,40 @@ export default function TravelPageClient() {
     >
       <TravelNav />
       <main>
+        {/* 1. Cinematic Hero Carousel & Expedition Announcements */}
         <TravelHero />
+
+        {/* 2. Authority & Proof Metrics (24/28 States, 4+ Years) */}
         <TravelStats />
-        <InteractiveIndiaMap />
-        <FeaturedDestinations />
-        <TravelGallery />
-        <TravelStories />
-        <TravelReels />
+
+        {/* 3. PRIMARY REVENUE: Curated Small-Group Expeditions & Tours */}
         <GroupTourCards />
+
+        {/* 4. HIGH-RETENTION VIDEO HOOK: iPhone Reels & Field Dispatches */}
+        <TravelReels />
+
+        {/* 5. Destination Guides & Circuit Exploration */}
+        <FeaturedDestinations />
+
+        {/* 6. GAMIFIED INTERACTION: 24/28 Interactive India Journey Map */}
+        <InteractiveIndiaMap />
+
+        {/* 7. VISUAL PROOF: High-Resolution Photo Gallery */}
+        <TravelGallery />
+
+        {/* 8. EDITORIAL TRUST: Long-form Travel Stories & Real Field Notes */}
+        <TravelStories />
+
+        {/* 9. Expedition Tools, High-Altitude Checklists & Route Guides */}
         <TravelTools />
+
+        {/* 10. MEET THE LEADER: About Ashraf Siddiqui & Travel Philosophy */}
         <AboutTraveller />
+
+        {/* 11. SECONDARY REVENUE: Custom Trip Planning, Brand Deals & Private Tours */}
         <TravelCTA />
+
+        {/* 12. HIGH-INTENT LEAD CAPTURE: Early Access Expedition Announcement Drops */}
         <NewsletterPreview />
       </main>
       <TravelFooter />
