@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { GroupTrip } from "../data/trips";
 
 interface TripBookingModalProps {
@@ -17,6 +17,8 @@ export default function TripBookingModal({
   initialTab = "itinerary",
 }: TripBookingModalProps) {
   const [activeTab, setActiveTab] = useState<"itinerary" | "register">(initialTab);
+  const modalCardRef = useRef<HTMLDivElement>(null);
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -33,6 +35,45 @@ export default function TripBookingModal({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Lock background body scroll and listen for Escape key when modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+    const originalTouchAction = document.body.style.touchAction;
+
+    // Calculate scrollbar width to prevent page shift
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    // Auto-focus the modal container so keyboard navigation and mouse wheel target it immediately
+    const timer = setTimeout(() => {
+      modalCardRef.current?.focus();
+    }, 50);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleResetAndClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+      document.body.style.touchAction = originalTouchAction;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -130,11 +171,28 @@ export default function TripBookingModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-[#080808]/95 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 overflow-y-auto"
+      className="fixed inset-0 z-50 bg-[#080808]/95 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 overflow-hidden overscroll-none select-none sm:select-auto"
       role="dialog"
       aria-modal="true"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleResetAndClose();
+      }}
+      onWheel={(e) => {
+        // Forward wheel events directly into the scrollable modal card
+        if (modalCardRef.current) {
+          modalCardRef.current.scrollTop += e.deltaY;
+        }
+      }}
     >
-      <div className="relative w-full max-w-2xl bg-[#111113] border-t sm:border border-[#f5f5f5]/15 rounded-t-[28px] sm:rounded-3xl p-5 sm:p-8 shadow-2xl max-h-[92vh] sm:max-h-[88vh] overflow-y-auto my-0 sm:my-6 overscroll-contain">
+      <div
+        ref={modalCardRef}
+        tabIndex={-1}
+        className="relative w-full max-w-2xl bg-[#111113] border-t sm:border border-[#f5f5f5]/15 rounded-t-[28px] sm:rounded-3xl p-5 sm:p-8 shadow-2xl max-h-[92vh] sm:max-h-[88vh] overflow-y-auto overscroll-contain focus:outline-none"
+        style={{
+          scrollbarWidth: "thin",
+          scrollbarColor: "rgba(255, 255, 255, 0.25) transparent",
+        }}
+      >
         {/* Mobile Drag Indicator Bar */}
         <div className="w-12 h-1 bg-white/20 rounded-full mx-auto mb-4 sm:hidden" />
 
