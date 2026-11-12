@@ -128,6 +128,8 @@ export default function GalleryBatchUploader({
       const item = stagedPhotos[i];
       if (!item.file) continue;
 
+      setStatusMessage(`Uploading ${i + 1} of ${stagedPhotos.length} to Cloudinary...`);
+
       try {
         const formData = new FormData();
         formData.append("file", item.file);
@@ -162,7 +164,7 @@ export default function GalleryBatchUploader({
       } catch (err: any) {
         remainingStaged.push({
           ...item,
-          error: err.message || "Failed to upload",
+          error: err.message || "Failed to upload to Cloudinary",
         });
       }
     }
@@ -175,10 +177,10 @@ export default function GalleryBatchUploader({
     setIsProcessing(false);
 
     if (remainingStaged.length === 0) {
-      setStatusMessage(`Successfully uploaded and added ${successfullyAdded.length} photo(s)!`);
+      setStatusMessage(`Successfully uploaded ${successfullyAdded.length} photo(s) to Cloudinary!`);
       setTimeout(() => setStatusMessage(null), 4000);
     } else {
-      setStatusMessage(`Uploaded ${successfullyAdded.length} photo(s). ${remainingStaged.length} failed.`);
+      setStatusMessage(`Uploaded ${successfullyAdded.length} photo(s) to Cloudinary. ${remainingStaged.length} failed.`);
     }
   };
 
@@ -207,11 +209,17 @@ export default function GalleryBatchUploader({
       {/* Top Banner / Explanation */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
         <div>
-          <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2" style={{ fontFamily: "var(--font-fredoka)" }}>
-            <span>Easy Photo Upload &amp; Auto-Organizer</span>
-          </h3>
-          <p className="text-xs text-white/50 mt-0.5">
-            Drop multiple photos at once. Orientations (Horizontal vs. Vertical) and clean titles are detected automatically.
+          <div className="flex items-center gap-2.5">
+            <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2" style={{ fontFamily: "var(--font-fredoka)" }}>
+              <span>Cloudinary Multi-Photo Uploader</span>
+            </h3>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Cloudinary Connected</span>
+            </div>
+          </div>
+          <p className="text-xs text-white/50 mt-1">
+            Upload multiple photos directly to Cloudinary. Orientations (Horizontal vs. Vertical) and titles are detected automatically.
           </p>
         </div>
 
@@ -248,8 +256,8 @@ export default function GalleryBatchUploader({
         onClick={() => fileInputRef.current?.click()}
         className={`relative rounded-2xl border-2 border-dashed p-8 sm:p-10 text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-3 ${
           isDragging
-            ? "border-white bg-white/10 scale-[1.01]"
-            : "border-white/15 bg-white/[0.02] hover:border-white/30 hover:bg-white/[0.04]"
+            ? "border-emerald-400 bg-emerald-500/10 scale-[1.01]"
+            : "border-white/15 bg-white/[0.02] hover:border-emerald-500/40 hover:bg-emerald-500/[0.03]"
         }`}
       >
         <input
@@ -264,20 +272,20 @@ export default function GalleryBatchUploader({
           className="hidden"
         />
 
-        <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white">
+        <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-inner">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="17 8 12 3 7 8" />
-            <line x1="12" y1="3" x2="12" y2="15" />
+            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+            <polyline points="12 11 12 17" />
+            <polyline points="9 14 12 11 15 14" />
           </svg>
         </div>
 
         <div>
           <p className="text-sm font-bold text-white">
-            Drag &amp; Drop photos here, or <span className="underline underline-offset-4">click to browse</span>
+            Drag &amp; Drop multiple photos here, or <span className="underline underline-offset-4 text-emerald-400">click to browse</span>
           </p>
-          <p className="text-xs text-white/40 mt-1">
-            Upload 1 or 20 photos at once · Supports JPG, PNG, WEBP, AVIF
+          <p className="text-xs text-white/50 mt-1">
+            Hold <strong className="text-white">Ctrl</strong> or <strong className="text-white">Shift</strong> to pick multiple photos at once · Uploads straight to Cloudinary (CDN)
           </p>
         </div>
       </div>
@@ -315,16 +323,24 @@ export default function GalleryBatchUploader({
                 type="button"
                 onClick={handleUploadAll}
                 disabled={isProcessing}
-                className="px-5 py-2 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all disabled:opacity-50 flex items-center gap-1.5 cursor-pointer shadow-lg"
+                className="px-5 py-2 rounded-full bg-emerald-400 text-black font-bold text-xs hover:bg-emerald-300 transition-all disabled:opacity-50 flex items-center gap-1.5 cursor-pointer shadow-lg"
               >
                 {isProcessing ? (
-                  <span>Uploading...</span>
+                  <>
+                    <svg className="animate-spin h-3.5 w-3.5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                    </svg>
+                    <span>Uploading to Cloudinary...</span>
+                  </>
                 ) : (
                   <>
-                    <span>Upload &amp; Add All ({stagedPhotos.length})</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <polyline points="20 6 9 17 4 12" />
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+                      <polyline points="12 11 12 17" />
+                      <polyline points="9 14 12 11 15 14" />
                     </svg>
+                    <span>Upload All to Cloudinary ({stagedPhotos.length})</span>
                   </>
                 )}
               </button>
@@ -441,3 +457,4 @@ export default function GalleryBatchUploader({
     </div>
   );
 }
+
