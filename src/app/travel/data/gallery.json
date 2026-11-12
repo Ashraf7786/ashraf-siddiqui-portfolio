@@ -1,206 +1,1280 @@
 [
   {
-    "id": "g1",
-    "src": "/img/travel/kashmir_hero.jpg",
-    "alt": "Dal Lake at Sunrise Kashmir",
-    "title": "Dal Lake at Sunrise",
-    "location": "Dal Lake, Srinagar",
+    "id": "g-1-ac8eb474b36be93ea6b395789a0a4126",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467776/ashraf-travel/gallery/ovzvdwtdslhtodsip5km.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Ovzvdwtdslhtodsip5km",
+    "title": "Ovzvdwtdslhtodsip5km",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-2-329c3980d9959e61dfefd0c1f40b2304",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467766/ashraf-travel/gallery/ima5fdxffnwaz1xicgqg.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Ima5fdxffnwaz1xicgqg",
+    "title": "Ima5fdxffnwaz1xicgqg",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-3-3d0166f85f845a9eb9d0d8f952257487",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467759/ashraf-travel/gallery/ty81enytqbqo8e9pe5zm.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Ty81enytqbqo8e9pe5zm",
+    "title": "Ty81enytqbqo8e9pe5zm",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-4-6038d7c726cfbcdfac81eeffe10f800a",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467756/ashraf-travel/gallery/lz4a3nn7gabgol3hh5h0.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Lz4a3nn7gabgol3hh5h0",
+    "title": "Lz4a3nn7gabgol3hh5h0",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-5-601b06f9cb88e1b6649b9441473c8dcb",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467750/ashraf-travel/gallery/jdyubm2rlek9w3sfe7v3.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Jdyubm2rlek9w3sfe7v3",
+    "title": "Jdyubm2rlek9w3sfe7v3",
+    "location": "Kashmir, India",
     "state": "Kashmir",
     "year": 2026,
     "category": "Mountains",
     "orientation": "landscape",
     "tags": [
       "kashmir",
-      "dal lake",
-      "sunrise",
+      "travel",
+      "india",
       "mountains"
-    ]
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
   },
   {
-    "id": "g2",
-    "src": "/img/travel/ladakh.jpg",
-    "alt": "Nubra Valley Ladakh",
-    "title": "Nubra Valley Cold Desert",
-    "location": "Nubra Valley, Ladakh",
-    "state": "Ladakh",
-    "year": 2026,
-    "category": "Mountains",
-    "orientation": "landscape",
-    "tags": [
-      "ladakh",
-      "nubra valley",
-      "bactrian camels",
-      "desert"
-    ]
-  },
-  {
-    "id": "g3",
-    "src": "/img/travel/rajasthan.jpg",
-    "alt": "Mehrangarh Fort Jodhpur",
-    "title": "Mehrangarh at Dusk",
-    "location": "Mehrangarh Fort, Jodhpur",
-    "state": "Rajasthan",
-    "year": 2025,
-    "category": "Cultures",
-    "orientation": "portrait",
-    "tags": [
-      "rajasthan",
-      "jodhpur",
-      "fort",
-      "heritage"
-    ]
-  },
-  {
-    "id": "g4",
-    "src": "/img/travel/kerala.jpg",
-    "alt": "Kerala Backwaters",
-    "title": "Backwaters of Kerala",
-    "location": "Alleppey, Kerala",
-    "state": "Kerala",
-    "year": 2024,
-    "category": "Nature",
-    "orientation": "landscape",
-    "tags": [
-      "kerala",
-      "backwaters",
-      "nature",
-      "green"
-    ]
-  },
-  {
-    "id": "g5",
-    "src": "/img/travel/kashmir_hero.jpg",
-    "alt": "Gulmarg Snow Kashmir",
-    "title": "First Snow at Gulmarg",
-    "location": "Gulmarg, Kashmir",
+    "id": "g-6-24c6375843e747b996fe9d84e934dba8",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467747/ashraf-travel/gallery/lteadb8eferno4yjys21.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Lteadb8eferno4yjys21",
+    "title": "Lteadb8eferno4yjys21",
+    "location": "Kashmir, India",
     "state": "Kashmir",
     "year": 2026,
     "category": "Mountains",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "tags": [
       "kashmir",
-      "gulmarg",
-      "snow",
-      "winter"
-    ]
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
   },
   {
-    "id": "g6",
-    "src": "/img/travel/ladakh.jpg",
-    "alt": "Pangong Tso Lake Ladakh",
-    "title": "Pangong Tso Reflections",
-    "location": "Pangong Tso, Ladakh",
-    "state": "Ladakh",
-    "year": 2026,
-    "category": "Nature",
-    "orientation": "landscape",
-    "tags": [
-      "ladakh",
-      "pangong",
-      "lake",
-      "reflections"
-    ]
-  },
-  {
-    "id": "g7",
-    "src": "/img/travel/rajasthan.jpg",
-    "alt": "Jaisalmer Golden Fort",
-    "title": "The Golden City",
-    "location": "Jaisalmer Fort, Rajasthan",
-    "state": "Rajasthan",
-    "year": 2025,
-    "category": "Cultures",
-    "orientation": "square",
-    "tags": [
-      "jaisalmer",
-      "golden fort",
-      "rajasthan",
-      "heritage"
-    ]
-  },
-  {
-    "id": "g8",
-    "src": "/img/travel/kerala.jpg",
-    "alt": "Munnar Tea Gardens",
-    "title": "Munnar Tea Estates",
-    "location": "Munnar, Kerala",
-    "state": "Kerala",
-    "year": 2024,
-    "category": "Nature",
-    "orientation": "landscape",
-    "tags": [
-      "munnar",
-      "tea",
-      "green",
-      "kerala"
-    ]
-  },
-  {
-    "id": "g9",
-    "src": "/img/travel/kashmir_hero.jpg",
-    "alt": "Pahalgam River Kashmir",
-    "title": "Pahalgam River Valley",
-    "location": "Pahalgam, Kashmir",
+    "id": "g-7-55127bd905c3fa1178a83a9e9954257b",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467743/ashraf-travel/gallery/tyqxrs9z8dlmgi2oojr3.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Tyqxrs9z8dlmgi2oojr3",
+    "title": "Tyqxrs9z8dlmgi2oojr3",
+    "location": "Kashmir, India",
     "state": "Kashmir",
     "year": 2026,
-    "category": "Nature",
-    "orientation": "landscape",
+    "category": "Roads",
+    "orientation": "portrait",
     "tags": [
-      "pahalgam",
-      "river",
       "kashmir",
-      "valley"
-    ]
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
   },
   {
-    "id": "g10",
-    "src": "/img/travel/ladakh.jpg",
-    "alt": "Leh Palace Ladakh",
-    "title": "Leh Palace Sunrise",
-    "location": "Leh Palace, Ladakh",
-    "state": "Ladakh",
+    "id": "g-8-f1aff76e5fe1dfb1d5d8198983f95719",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467739/ashraf-travel/gallery/yhcuki1asucwhqcncng9.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Yhcuki1asucwhqcncng9",
+    "title": "Yhcuki1asucwhqcncng9",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
     "year": 2026,
-    "category": "Cultures",
-    "orientation": "portrait",
-    "tags": [
-      "leh",
-      "palace",
-      "ladakh",
-      "sunrise"
-    ]
-  },
-  {
-    "id": "g11",
-    "src": "/img/travel/rajasthan.jpg",
-    "alt": "Hawa Mahal Jaipur",
-    "title": "Hawa Mahal Pink City",
-    "location": "Hawa Mahal, Jaipur",
-    "state": "Rajasthan",
-    "year": 2025,
-    "category": "Cities",
-    "orientation": "portrait",
-    "tags": [
-      "jaipur",
-      "hawa mahal",
-      "pink city",
-      "architecture"
-    ]
-  },
-  {
-    "id": "g12",
-    "src": "/img/travel/kerala.jpg",
-    "alt": "Varkala Beach Kerala",
-    "title": "Cliffs of Varkala",
-    "location": "Varkala Beach, Kerala",
-    "state": "Kerala",
-    "year": 2024,
-    "category": "Nature",
+    "category": "Mountains",
     "orientation": "landscape",
     "tags": [
-      "varkala",
-      "beach",
-      "cliffs",
-      "kerala"
-    ]
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-9-0825d2339a5c3e77376bb62943c4cb09",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467736/ashraf-travel/gallery/w3khe7fhglf8kzvmx2n5.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - W3khe7fhglf8kzvmx2n5",
+    "title": "W3khe7fhglf8kzvmx2n5",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-10-19364e55eab3f3731ee67928fff01f66",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467733/ashraf-travel/gallery/fj0fbmo7euhceo8mxjwm.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Fj0fbmo7euhceo8mxjwm",
+    "title": "Fj0fbmo7euhceo8mxjwm",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-11-d8488c579e13992b0da7193c39173783",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467731/ashraf-travel/gallery/zzlyayqlvkolwpqhjfl8.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Zzlyayqlvkolwpqhjfl8",
+    "title": "Zzlyayqlvkolwpqhjfl8",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-12-66d24bcb3ebd7981a608ee224497b26c",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467729/ashraf-travel/gallery/cklwfixpa8snwppm085v.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Cklwfixpa8snwppm085v",
+    "title": "Cklwfixpa8snwppm085v",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-13-ccd0ebc304e4964e43b491c0056a09e6",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467726/ashraf-travel/gallery/u2aqiajracxfjurontvg.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - U2aqiajracxfjurontvg",
+    "title": "U2aqiajracxfjurontvg",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-14-213cabe2503124a521e7a66aa0cff137",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467723/ashraf-travel/gallery/un4w88qrq0kp3sry6lcy.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Un4w88qrq0kp3sry6lcy",
+    "title": "Un4w88qrq0kp3sry6lcy",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-15-b0468e376e8175261ea9589f78caabd4",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467719/ashraf-travel/gallery/jtlecpy2awo4q03jfd5g.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Jtlecpy2awo4q03jfd5g",
+    "title": "Jtlecpy2awo4q03jfd5g",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-16-96b229f8651de0b44b4cd17c23a14f70",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467715/ashraf-travel/gallery/fj5azj1rwrwdhvpvimyt.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Fj5azj1rwrwdhvpvimyt",
+    "title": "Fj5azj1rwrwdhvpvimyt",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-17-f488774cad1860674a6ef9b5247e2b12",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467711/ashraf-travel/gallery/xgpiyqt0jy7u3vaq9wqm.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Xgpiyqt0jy7u3vaq9wqm",
+    "title": "Xgpiyqt0jy7u3vaq9wqm",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-18-dc14b1652b20df858b071623d70592ff",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467707/ashraf-travel/gallery/wszbtl9jz67txmmhgm7p.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Wszbtl9jz67txmmhgm7p",
+    "title": "Wszbtl9jz67txmmhgm7p",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-19-e687709a1a93454e25e052b484e9c542",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467700/ashraf-travel/gallery/ivqq0di9hfpvxbiekoam.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Ivqq0di9hfpvxbiekoam",
+    "title": "Ivqq0di9hfpvxbiekoam",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-20-42cffd7b125fbdc7eda34fe5a3261d6b",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467698/ashraf-travel/gallery/ni22bmzulzodcpnjvamr.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Ni22bmzulzodcpnjvamr",
+    "title": "Ni22bmzulzodcpnjvamr",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-21-57f319158999590869687e52c13ab1c8",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467693/ashraf-travel/gallery/iosyjukpvvspygd14myz.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Iosyjukpvvspygd14myz",
+    "title": "Iosyjukpvvspygd14myz",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-22-74ee6ed8bc4204ac6b4b369296f982bf",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467690/ashraf-travel/gallery/p0cmyfpcdqzacr6bgnhg.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - P0cmyfpcdqzacr6bgnhg",
+    "title": "P0cmyfpcdqzacr6bgnhg",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-23-0690cce0eb9f6ea5915897b40386ddf9",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467679/ashraf-travel/gallery/flpk7jmozx61gprrxcng.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Flpk7jmozx61gprrxcng",
+    "title": "Flpk7jmozx61gprrxcng",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-24-64d4bf146bb2fe2a800fcb4852971ae5",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467674/ashraf-travel/gallery/qrboz4bf1dcvyki7oh3i.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Qrboz4bf1dcvyki7oh3i",
+    "title": "Qrboz4bf1dcvyki7oh3i",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-25-fc0d97059ba0137bffc80eda892eebdc",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467671/ashraf-travel/gallery/qqnpc4mphes6xtt4kqlo.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Qqnpc4mphes6xtt4kqlo",
+    "title": "Qqnpc4mphes6xtt4kqlo",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-26-9238f0ed4b1af85199a3ed7744b7bd33",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467667/ashraf-travel/gallery/clwwrybqkuh9hmtlkxby.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Clwwrybqkuh9hmtlkxby",
+    "title": "Clwwrybqkuh9hmtlkxby",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-27-991a2ceaf1d6d7a985d3c666a47f0176",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467662/ashraf-travel/gallery/hhofdwkqonhtgtdzfemb.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Hhofdwkqonhtgtdzfemb",
+    "title": "Hhofdwkqonhtgtdzfemb",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-28-dcfd45d068b4be8f96ac89be7a22735f",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467660/ashraf-travel/gallery/aw7lu70oax5qa0ehblsc.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Aw7lu70oax5qa0ehblsc",
+    "title": "Aw7lu70oax5qa0ehblsc",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-29-470463eb2c703f385829807e145ac113",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467656/ashraf-travel/gallery/idzd6yzxbvvg0h0uzitk.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Idzd6yzxbvvg0h0uzitk",
+    "title": "Idzd6yzxbvvg0h0uzitk",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-30-744fa3ad67467f5ad369257287e2649a",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467645/ashraf-travel/gallery/wgt4hq74vjku8hfgv0ee.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Wgt4hq74vjku8hfgv0ee",
+    "title": "Wgt4hq74vjku8hfgv0ee",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-31-7c11dcffbe9bd1c3cdd6230f2fb5f0d1",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467640/ashraf-travel/gallery/jpqkhrmbptfyuc5rxb9p.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Jpqkhrmbptfyuc5rxb9p",
+    "title": "Jpqkhrmbptfyuc5rxb9p",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-32-61aa927d86249ddd68b73a8dcb75e366",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467635/ashraf-travel/gallery/v1qhi5aysvdcydmwbbsj.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - V1qhi5aysvdcydmwbbsj",
+    "title": "V1qhi5aysvdcydmwbbsj",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-33-2e4bd9d8ee02e06c658c07c758027a77",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467631/ashraf-travel/gallery/s26h91qujwheopt0hsg6.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - S26h91qujwheopt0hsg6",
+    "title": "S26h91qujwheopt0hsg6",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-34-a2b031503e1e5a21e7da8758c45c4d2c",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467628/ashraf-travel/gallery/psvnjh5yvromol2zuurq.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Psvnjh5yvromol2zuurq",
+    "title": "Psvnjh5yvromol2zuurq",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-35-4f0f352be5c2563eb8051a73079498e1",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467625/ashraf-travel/gallery/bv6beqwwjn7lh3iia7zk.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Bv6beqwwjn7lh3iia7zk",
+    "title": "Bv6beqwwjn7lh3iia7zk",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-36-8c94b0b79e709bb2750a2f40277f218b",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467623/ashraf-travel/gallery/farocq7dc8k92gu9lfy2.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Farocq7dc8k92gu9lfy2",
+    "title": "Farocq7dc8k92gu9lfy2",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-37-9db53313c5d852b6bd5c5dec0c9b81a2",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467608/ashraf-travel/gallery/jmkvexujme9eu0yryub9.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Jmkvexujme9eu0yryub9",
+    "title": "Jmkvexujme9eu0yryub9",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-38-53433a725ab0c887ba624b4cd5fd7d31",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467603/ashraf-travel/gallery/d4xhgeyocfxx73bppedp.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - D4xhgeyocfxx73bppedp",
+    "title": "D4xhgeyocfxx73bppedp",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-39-32c4ebf842eb4518be472758044cb12f",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467599/ashraf-travel/gallery/aoyjzp9itwas2urbxssq.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Aoyjzp9itwas2urbxssq",
+    "title": "Aoyjzp9itwas2urbxssq",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-40-341bf805f4ed4a2e270502874d634fb2",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467597/ashraf-travel/gallery/f7j4uhfugulsngil64j4.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - F7j4uhfugulsngil64j4",
+    "title": "F7j4uhfugulsngil64j4",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-41-3c61ba4e86d7efd18dad032219f48655",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467594/ashraf-travel/gallery/h3xbtiwt6aypuc82vdun.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - H3xbtiwt6aypuc82vdun",
+    "title": "H3xbtiwt6aypuc82vdun",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-42-2d4e71f749e302ceade3426df3b82177",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467589/ashraf-travel/gallery/n5ofwbmk5a6zzcvw4k3w.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - N5ofwbmk5a6zzcvw4k3w",
+    "title": "N5ofwbmk5a6zzcvw4k3w",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-43-661a1b06d913f5591782f703dd9e75e5",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467586/ashraf-travel/gallery/ysvpjsm6kijxzie9ti7w.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Ysvpjsm6kijxzie9ti7w",
+    "title": "Ysvpjsm6kijxzie9ti7w",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-44-3c1023afa0ba27826ad0c57907186672",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467584/ashraf-travel/gallery/g2bbnff1wuolcyd8zl8o.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - G2bbnff1wuolcyd8zl8o",
+    "title": "G2bbnff1wuolcyd8zl8o",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-45-635aba6679c59332bff4270b399da496",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467581/ashraf-travel/gallery/kpdu4r2uuiox1fowk1pm.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Kpdu4r2uuiox1fowk1pm",
+    "title": "Kpdu4r2uuiox1fowk1pm",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-46-994e0bb25774d84f3af98956206f4d43",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467579/ashraf-travel/gallery/orymu9rtxjooep1quucl.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Orymu9rtxjooep1quucl",
+    "title": "Orymu9rtxjooep1quucl",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-47-e7c4741fbe8b5f130278220c29453698",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467576/ashraf-travel/gallery/d5crryvhgx0ph2rhqtlm.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - D5crryvhgx0ph2rhqtlm",
+    "title": "D5crryvhgx0ph2rhqtlm",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-48-c50a468b8f633d04c470da2798672d86",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467573/ashraf-travel/gallery/gaopaskt4xnon22wud0z.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Gaopaskt4xnon22wud0z",
+    "title": "Gaopaskt4xnon22wud0z",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-49-8cbe99af0bb4f7b434fa02789bb8e6b9",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467570/ashraf-travel/gallery/ex46ubazdzr7q5nkdfh0.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Ex46ubazdzr7q5nkdfh0",
+    "title": "Ex46ubazdzr7q5nkdfh0",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-50-4044945ca49cae03433bf3d375688c7b",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467567/ashraf-travel/gallery/oacb7eybjznzlthcfomt.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Oacb7eybjznzlthcfomt",
+    "title": "Oacb7eybjznzlthcfomt",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-51-c688013718eb1592695632d3e155296c",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467562/ashraf-travel/gallery/mywwisorae7ii45m7ih7.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Mywwisorae7ii45m7ih7",
+    "title": "Mywwisorae7ii45m7ih7",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-52-f77d2b333286b51e666d819ed4314a21",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467558/ashraf-travel/gallery/nktac0lgqi0exeqpwqc6.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Nktac0lgqi0exeqpwqc6",
+    "title": "Nktac0lgqi0exeqpwqc6",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-53-de102ce6b376efc5883ce3349bc9a88c",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467553/ashraf-travel/gallery/ezs30v2bdc45e2kruud8.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Ezs30v2bdc45e2kruud8",
+    "title": "Ezs30v2bdc45e2kruud8",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-54-bde4753e0b70fedf384ad5c8840cc779",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467547/ashraf-travel/gallery/lwks1bvowmrxqc3pagdo.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Lwks1bvowmrxqc3pagdo",
+    "title": "Lwks1bvowmrxqc3pagdo",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-55-6d6f284472d11e887f15dda70ae8206e",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467543/ashraf-travel/gallery/tjfpbb6hlpfaf1nyiiud.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Tjfpbb6hlpfaf1nyiiud",
+    "title": "Tjfpbb6hlpfaf1nyiiud",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-56-31e4a9248e94a4bf7a4ec8be72d5d847",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467540/ashraf-travel/gallery/qxcmvierwh6yqzsrne6h.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Qxcmvierwh6yqzsrne6h",
+    "title": "Qxcmvierwh6yqzsrne6h",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-57-5bf68c970db627916140f47c7a34c5b0",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467537/ashraf-travel/gallery/k3cvqjr8squkhzsoraie.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - K3cvqjr8squkhzsoraie",
+    "title": "K3cvqjr8squkhzsoraie",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-58-e7ff2949c9f465451053d885529eb84c",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467534/ashraf-travel/gallery/oyrnuz54dbvvq56fmotj.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Oyrnuz54dbvvq56fmotj",
+    "title": "Oyrnuz54dbvvq56fmotj",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-59-f85fd4d14329ad745aa83f689c47620f",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467530/ashraf-travel/gallery/lpn2utujmbhpef9iabsw.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Lpn2utujmbhpef9iabsw",
+    "title": "Lpn2utujmbhpef9iabsw",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-60-117e275695846b09b382b020f172ff91",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467527/ashraf-travel/gallery/kjsphn9secfuhpztwuv4.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Kjsphn9secfuhpztwuv4",
+    "title": "Kjsphn9secfuhpztwuv4",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-61-4b60a47572145f41d1d31aea3a7293bf",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467523/ashraf-travel/gallery/wbnnt0qqfz6euxloovee.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Wbnnt0qqfz6euxloovee",
+    "title": "Wbnnt0qqfz6euxloovee",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-62-a4f83ac43714c34f7067d4793d897098",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467520/ashraf-travel/gallery/dkoiefnhl1lc1tkjrsle.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Dkoiefnhl1lc1tkjrsle",
+    "title": "Dkoiefnhl1lc1tkjrsle",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-63-3e81c729f189755a4bae34763c9e686a",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467517/ashraf-travel/gallery/c0tima1yc8vcgn4j8pp1.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - C0tima1yc8vcgn4j8pp1",
+    "title": "C0tima1yc8vcgn4j8pp1",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-64-24aa116cc3ba291b18716192e87e2173",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467515/ashraf-travel/gallery/uvtdeb4xvtcsy48yquvc.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Uvtdeb4xvtcsy48yquvc",
+    "title": "Uvtdeb4xvtcsy48yquvc",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-65-ce1c6060f441a346f43d93977fc0f5b7",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467510/ashraf-travel/gallery/q4cx6ctup9u0tktc5omn.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Q4cx6ctup9u0tktc5omn",
+    "title": "Q4cx6ctup9u0tktc5omn",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-66-9e37f42716a1989af525e852905ff53e",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467506/ashraf-travel/gallery/fl1jyxsovdedbjjuh946.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Fl1jyxsovdedbjjuh946",
+    "title": "Fl1jyxsovdedbjjuh946",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-67-56c9577d3f62c60c22ce9ac0bb2b4988",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467502/ashraf-travel/gallery/wtmgmr6rdqdp5acbpayw.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Wtmgmr6rdqdp5acbpayw",
+    "title": "Wtmgmr6rdqdp5acbpayw",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-68-80b122e88d6f644009e578e17b242427",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467012/ashraf-travel/gallery/o1ciym69epxxfnwdiqr3.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - O1ciym69epxxfnwdiqr3",
+    "title": "O1ciym69epxxfnwdiqr3",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-69-fb525e5911a11e34d860a8e5bca05be2",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467008/ashraf-travel/gallery/p8etdrcrsxzgfbpvwonw.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - P8etdrcrsxzgfbpvwonw",
+    "title": "P8etdrcrsxzgfbpvwonw",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-70-2e72b8d95395591ca7572016371f2f48",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467006/ashraf-travel/gallery/bfpnsppcbqjawtiunerp.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Bfpnsppcbqjawtiunerp",
+    "title": "Bfpnsppcbqjawtiunerp",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Roads",
+    "orientation": "portrait",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "roads"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
+  },
+  {
+    "id": "g-71-7c18b57a52251f5b28b40702bcb6564e",
+    "src": "https://res.cloudinary.com/kswonkd9/image/upload/v1794467004/ashraf-travel/gallery/qssugkmt5dxx9lowlftn.jpg",
+    "alt": "Ashraf Siddiqui Travel Photograph - Qssugkmt5dxx9lowlftn",
+    "title": "Qssugkmt5dxx9lowlftn",
+    "location": "Kashmir, India",
+    "state": "Kashmir",
+    "year": 2026,
+    "category": "Mountains",
+    "orientation": "landscape",
+    "tags": [
+      "kashmir",
+      "travel",
+      "india",
+      "mountains"
+    ],
+    "notes": "Captured during winter journey through the valley and high passes."
   }
 ]

@@ -147,7 +147,7 @@ export default function TravelGallery() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch("/api/travel/gallery")
+    fetch(`/api/travel/gallery?t=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
       .then((d) => {
         if (d.photos && Array.isArray(d.photos) && d.photos.length > 0) {

@@ -3,6 +3,9 @@ import { getAdminSessionFromCookies } from "@/lib/adminAuth";
 import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
 import { TRAVEL_PHOTOS } from "@/app/travel/data/gallery";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   const session = await getAdminSessionFromCookies();
   if (!session.authenticated) {
@@ -10,7 +13,14 @@ export async function GET() {
   }
 
   const photos = getCachedJson("gallery.json", TRAVEL_PHOTOS);
-  return NextResponse.json({ success: true, count: photos.length, photos });
+  return NextResponse.json(
+    { success: true, count: photos.length, photos },
+    {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+      },
+    }
+  );
 }
 
 export async function POST(req: NextRequest) {
