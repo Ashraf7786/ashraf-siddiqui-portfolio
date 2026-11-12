@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSessionFromCookies } from "@/lib/adminAuth";
-import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson, writeCachedJsonAsync } from "@/lib/travelDataCache";
 import { TRAVEL_PHOTOS } from "@/app/travel/data/gallery";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +12,7 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Unauthorized access." }, { status: 401 });
   }
 
-  const photos = getCachedJson("gallery.json", TRAVEL_PHOTOS);
+  const photos = await getDynamicJson("gallery.json", TRAVEL_PHOTOS);
   return NextResponse.json(
     { success: true, count: photos.length, photos },
     {
@@ -66,9 +66,9 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    const saved = writeCachedJson("gallery.json", sanitizedPhotos);
+    const saved = await writeCachedJsonAsync("gallery.json", sanitizedPhotos);
     if (!saved) {
-      throw new Error("Disk write failed.");
+      throw new Error("Storage write failed.");
     }
 
     return NextResponse.json({

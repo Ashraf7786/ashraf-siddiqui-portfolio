@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson } from "@/lib/travelDataCache";
 import { TRAVEL_STORIES, TravelStory } from "@/app/travel/data/stories";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
-  const stories = getCachedJson<TravelStory[]>("stories.json", TRAVEL_STORIES);
+  const stories = await getDynamicJson<TravelStory[]>("stories.json", TRAVEL_STORIES);
 
   const { searchParams } = new URL(req.url);
   const slug = searchParams.get("slug");
@@ -19,7 +20,7 @@ export async function GET(req: NextRequest) {
       { success: true, story },
       {
         headers: {
-          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
         },
       }
     );
@@ -29,9 +30,8 @@ export async function GET(req: NextRequest) {
     { success: true, count: stories.length, stories },
     {
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
       },
     }
   );
 }
-

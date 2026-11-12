@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSessionFromCookies } from "@/lib/adminAuth";
-import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson, writeCachedJsonAsync } from "@/lib/travelDataCache";
 import { GROUP_TRIPS } from "@/app/travel/data/trips";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +12,7 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Unauthorized access." }, { status: 401 });
   }
 
-  const trips = getCachedJson("trips.json", GROUP_TRIPS);
+  const trips = await getDynamicJson("trips.json", GROUP_TRIPS);
   return NextResponse.json(
     { success: true, count: trips.length, trips },
     {
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const existingTrips = getCachedJson<any[]>("trips.json", GROUP_TRIPS);
+    const existingTrips = await getDynamicJson<any[]>("trips.json", GROUP_TRIPS);
 
     const sanitizedTrips = trips.map((trip, idx) => {
       if (!trip.title) {
@@ -118,8 +118,8 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    const saved = writeCachedJson("trips.json", sanitizedTrips);
-    if (!saved) throw new Error("Disk write failed.");
+    const saved = await writeCachedJsonAsync("trips.json", sanitizedTrips);
+    if (!saved) throw new Error("Storage write failed.");
 
     return NextResponse.json({
       success: true,

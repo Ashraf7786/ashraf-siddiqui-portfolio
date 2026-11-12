@@ -1,21 +1,33 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useIsomorphicLayoutEffect } from "@/hooks/useIsomorphicLayoutEffect";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STATS = [
-  { value: "24", unit: "/28", label: "Indian States Explored" },
-  { value: "01", unit: null, label: "Country Explored" },
-  { value: "4+", unit: null, label: "Years Travelling" },
-  { value: "∞", unit: null, label: "Stories to Tell" },
-];
-
 export default function TravelStats() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [visitedCount, setVisitedCount] = useState<string>("24");
+
+  useEffect(() => {
+    fetch(`/api/travel/states?t=${Date.now()}`, { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.summary && typeof d.summary.visitedStates === "number") {
+          setVisitedCount(String(d.summary.visitedStates));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const stats = [
+    { value: visitedCount, unit: "/28", label: "Indian States Explored" },
+    { value: "01", unit: null, label: "Country Explored" },
+    { value: "4+", unit: null, label: "Years Travelling" },
+    { value: "∞", unit: null, label: "Stories to Tell" },
+  ];
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -39,7 +51,7 @@ export default function TravelStats() {
       className="relative z-10 py-16 px-6 md:px-16 border-b border-[#f5f5f5]/5 bg-[#080808]"
     >
       <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        {STATS.map((s) => (
+        {stats.map((s) => (
           <div key={s.label} className="stat-item">
             <div className="flex items-baseline justify-center gap-1">
               <p

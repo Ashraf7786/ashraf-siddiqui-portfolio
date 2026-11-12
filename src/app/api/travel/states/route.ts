@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { getCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson } from "@/lib/travelDataCache";
 import { INDIA_STATES_DATA, IndiaStateData } from "@/app/travel/data/indiaStates";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
-  const states = getCachedJson<Record<string, IndiaStateData>>("states.json", INDIA_STATES_DATA);
+  const states = await getDynamicJson<Record<string, IndiaStateData>>("states.json", INDIA_STATES_DATA);
 
   const totalStates = 28;
   const totalUTs = 8;
@@ -33,9 +34,8 @@ export async function GET() {
     { success: true, count: Object.keys(states).length, states, summary },
     {
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
       },
     }
   );
 }
-

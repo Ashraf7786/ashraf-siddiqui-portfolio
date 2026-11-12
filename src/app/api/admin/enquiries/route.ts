@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSessionFromCookies } from "@/lib/adminAuth";
-import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson, writeCachedJsonAsync } from "@/lib/travelDataCache";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   const session = await getAdminSessionFromCookies();
@@ -9,8 +12,15 @@ export async function GET() {
   }
 
   try {
-    const enquiries = getCachedJson<any[]>("enquiries.json", []);
-    return NextResponse.json({ success: true, enquiries });
+    const enquiries = await getDynamicJson<any[]>("enquiries.json", []);
+    return NextResponse.json(
+      { success: true, enquiries },
+      {
+        headers: {
+          "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json({ success: false, error: "Failed to read enquiries." }, { status: 500 });
   }
@@ -28,14 +38,14 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Missing enquiry id or status." }, { status: 400 });
     }
 
-    const enquiries = getCachedJson<any[]>("enquiries.json", []);
+    const enquiries = await getDynamicJson<any[]>("enquiries.json", []);
     const index = enquiries.findIndex((e: any) => e.id === id);
     if (index === -1) {
       return NextResponse.json({ success: false, error: "Enquiry not found." }, { status: 404 });
     }
 
     enquiries[index].status = status;
-    writeCachedJson("enquiries.json", enquiries);
+    await writeCachedJsonAsync("enquiries.json", enquiries);
 
     return NextResponse.json({ success: true, enquiry: enquiries[index] });
   } catch (error) {
@@ -56,7 +66,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Missing enquiry id parameter." }, { status: 400 });
     }
 
-    let enquiries = getCachedJson<any[]>("enquiries.json", []);
+    let enquiries = await getDynamicJson<any[]>("enquiries.json", []);
     const initialLength = enquiries.length;
     enquiries = enquiries.filter((e: any) => e.id !== id);
 
@@ -64,7 +74,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Enquiry not found." }, { status: 404 });
     }
 
-    writeCachedJson("enquiries.json", enquiries);
+    await writeCachedJsonAsync("enquiries.json", enquiries);
     return NextResponse.json({ success: true, message: "Enquiry deleted successfully." });
   } catch (error) {
     return NextResponse.json({ success: false, error: "Failed to delete enquiry." }, { status: 500 });

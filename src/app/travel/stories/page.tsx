@@ -1,10 +1,11 @@
 import React from "react";
 import { Metadata } from "next";
 import { TRAVEL_STORIES, TravelStory } from "../data/stories";
-import { getCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson } from "@/lib/travelDataCache";
 import StoriesClient from "./StoriesClient";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Travel Stories & Field Notes | Ashraf Siddiqui",
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function StoriesPage() {
-  const initialStories = getCachedJson<TravelStory[]>("stories.json", TRAVEL_STORIES);
+export default async function StoriesPage() {
+  const initialStories = await getDynamicJson<TravelStory[]>("stories.json", TRAVEL_STORIES);
   return <StoriesClient initialStories={initialStories} />;
 }

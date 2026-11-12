@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { getCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson } from "@/lib/travelDataCache";
 import { GROUP_TRIPS } from "@/app/travel/data/trips";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET() {
-  const trips = getCachedJson("trips.json", GROUP_TRIPS);
+  const trips = await getDynamicJson("trips.json", GROUP_TRIPS);
 
   return NextResponse.json(
     { success: true, count: trips.length, trips },

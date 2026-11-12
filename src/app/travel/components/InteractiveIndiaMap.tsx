@@ -29,7 +29,7 @@ export default function InteractiveIndiaMap() {
   React.useEffect(() => {
     async function loadDynamicStates() {
       try {
-        const res = await fetch("/api/travel/states");
+        const res = await fetch(`/api/travel/states?t=${Date.now()}`, { cache: "no-store" });
         if (res.ok) {
           const d = await res.json();
           if (d.states && Object.keys(d.states).length > 0) {

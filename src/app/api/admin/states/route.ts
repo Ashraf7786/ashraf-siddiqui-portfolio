@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSessionFromCookies } from "@/lib/adminAuth";
-import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson, writeCachedJsonAsync } from "@/lib/travelDataCache";
 import { INDIA_STATES_DATA, IndiaStateData } from "@/app/travel/data/indiaStates";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   const session = await getAdminSessionFromCookies();
@@ -9,8 +12,15 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Unauthorized access." }, { status: 401 });
   }
 
-  const states = getCachedJson<Record<string, IndiaStateData>>("states.json", INDIA_STATES_DATA);
-  return NextResponse.json({ success: true, count: Object.keys(states).length, states });
+  const states = await getDynamicJson<Record<string, IndiaStateData>>("states.json", INDIA_STATES_DATA);
+  return NextResponse.json(
+    { success: true, count: Object.keys(states).length, states },
+    {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+      },
+    }
+  );
 }
 
 export async function POST(req: NextRequest) {
@@ -30,7 +40,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const current = getCachedJson<Record<string, IndiaStateData>>("states.json", INDIA_STATES_DATA);
+    const current = await getDynamicJson<Record<string, IndiaStateData>>("states.json", INDIA_STATES_DATA);
     const sanitized: Record<string, IndiaStateData> = {};
 
     Object.keys(states).forEach((key) => {
@@ -67,10 +77,10 @@ export async function POST(req: NextRequest) {
       };
     });
 
-    const success = writeCachedJson("states.json", sanitized);
+    const success = await writeCachedJsonAsync("states.json", sanitized);
     if (!success) {
       return NextResponse.json(
-        { success: false, error: "Failed to persist states.json to disk." },
+        { success: false, error: "Failed to persist states.json to storage." },
         { status: 500 }
       );
     }
@@ -87,4 +97,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-

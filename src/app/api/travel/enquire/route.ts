@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { extractClientIp } from "@/lib/adminAuth";
-import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson, writeCachedJsonAsync } from "@/lib/travelDataCache";
 import { sendInquiryNotification } from "@/lib/emailService";
 
 // Simple in-memory spam preventer: max 5 submissions per 10 mins per IP
@@ -130,9 +130,9 @@ export async function POST(req: NextRequest) {
       status: "New" as "New" | "Contacted" | "Confirmed" | "Archived",
     };
 
-    const existing = getCachedJson<any[]>("enquiries.json", []);
+    const existing = await getDynamicJson<any[]>("enquiries.json", []);
     existing.unshift(newEnquiry); // newest first
-    writeCachedJson("enquiries.json", existing);
+    await writeCachedJsonAsync("enquiries.json", existing);
 
     // Send formatted luxury email notification to ashrafsiddiquitravel@gmail.com
     let emailDispatched = false;

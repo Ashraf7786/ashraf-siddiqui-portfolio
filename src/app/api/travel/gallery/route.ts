@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { getCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson } from "@/lib/travelDataCache";
 import { TRAVEL_PHOTOS, GalleryPhoto } from "@/app/travel/data/gallery";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET() {
-  const photos = getCachedJson<GalleryPhoto[]>("gallery.json", TRAVEL_PHOTOS);
+  const photos = await getDynamicJson<GalleryPhoto[]>("gallery.json", TRAVEL_PHOTOS);
 
   return NextResponse.json(
     { success: true, count: photos.length, photos },

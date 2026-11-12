@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
+import { getDynamicJson, writeCachedJsonAsync } from "@/lib/travelDataCache";
 
 export interface NewsletterSubscriber {
   id: string;
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Please enter a valid email address." }, { status: 400 });
     }
 
-    const subscribers = getCachedJson<NewsletterSubscriber[]>("subscribers.json", []);
+    const subscribers = await getDynamicJson<NewsletterSubscriber[]>("subscribers.json", []);
 
     // Check if already subscribed
     const existing = subscribers.find((s) => s.email.toLowerCase() === cleanEmail);
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     };
 
     const updated = [newSubscriber, ...subscribers];
-    writeCachedJson("subscribers.json", updated);
+    await writeCachedJsonAsync("subscribers.json", updated);
 
     return NextResponse.json({
       success: true,

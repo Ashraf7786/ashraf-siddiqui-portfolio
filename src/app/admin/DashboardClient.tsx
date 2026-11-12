@@ -514,13 +514,14 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
     async function loadAllData() {
       setIsLoading(true);
       try {
+        const now = Date.now();
         const [heroRes, galRes, reelsRes, tripsRes, storiesRes, enqRes] = await Promise.all([
-          fetch("/api/admin/hero"),
-          fetch("/api/admin/gallery"),
-          fetch("/api/admin/reels"),
-          fetch("/api/admin/trips"),
-          fetch("/api/admin/stories"),
-          fetch("/api/admin/enquiries"),
+          fetch(`/api/admin/hero?t=${now}`, { cache: "no-store" }),
+          fetch(`/api/admin/gallery?t=${now}`, { cache: "no-store" }),
+          fetch(`/api/admin/reels?t=${now}`, { cache: "no-store" }),
+          fetch(`/api/admin/trips?t=${now}`, { cache: "no-store" }),
+          fetch(`/api/admin/stories?t=${now}`, { cache: "no-store" }),
+          fetch(`/api/admin/enquiries?t=${now}`, { cache: "no-store" }),
         ]);
 
         if (heroRes.ok) {

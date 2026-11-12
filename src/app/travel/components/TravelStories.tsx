@@ -26,7 +26,7 @@ export default function TravelStories() {
   useEffect(() => {
     async function loadDynamicStories() {
       try {
-        const res = await fetch("/api/travel/stories");
+        const res = await fetch(`/api/travel/stories?t=${Date.now()}`, { cache: "no-store" });
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data.stories) && data.stories.length > 0) {

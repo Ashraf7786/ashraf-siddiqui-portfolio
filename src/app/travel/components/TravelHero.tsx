@@ -109,16 +109,28 @@ export default function TravelHero() {
   useEffect(() => {
     async function fetchDynamicSlides() {
       try {
-        const res = await fetch("/api/travel/hero");
-        if (res.ok) {
-          const data = await res.json();
+        const [heroRes, tripsRes] = await Promise.all([
+          fetch(`/api/travel/hero?t=${Date.now()}`, { cache: "no-store" }),
+          fetch(`/api/travel/trips?t=${Date.now()}`, { cache: "no-store" }),
+        ]);
+
+        let liveTrips: GroupTrip[] = GROUP_TRIPS;
+        if (tripsRes.ok) {
+          const tripData = await tripsRes.json();
+          if (Array.isArray(tripData.trips) && tripData.trips.length > 0) {
+            liveTrips = tripData.trips;
+          }
+        }
+
+        if (heroRes.ok) {
+          const data = await heroRes.json();
           if (Array.isArray(data.slides) && data.slides.length > 0) {
             const mappedSlides: ExpeditionSlide[] = data.slides.map(
               (s: any, idx: number) => {
                 const matchedTrip =
-                  GROUP_TRIPS.find((t) => t.slug === s.tripSlug) ||
-                  GROUP_TRIPS[idx % GROUP_TRIPS.length] ||
-                  GROUP_TRIPS[0];
+                  liveTrips.find((t) => t.slug === s.tripSlug) ||
+                  liveTrips[idx % liveTrips.length] ||
+                  liveTrips[0];
                 return {
                   ...s,
                   tripData: matchedTrip,
@@ -126,6 +138,9 @@ export default function TravelHero() {
               }
             );
             setSlides(mappedSlides);
+            if (mappedSlides[0]?.tripData) {
+              setModalTrip(mappedSlides[0].tripData);
+            }
           }
         }
       } catch {

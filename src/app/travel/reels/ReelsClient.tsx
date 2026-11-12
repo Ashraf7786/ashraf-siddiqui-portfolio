@@ -38,7 +38,7 @@ export default function ReelsClient() {
   const [isModalOpen, setIsModalOpen] = useState(Boolean(initialId));
 
   useEffect(() => {
-    fetch("/api/travel/reels")
+    fetch(`/api/travel/reels?t=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
       .then((d) => {
         if (d.reels && Array.isArray(d.reels) && d.reels.length > 0) {
