@@ -18,7 +18,7 @@ export default function GroupTourCards() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    fetch("/api/travel/trips")
+    fetch(`/api/travel/trips?t=${Date.now()}`, { cache: "no-store" })
       .then((r) => r.json())
       .then((d) => {
         if (d.trips && Array.isArray(d.trips) && d.trips.length > 0) {

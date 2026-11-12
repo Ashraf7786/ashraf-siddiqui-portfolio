@@ -83,6 +83,19 @@ interface ReelItem {
   instagramHandle?: string;
 }
 
+export interface TripDayItineraryItem {
+  day: number;
+  title: string;
+  description: string;
+  mealsIncluded: string;
+  nightStay: string;
+}
+
+export interface TripFAQItem {
+  question: string;
+  answer: string;
+}
+
 interface GroupTripItem {
   id: string;
   slug: string;
@@ -111,6 +124,8 @@ interface GroupTripItem {
   highlights: string[];
   inclusions: string[];
   exclusions: string[];
+  dayWiseItinerary?: TripDayItineraryItem[];
+  faqs?: TripFAQItem[];
 }
 
 interface LeadEnquiryItem {
@@ -2690,6 +2705,22 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                         highlights: ["High-altitude passes", "Stargazing at Pangong", "Monastery visits"],
                         inclusions: ["All Stays", "Breakfast & Dinner", "Dedicated 4x4 Transit", "Permits"],
                         exclusions: ["Flights to departure city", "Lunches", "Personal gear"],
+                        dayWiseItinerary: [
+                          {
+                            day: 1,
+                            title: "Arrival & Base Camp Check-In",
+                            description: "Welcome gathering, acclimatization walk, and evening welcome dinner.",
+                            mealsIncluded: "Welcome Dinner",
+                            nightStay: "Heritage Mountain Stay",
+                          },
+                          {
+                            day: 2,
+                            title: "High-Altitude Pass & Lake Circuit",
+                            description: "Scenic 4x4 expedition through mountain corridors with curated photo stops.",
+                            mealsIncluded: "Breakfast & Dinner",
+                            nightStay: "Alpine Stargazing Camp",
+                          },
+                        ],
                       };
                       setTrips([newTrip, ...trips]);
                       setSelectedTripIndex(0);
@@ -3073,21 +3104,297 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                         </div>
                       </div>
 
-                      {/* Inclusions (newline-separated) */}
+                      {/* Inclusions & Exclusions */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
+                            Inclusions (one item per line)
+                          </label>
+                          <textarea
+                            rows={4}
+                            value={(currentTrip.inclusions || []).join("\n")}
+                            onChange={(e) => {
+                              const arr = [...trips];
+                              arr[selectedTripIndex].inclusions = e.target.value.split("\n").filter(Boolean);
+                              setTrips(arr);
+                            }}
+                            placeholder="All Stays&#10;Breakfast & Dinner&#10;Dedicated 4x4 Transit&#10;Permits & Fees"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono resize-none leading-relaxed"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
+                            Exclusions (one item per line)
+                          </label>
+                          <textarea
+                            rows={4}
+                            value={(currentTrip.exclusions || []).join("\n")}
+                            onChange={(e) => {
+                              const arr = [...trips];
+                              arr[selectedTripIndex].exclusions = e.target.value.split("\n").filter(Boolean);
+                              setTrips(arr);
+                            }}
+                            placeholder="Flights to departure city&#10;Lunches&#10;Personal gear & shopping"
+                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono resize-none leading-relaxed"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Highlights */}
                       <div>
                         <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                          Inclusions (one item per line)
+                          Trip Highlights (one bullet point per line)
                         </label>
                         <textarea
-                          rows={4}
-                          value={currentTrip.inclusions.join("\n")}
+                          rows={3}
+                          value={(currentTrip.highlights || []).join("\n")}
                           onChange={(e) => {
                             const arr = [...trips];
-                            arr[selectedTripIndex].inclusions = e.target.value.split("\n").filter(Boolean);
+                            arr[selectedTripIndex].highlights = e.target.value.split("\n").filter(Boolean);
                             setTrips(arr);
                           }}
-                          className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 font-mono resize-none leading-relaxed"
+                          placeholder="Frozen Dal Lake and wooden houseboats&#10;Cable car to Apharwat Peak 14,000 ft&#10;Saffron Kehwa by evening bonfires"
+                          className="w-full bg-[#080808] border border-white/15 rounded-xl px-3.5 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
                         />
+                      </div>
+
+                      {/* ══════════════════════════════════════════════════════════
+                          IN-DEPTH DAY-BY-DAY ITINERARY PLANNER (DYNAMIC)
+                          ══════════════════════════════════════════════════════════ */}
+                      <div className="pt-4 border-t border-white/10 space-y-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h4 className="text-sm sm:text-base font-bold text-white flex items-center gap-2" style={{ fontFamily: "var(--font-fredoka)" }}>
+                                <span>Day-by-Day Trip Plan</span>
+                              </h4>
+                              <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-white font-mono text-xs font-semibold">
+                                {(currentTrip.dayWiseItinerary || []).length} Days
+                              </span>
+                            </div>
+                            <p className="text-xs text-white/50 mt-0.5">
+                              Edit, add, or delete days for the in-depth itinerary shown in the traveler booking modal.
+                            </p>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const arr = [...trips];
+                              const currentItinerary = arr[selectedTripIndex].dayWiseItinerary || [];
+                              const nextDayNum = currentItinerary.length + 1;
+                              const newDay: TripDayItineraryItem = {
+                                day: nextDayNum,
+                                title: `Day ${nextDayNum} Route & Exploration`,
+                                description: "Detailed day route, viewpoints, local meals, and activities.",
+                                mealsIncluded: "Breakfast & Dinner",
+                                nightStay: "Base Stay / Hotel",
+                              };
+                              arr[selectedTripIndex].dayWiseItinerary = [...currentItinerary, newDay];
+                              setTrips(arr);
+                            }}
+                            className="px-4 py-2 rounded-xl bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md"
+                          >
+                            <PlusIcon />
+                            <span>Add Day</span>
+                          </button>
+                        </div>
+
+                        {/* List of Day Cards */}
+                        <div className="space-y-3">
+                          {(currentTrip.dayWiseItinerary || []).length > 0 ? (
+                            (currentTrip.dayWiseItinerary || []).map((dayItem, dIdx) => (
+                              <div
+                                key={dIdx}
+                                className="p-4 rounded-2xl bg-[#080808] border border-white/10 space-y-3 relative group"
+                              >
+                                {/* Card Header with Day Badge & Actions */}
+                                <div className="flex items-center justify-between gap-2 border-b border-white/5 pb-2.5">
+                                  <div className="flex items-center gap-2">
+                                    <span className="px-2.5 py-1 rounded-lg bg-white/10 text-white font-mono text-xs font-bold border border-white/10">
+                                      Day {dayItem.day || dIdx + 1}
+                                    </span>
+                                    <span className="text-xs text-white/40 font-mono">
+                                      Stage #{dIdx + 1}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex items-center gap-1">
+                                    {/* Move Up */}
+                                    <button
+                                      type="button"
+                                      disabled={dIdx === 0}
+                                      onClick={() => {
+                                        if (dIdx === 0) return;
+                                        const arr = [...trips];
+                                        const itin = [...(arr[selectedTripIndex].dayWiseItinerary || [])];
+                                        const temp = itin[dIdx];
+                                        itin[dIdx] = itin[dIdx - 1];
+                                        itin[dIdx - 1] = temp;
+                                        // Renumber days
+                                        itin.forEach((item, i) => { item.day = i + 1; });
+                                        arr[selectedTripIndex].dayWiseItinerary = itin;
+                                        setTrips(arr);
+                                      }}
+                                      className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-20 cursor-pointer"
+                                      title="Move Day Up"
+                                    >
+                                      ▲
+                                    </button>
+
+                                    {/* Move Down */}
+                                    <button
+                                      type="button"
+                                      disabled={dIdx === (currentTrip.dayWiseItinerary?.length || 0) - 1}
+                                      onClick={() => {
+                                        const itin = [...(currentTrip.dayWiseItinerary || [])];
+                                        if (dIdx >= itin.length - 1) return;
+                                        const arr = [...trips];
+                                        const temp = itin[dIdx];
+                                        itin[dIdx] = itin[dIdx + 1];
+                                        itin[dIdx + 1] = temp;
+                                        // Renumber days
+                                        itin.forEach((item, i) => { item.day = i + 1; });
+                                        arr[selectedTripIndex].dayWiseItinerary = itin;
+                                        setTrips(arr);
+                                      }}
+                                      className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/10 transition-colors disabled:opacity-20 cursor-pointer"
+                                      title="Move Day Down"
+                                    >
+                                      ▼
+                                    </button>
+
+                                    {/* Delete Day */}
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        if (confirm(`Delete Day ${dayItem.day}?`)) {
+                                          const arr = [...trips];
+                                          const itin = (arr[selectedTripIndex].dayWiseItinerary || []).filter((_, i) => i !== dIdx);
+                                          // Renumber days
+                                          itin.forEach((item, i) => { item.day = i + 1; });
+                                          arr[selectedTripIndex].dayWiseItinerary = itin;
+                                          setTrips(arr);
+                                        }
+                                      }}
+                                      className="p-1.5 rounded-lg text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors ml-1 cursor-pointer"
+                                      title="Delete this Day"
+                                    >
+                                      <TrashIcon />
+                                    </button>
+                                  </div>
+                                </div>
+
+                                {/* Day Title & Night Stay */}
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                  <div>
+                                    <label className="block text-[10px] uppercase tracking-wider text-white/40 font-bold mb-1">
+                                      Day Title
+                                    </label>
+                                    <input
+                                      type="text"
+                                      value={dayItem.title || ""}
+                                      onChange={(e) => {
+                                        const arr = [...trips];
+                                        const itin = [...(arr[selectedTripIndex].dayWiseItinerary || [])];
+                                        itin[dIdx] = { ...itin[dIdx], title: e.target.value };
+                                        arr[selectedTripIndex].dayWiseItinerary = itin;
+                                        setTrips(arr);
+                                      }}
+                                      placeholder="e.g. Transit to Srinagar & Dal Lake Welcome"
+                                      className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40 font-semibold"
+                                    />
+                                  </div>
+
+                                  <div>
+                                    <label className="block text-[10px] uppercase tracking-wider text-white/40 font-bold mb-1">
+                                      Night Stay / Accommodation
+                                    </label>
+                                    <input
+                                      type="text"
+                                      value={dayItem.nightStay || ""}
+                                      onChange={(e) => {
+                                        const arr = [...trips];
+                                        const itin = [...(arr[selectedTripIndex].dayWiseItinerary || [])];
+                                        itin[dIdx] = { ...itin[dIdx], nightStay: e.target.value };
+                                        arr[selectedTripIndex].dayWiseItinerary = itin;
+                                        setTrips(arr);
+                                      }}
+                                      placeholder="e.g. Srinagar Hotel / Cedar Houseboat"
+                                      className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40"
+                                    />
+                                  </div>
+                                </div>
+
+                                {/* Meals Included */}
+                                <div>
+                                  <label className="block text-[10px] uppercase tracking-wider text-white/40 font-bold mb-1">
+                                    Meals Included
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={dayItem.mealsIncluded || ""}
+                                    onChange={(e) => {
+                                      const arr = [...trips];
+                                      const itin = [...(arr[selectedTripIndex].dayWiseItinerary || [])];
+                                      itin[dIdx] = { ...itin[dIdx], mealsIncluded: e.target.value };
+                                      arr[selectedTripIndex].dayWiseItinerary = itin;
+                                      setTrips(arr);
+                                    }}
+                                    placeholder="e.g. Welcome Kehwa & Dinner, Breakfast & Dinner"
+                                    className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40 text-emerald-400 font-mono"
+                                  />
+                                </div>
+
+                                {/* Day Description & Route Activities */}
+                                <div>
+                                  <label className="block text-[10px] uppercase tracking-wider text-white/40 font-bold mb-1">
+                                    Route Activities &amp; Experience Details
+                                  </label>
+                                  <textarea
+                                    rows={3}
+                                    value={dayItem.description || ""}
+                                    onChange={(e) => {
+                                      const arr = [...trips];
+                                      const itin = [...(arr[selectedTripIndex].dayWiseItinerary || [])];
+                                      itin[dIdx] = { ...itin[dIdx], description: e.target.value };
+                                      arr[selectedTripIndex].dayWiseItinerary = itin;
+                                      setTrips(arr);
+                                    }}
+                                    placeholder="Describe the day's route, scenic viewpoints, photo stops, and local interactions..."
+                                    className="w-full bg-[#111113] border border-white/15 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-white/40 resize-none leading-relaxed"
+                                  />
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="p-8 text-center bg-[#080808] border border-dashed border-white/15 rounded-2xl space-y-3">
+                              <p className="text-xs text-white/50">
+                                No daily itinerary days defined for this trip yet.
+                              </p>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const arr = [...trips];
+                                  arr[selectedTripIndex].dayWiseItinerary = [
+                                    {
+                                      day: 1,
+                                      title: "Day 1 Welcome & Base Check-In",
+                                      description: "Arrive at destination, meet the group, and settle into your stay.",
+                                      mealsIncluded: "Welcome Dinner",
+                                      nightStay: "Heritage Base Stay",
+                                    },
+                                  ];
+                                  setTrips(arr);
+                                }}
+                                className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-all cursor-pointer"
+                              >
+                                + Add First Day to Itinerary
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ) : (

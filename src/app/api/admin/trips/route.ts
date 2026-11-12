@@ -3,6 +3,9 @@ import { getAdminSessionFromCookies } from "@/lib/adminAuth";
 import { getCachedJson, writeCachedJson } from "@/lib/travelDataCache";
 import { GROUP_TRIPS } from "@/app/travel/data/trips";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   const session = await getAdminSessionFromCookies();
   if (!session.authenticated) {
@@ -10,7 +13,14 @@ export async function GET() {
   }
 
   const trips = getCachedJson("trips.json", GROUP_TRIPS);
-  return NextResponse.json({ success: true, count: trips.length, trips });
+  return NextResponse.json(
+    { success: true, count: trips.length, trips },
+    {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+      },
+    }
+  );
 }
 
 export async function POST(req: NextRequest) {
@@ -79,11 +89,22 @@ export async function POST(req: NextRequest) {
           : typeof trip.exclusions === "string"
           ? (trip.exclusions as string).split("\n").map((e) => e.trim()).filter(Boolean)
           : [],
-        dayWiseItinerary: Array.isArray(trip.dayWiseItinerary) && trip.dayWiseItinerary.length > 0
-          ? trip.dayWiseItinerary
+        dayWiseItinerary: Array.isArray(trip.dayWiseItinerary)
+          ? trip.dayWiseItinerary.map((d: any, dIdx: number) => ({
+              day: Number(d.day) || dIdx + 1,
+              title: String(d.title || `Day ${dIdx + 1}`).trim(),
+              description: String(d.description || "").trim(),
+              mealsIncluded: String(d.mealsIncluded || "").trim(),
+              nightStay: String(d.nightStay || "").trim(),
+            }))
           : (existingTrip?.dayWiseItinerary || []),
-        faqs: Array.isArray(trip.faqs) && trip.faqs.length > 0
+        faqs: Array.isArray(trip.faqs)
           ? trip.faqs
+              .map((f: any) => ({
+                question: String(f.question || "").trim(),
+                answer: String(f.answer || "").trim(),
+              }))
+              .filter((f: any) => f.question)
           : (existingTrip?.faqs || []),
         host: trip.host && trip.host.name
           ? trip.host

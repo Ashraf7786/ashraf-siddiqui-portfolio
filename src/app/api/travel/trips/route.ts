@@ -3,6 +3,7 @@ import { getCachedJson } from "@/lib/travelDataCache";
 import { GROUP_TRIPS } from "@/app/travel/data/trips";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   const trips = getCachedJson("trips.json", GROUP_TRIPS);
@@ -11,7 +12,9 @@ export async function GET() {
     { success: true, count: trips.length, trips },
     {
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0",
+        "Pragma": "no-cache",
+        "Expires": "0",
       },
     }
   );
