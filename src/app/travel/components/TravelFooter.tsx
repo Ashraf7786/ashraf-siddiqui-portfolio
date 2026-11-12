@@ -172,6 +172,26 @@ export default function TravelFooter() {
           </div>
         </div>
 
+        {/* Trust & Guarantee Strip */}
+        <div className="py-6 border-b border-white/5 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-center text-xs">
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+            <span className="font-semibold text-white block">Jaipur Base</span>
+            <span className="text-[10px] text-white/40">Verified Local Operations</span>
+          </div>
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+            <span className="font-semibold text-white block">Refund Protection</span>
+            <span className="text-[10px] text-white/40">Clear Cancellation Terms</span>
+          </div>
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+            <span className="font-semibold text-white block">Solo Safe</span>
+            <span className="text-[10px] text-white/40">Same-Gender Room Pairing</span>
+          </div>
+          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
+            <span className="font-semibold text-white block">₹0 Surprise Fees</span>
+            <span className="text-[10px] text-white/40">100% Honest Pricing</span>
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#f5f5f5]/40">
           <p>© {new Date().getFullYear()} Ashraf Siddiqui · Travel Diaries. All rights reserved.</p>

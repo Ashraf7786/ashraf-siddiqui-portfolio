@@ -9,6 +9,7 @@ import TravelGallery from "./components/TravelGallery";
 import TravelStories from "./components/TravelStories";
 import TravelReels from "./components/TravelReels";
 import GroupTourCards from "./components/GroupTourCards";
+import TravelerReviews from "./components/TravelerReviews";
 import TravelTools from "./components/TravelTools";
 import AboutTraveller from "./components/AboutTraveller";
 import TravelCTA from "./components/TravelCTA";
@@ -31,6 +32,9 @@ export default function TravelPageClient() {
 
         {/* 3. PRIMARY REVENUE: Curated Small-Group Expeditions & Tours */}
         <GroupTourCards />
+
+        {/* 3.5 SOCIAL PROOF & TRUST: Real Traveler Reviews & Booking Process */}
+        <TravelerReviews />
 
         {/* 4. HIGH-RETENTION VIDEO HOOK: iPhone Reels & Field Dispatches */}
         <TravelReels />
