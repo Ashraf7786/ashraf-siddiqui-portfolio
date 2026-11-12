@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { TravelStory, StorySection } from "@/app/travel/data/stories";
 import { CloudinaryUploadButton } from "./components/CloudinaryUploadButton";
+import GalleryBatchUploader from "./components/GalleryBatchUploader";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 type AdminTab = "hero" | "gallery" | "reels" | "trips" | "stories" | "enquiries";
@@ -1957,6 +1958,14 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
                 </div>
               </div>
 
+              {/* Fast Drag-and-Drop Batch Uploader */}
+              <GalleryBatchUploader
+                onPhotosAdded={(newPhotos) => {
+                  setPhotos([...newPhotos, ...photos]);
+                  setSelectedPhotoIndex(0);
+                }}
+              />
+
               {/* Filter & Search Bar */}
               <div className="flex flex-col sm:flex-row items-center gap-3">
                 <div className="relative flex-1 w-full">
@@ -2236,21 +2245,55 @@ export default function DashboardClient({ adminUsername }: { adminUsername: stri
 
                         <div>
                           <label className="block text-[11px] uppercase tracking-wider text-[#f5f5f5]/50 font-bold mb-1">
-                            Orientation
+                            Orientation (Horizontal vs Vertical)
                           </label>
-                          <select
-                            value={currentPhoto.orientation}
-                            onChange={(e) => {
-                              const arr = [...photos];
-                              arr[selectedPhotoIndex].orientation = e.target.value as any;
-                              setPhotos(arr);
-                            }}
-                            className="w-full bg-[#080808] border border-white/15 rounded-xl px-3 py-2.5 text-base sm:text-xs text-white outline-none focus:border-white/40"
-                          >
-                            <option value="landscape">Landscape (Horizontal - 3:2 / 16:9)</option>
-                            <option value="portrait">Portrait (Vertical - 4:5 / 9:16)</option>
-                            <option value="square">Square (1:1)</option>
-                          </select>
+                          <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#080808] border border-white/15 rounded-xl">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const arr = [...photos];
+                                arr[selectedPhotoIndex].orientation = "landscape";
+                                setPhotos(arr);
+                              }}
+                              className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
+                                currentPhoto.orientation === "landscape"
+                                  ? "bg-white text-black shadow-sm"
+                                  : "text-white/60 hover:text-white hover:bg-white/5"
+                              }`}
+                            >
+                              Horizontal (16:9)
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const arr = [...photos];
+                                arr[selectedPhotoIndex].orientation = "portrait";
+                                setPhotos(arr);
+                              }}
+                              className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
+                                currentPhoto.orientation === "portrait"
+                                  ? "bg-white text-black shadow-sm"
+                                  : "text-white/60 hover:text-white hover:bg-white/5"
+                              }`}
+                            >
+                              Vertical (3:4)
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const arr = [...photos];
+                                arr[selectedPhotoIndex].orientation = "square";
+                                setPhotos(arr);
+                              }}
+                              className={`py-1.5 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center ${
+                                currentPhoto.orientation === "square"
+                                  ? "bg-white text-black shadow-sm"
+                                  : "text-white/60 hover:text-white hover:bg-white/5"
+                              }`}
+                            >
+                              Square (1:1)
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
