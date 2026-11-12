@@ -52,7 +52,9 @@ export default function GroupTourCards() {
               <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
               <path d="M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
-            <p className="text-[11px] sm:text-xs tracking-[0.25em] uppercase text-[#f5f5f5]/40 font-semibold">Join the Journey</p>
+            <p className="text-[11px] sm:text-xs tracking-[0.2em] uppercase text-[#f5f5f5]/60 font-semibold font-mono">
+              Budget Expeditions · Packages From ₹4,999 to ₹19,999
+            </p>
           </div>
           <h2
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#f5f5f5]"
@@ -60,8 +62,8 @@ export default function GroupTourCards() {
           >
             Upcoming Group Trips
           </h2>
-          <p className="mt-2 text-[#f5f5f5]/50 max-w-lg text-xs sm:text-sm leading-relaxed">
-            Travel with a friendly group of 10 to 12 people. Guided personally by Ashraf Siddiqui across India’s most scenic routes.
+          <p className="mt-2 text-[#f5f5f5]/70 max-w-xl text-xs sm:text-sm leading-relaxed">
+            Pocket-friendly small-group journeys for students, solo travelers, and curious explorers. All stays, transport, and meals included with zero hidden costs.
           </p>
         </div>
 
@@ -207,15 +209,22 @@ export default function GroupTourCards() {
                       )}
                     </div>
 
-                    {/* Bottom Action Row (Compact) */}
+                    {/* Bottom Action Row (With Clear Budget Pricing) */}
                     <div className="flex items-center justify-between gap-3 flex-wrap pt-3 border-t border-[#f5f5f5]/5">
                       {isUpcoming ? (
                         <>
-                          <div className="flex items-center gap-1.5 text-white/40 text-xs">
-                            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
-                            <span className="text-[11px] uppercase tracking-wider font-mono">
-                              Small Group: 10–12 Travellers
+                          <div>
+                            <span className="text-[10px] text-white/40 uppercase tracking-widest block font-medium">
+                              Estimated Budget
                             </span>
+                            <p
+                              className="text-base sm:text-lg font-bold text-white flex items-baseline gap-1"
+                              style={{ fontFamily: "var(--font-fredoka)" }}
+                            >
+                              ₹{tour.pricePerPerson.toLocaleString("en-IN")}
+                              <span className="text-xs text-white/40 font-normal">/ person</span>
+                            </p>
+                            <span className="text-[10px] text-white/40 block">Small Group · 10–12 Travellers</span>
                           </div>
                           <button
                             onClick={() => {
@@ -224,7 +233,7 @@ export default function GroupTourCards() {
                             }}
                             className="px-5 py-2.5 rounded-full text-xs font-bold bg-white text-black hover:bg-[#eaeaea] transition-all flex items-center gap-2 cursor-pointer shadow-md"
                           >
-                            <span>Get Notified When Dates Open</span>
+                            <span>Get Notified for Dates</span>
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                               <line x1="5" y1="12" x2="19" y2="12" />
                               <polyline points="12 5 19 12 12 19" />
@@ -234,16 +243,19 @@ export default function GroupTourCards() {
                       ) : (
                         <>
                           <div>
-                            <p className="text-[9px] text-[#f5f5f5]/30 uppercase tracking-widest">Trip Type</p>
+                            <span className="text-[10px] text-white/50 uppercase tracking-widest block font-medium">
+                              All-Inclusive Package
+                            </span>
                             <p
-                              className="text-base sm:text-lg font-bold text-[#f5f5f5]"
+                              className="text-xl sm:text-2xl font-bold text-white flex items-baseline gap-1"
                               style={{ fontFamily: "var(--font-fredoka)" }}
                             >
-                              Small Group Trip
-                              <span className="text-[11px] text-[#f5f5f5]/40 font-normal block font-sans">
-                                10–12 Travellers
-                              </span>
+                              ₹{tour.pricePerPerson.toLocaleString("en-IN")}
+                              <span className="text-xs text-white/50 font-normal">/ person</span>
                             </p>
+                            <span className="text-[10px] text-white/40 block font-mono">
+                              Stays + Travel + Meals Included
+                            </span>
                           </div>
                           <div className="flex items-center gap-2">
                             <button
@@ -253,7 +265,7 @@ export default function GroupTourCards() {
                               }}
                               className="px-4 py-2 rounded-full text-xs font-semibold text-white/80 hover:text-white bg-white/5 hover:bg-white/10 border border-white/15 hover:border-white/30 transition-all cursor-pointer"
                             >
-                              See Day-by-Day Plan
+                              Day-by-Day Plan
                             </button>
                             <button
                               onClick={() => {

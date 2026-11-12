@@ -288,15 +288,9 @@ export default function TravelHero() {
     { label: "Dates", value: `${trip.departureDate} – ${trip.returnDate}` },
     { label: "Duration", value: trip.durationLabel || `${trip.durationDays} Days` },
     {
-      label: "Altitude",
-      value:
-        currentSlide.tripSlug?.includes("spiti")
-          ? "15,000 ft"
-          : currentSlide.tripSlug?.includes("ladakh")
-          ? "18,380 ft"
-          : currentSlide.tripSlug?.includes("kashmir")
-          ? "14,000 ft"
-          : "4,600 ft",
+      label: "Package",
+      value: trip.pricePerPerson > 0 ? `₹${trip.pricePerPerson.toLocaleString("en-IN")}` : "From ₹4,999",
+      highlight: true,
     },
     { label: "Group Size", value: `${trip.maxGroupSize} Travellers` },
     { label: "Expedition", value: "Curated Group" },

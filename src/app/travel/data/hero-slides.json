@@ -1,30 +1,88 @@
 [
   {
-    "id": "kashmir-winter-expedition",
-    "tripSlug": "",
+    "id": "rajasthan-desert-weekend",
+    "tripSlug": "rajasthan-desert-weekend-backpacking",
     "mediaType": "photo",
-    "badgeLabel": "Winter · Verified Group Tour",
-    "eyebrow": "ASHRAF SIDDIQUI · SOLO TRAVELLER",
-    "titleLine1": "KASHMIR WINTER",
-    "titleLine2": "GROUP TRIP",
-    "subtitle": "From solitary shikara drifts on frozen Dal Lake to high-altitude powder at Apharwat Peak. Experience Kashmir with zero tourist rush.",
-    "posterImage": "https://res.cloudinary.com/kswonkd9/image/upload/v1794421586/kashmir1.jpg",
-    "imageAlt": "Kashmir winter alpine snow expedition",
+    "badgeLabel": "Weekend Backpacking · From ₹4,999",
+    "eyebrow": "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA",
+    "titleLine1": "RAJASTHAN DESERT",
+    "titleLine2": "WEEKEND ESCAPE",
+    "subtitle": "Camp under the stars in Sam Sand Dunes, ride camels across golden sands, and explore the living Golden Fort on a pocket-friendly weekend.",
+    "posterImage": "/img/travel/rajasthan.jpg",
+    "imageAlt": "Rajasthan desert weekend camping",
     "metrics": [
       {
         "label": "Dates",
-        "value": "27 Jan– 3 Feb 2027",
+        "value": "27 Feb – 1 Mar 2026",
         "highlight": true
       },
       {
         "label": "Duration",
-        "value": "8 Days / 7 Nights",
+        "value": "3 Days / 2 Nights",
         "highlight": false
       },
       {
-        "label": "Altitude",
-        "value": "14,000 ft",
+        "label": "Package",
+        "value": "₹4,999 / Person",
+        "highlight": true
+      },
+      {
+        "label": "Group Size",
+        "value": "12 Travellers",
         "highlight": false
+      },
+      {
+        "label": "Expedition",
+        "value": "Curated Group",
+        "highlight": false
+      },
+      {
+        "label": "Available",
+        "value": "5 Seats Left",
+        "highlight": true
+      }
+    ],
+    "primaryCta": {
+      "enabled": true,
+      "label": "View Trip Details & Reserve",
+      "action": "openModal",
+      "target": "rajasthan-desert-weekend-backpacking"
+    },
+    "secondaryCta": {
+      "enabled": true,
+      "label": "See All Trips (From ₹4,999)",
+      "action": "scroll",
+      "target": "#group-tours"
+    },
+    "isActive": true,
+    "sortOrder": 1
+  },
+  {
+    "id": "kashmir-winter-expedition",
+    "tripSlug": "kashmir-winter-expedition-2026",
+    "mediaType": "photo",
+    "badgeLabel": "Winter Snow Trip · All-Inclusive ₹18,999",
+    "eyebrow": "ASHRAF SIDDIQUI · SOLO TRAVELLER",
+    "titleLine1": "KASHMIR WINTER",
+    "titleLine2": "GROUP EXPEDITION",
+    "subtitle": "From solitary shikara drifts on frozen Dal Lake to high-altitude snow at Gulmarg and pine valleys of Pahalgam. Real travel without tourist rush.",
+    "posterImage": "/img/travel/kashmir_hero.jpg",
+    "imageAlt": "Kashmir winter alpine snow expedition",
+    "metrics": [
+      {
+        "label": "Dates",
+        "value": "14 Feb – 21 Feb 2026",
+        "highlight": true
+      },
+      {
+        "label": "Duration",
+        "value": "7 Days / 6 Nights",
+        "highlight": false
+      },
+      {
+        "label": "Package",
+        "value": "₹18,999 / Person",
+        "highlight": true
       },
       {
         "label": "Group Size",
@@ -38,7 +96,7 @@
       },
       {
         "label": "Available",
-        "value": "8 Seats Left",
+        "value": "4 Seats Left",
         "highlight": true
       }
     ],
@@ -61,32 +119,32 @@
     "id": "meghalaya-living-roots",
     "tripSlug": "meghalaya-living-root-bridges-2026",
     "mediaType": "photo",
-    "badgeLabel": "Northeast Trails · Ancient Bridges",
+    "badgeLabel": "Northeast Trails · From ₹14,999",
     "eyebrow": "ASHRAF SIDDIQUI · SOLO TRAVELLER · JAIPUR, INDIA",
     "titleLine1": "MEGHALAYA TRAILS",
     "titleLine2": "ROOT BRIDGES.",
-    "subtitle": "Trek down 3,500 steps to century-old bio-engineered root bridges, swim in crystal Umngot waters, and explore sacred Khasi rainforests.",
+    "subtitle": "Trek down 3,000 steps to century-old bio-engineered root bridges, swim in crystal Umngot waters, and explore sacred Khasi rainforests.",
     "posterImage": "/img/travel/Snowy Mountain Road Journey.png",
     "imageAlt": "Meghalaya living root bridges expedition",
     "metrics": [
       {
         "label": "Dates",
-        "value": "15 Oct – 21 Oct 2026",
+        "value": "15 Oct – 20 Oct 2026",
         "highlight": false
       },
       {
         "label": "Duration",
-        "value": "7 Days / 6 Nights",
+        "value": "6 Days / 5 Nights",
         "highlight": false
       },
       {
-        "label": "Altitude",
-        "value": "4,600 ft",
-        "highlight": false
+        "label": "Package",
+        "value": "₹14,999 / Person",
+        "highlight": true
       },
       {
         "label": "Group Size",
-        "value": "14 Travellers",
+        "value": "12 Travellers",
         "highlight": false
       },
       {
@@ -113,6 +171,6 @@
       "target": "#group-tours"
     },
     "isActive": true,
-    "sortOrder": 4
+    "sortOrder": 3
   }
 ]

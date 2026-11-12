@@ -78,8 +78,8 @@ export default function TripsClient() {
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
-              <p className="text-[11px] sm:text-xs tracking-[0.25em] uppercase text-[#f5f5f5]/40 font-medium">
-                Curated Small-Group Journeys
+              <p className="text-[11px] sm:text-xs tracking-[0.2em] uppercase text-[#f5f5f5]/60 font-semibold font-mono">
+                Budget Expeditions · From ₹4,999 to ₹19,999
               </p>
             </div>
             <h1
@@ -88,9 +88,8 @@ export default function TripsClient() {
             >
               Upcoming Group Expeditions
             </h1>
-            <p className="mt-3 text-xs sm:text-sm text-[#f5f5f5]/50 max-w-xl leading-relaxed">
-              Travel slowly with a close-knit group of 10 to 12 explorers. Personally led by Ashraf Siddiqui
-              across India’s wildest mountain passes, high deserts, and cultural heartlands.
+            <p className="mt-3 text-xs sm:text-sm text-[#f5f5f5]/70 max-w-xl leading-relaxed">
+              Pocket-friendly small-group journeys from ₹4,999 to ₹19,999. Travel slowly with 10 to 12 explorers, staying in local homestays with zero hidden charges.
             </p>
           </div>
 
@@ -307,12 +306,15 @@ export default function TripsClient() {
                         {/* Trip Mode and CTA */}
                         <div className="flex items-center justify-between pt-3 border-t border-[#f5f5f5]/10">
                           <div>
-                            <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 block">Expedition</span>
+                            <span className="text-[10px] uppercase tracking-wider text-[#f5f5f5]/40 block font-mono">
+                              All-Inclusive
+                            </span>
                             <p
-                              className="text-sm sm:text-base font-bold text-[#f5f5f5]"
+                              className="text-base sm:text-lg font-bold text-[#f5f5f5] flex items-baseline gap-1"
                               style={{ fontFamily: "var(--font-fredoka)" }}
                             >
-                              Curated Group Tour
+                              ₹{trip.pricePerPerson.toLocaleString("en-IN")}
+                              <span className="text-[11px] text-white/40 font-normal">/ person</span>
                             </p>
                           </div>
 

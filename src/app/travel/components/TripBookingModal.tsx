@@ -224,6 +224,20 @@ export default function TripBookingModal({
               <p className="text-xs text-[#f5f5f5]/50 mt-1">
                 {trip.departureDate} &rarr; {trip.returnDate} · {trip.durationLabel} · Small Group (10–12 People)
               </p>
+
+              {/* Price Banner */}
+              {trip.pricePerPerson > 0 && (
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs mt-3 flex-wrap">
+                  <span className="text-white/50 text-[11px]">All-Inclusive Package:</span>
+                  <span className="font-bold text-white text-sm" style={{ fontFamily: "var(--font-fredoka)" }}>
+                    ₹{trip.pricePerPerson.toLocaleString("en-IN")}
+                  </span>
+                  <span className="text-[10px] text-white/40">/ person</span>
+                  <span className="text-[10px] text-white/40 border-l border-white/10 pl-2 font-mono">
+                    Stays, travel &amp; meals included
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Navigation Tabs: Detailed Itinerary vs. Register Seat */}

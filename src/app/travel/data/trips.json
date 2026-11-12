@@ -1,5 +1,94 @@
 [
   {
+    "id": "trip-rajasthan-weekend",
+    "slug": "rajasthan-desert-weekend-backpacking",
+    "title": "Rajasthan Desert & Forts Weekend Backpacking",
+    "tagline": "Camp under the desert stars at Sam Sand Dunes, explore the living Golden Fort, and eat hot dal baati at roadside dhabas.",
+    "destination": "Jaisalmer & Thar Desert",
+    "destinationSlug": "rajasthan",
+    "state": "Rajasthan",
+    "coverImage": "/img/travel/rajasthan.jpg",
+    "gallery": [
+      "/img/travel/rajasthan.jpg",
+      "/img/travel/kashmir_hero.jpg",
+      "/img/travel/ladakh.jpg"
+    ],
+    "departureDate": "27 Feb 2026",
+    "returnDate": "01 Mar 2026",
+    "durationDays": 3,
+    "durationLabel": "3 Days / 2 Nights",
+    "departureCity": "Jaipur / Jaisalmer",
+    "pricePerPerson": 4999,
+    "currency": "INR (₹)",
+    "maxGroupSize": 12,
+    "availableSeats": 5,
+    "totalSeats": 12,
+    "difficulty": "Easy to Moderate",
+    "status": "Almost Full",
+    "isConfirmed": true,
+    "isUpcoming": false,
+    "overview": "A budget-friendly 3-day weekend backpacking escape designed for students and working professionals. Camp under crystal clear desert skies at Sam Sand Dunes, take an evening camel trek, explore the narrow lanes of Jaisalmer Golden Fort, and enjoy fresh Rajasthani food around a night bonfire.",
+    "highlights": [
+      "Overnight camping in Swiss tents in the Thar Desert with evening folk music & bonfire",
+      "Sunset camel safari across the golden sand ripples of Sam Dunes",
+      "Walking tour inside the 800-year-old living Jaisalmer Fort & Patwon Ki Haveli",
+      "Authentic local meals including hot Dal Baati Churma and Ker Sangri",
+      "Small group of 10–12 friendly travelers guided personally by Ashraf"
+    ],
+    "inclusions": [
+      "2 nights accommodation (1 night desert swiss tent + 1 night heritage hostel/hotel)",
+      "Daily breakfast and traditional Rajasthani dinners",
+      "Sunset desert camel safari and cultural folk dance evening",
+      "Guided walk of Jaisalmer Fort and ancient town markets",
+      "Dedicated trip host and 24/7 on-ground assistance"
+    ],
+    "exclusions": [
+      "Train or bus travel to/from Jaipur/Jaisalmer",
+      "Lunches and personal shopping expenses",
+      "Monument entry tickets and camera fees"
+    ],
+    "dayWiseItinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Jaisalmer & Golden Fort Exploration",
+        "description": "Meet the group at Jaisalmer station/hotel. Check in, freshen up, and head out to explore the UNESCO World Heritage Jaisalmer Fort — one of the only living forts in the world. Stroll through the heritage alleys and watch the sunset from Cannon Point. Enjoy a hot local dinner together.",
+        "mealsIncluded": "Welcome Chai & Dinner",
+        "nightStay": "Jaisalmer Heritage Stay"
+      },
+      {
+        "day": 2,
+        "title": "Ghost Village of Kuldhara & Thar Desert Camping",
+        "description": "After breakfast, visit the mysterious abandoned village of Kuldhara. Continue into the Thar desert to Sam Sand Dunes. Enjoy sunset camel rides across the golden sands. Spend the evening around a warm desert bonfire with Rajasthani folk music, dancing, and a star-lit dinner.",
+        "mealsIncluded": "Breakfast & Desert Dinner",
+        "nightStay": "Sam Sand Dunes Swiss Camp"
+      },
+      {
+        "day": 3,
+        "title": "Desert Sunrise & Return Journey",
+        "description": "Wake up early to catch a peaceful desert sunrise over the dunes. Enjoy hot tea and breakfast before driving back to Jaisalmer town. Explore local spice and handicraft markets before evening departures.",
+        "mealsIncluded": "Breakfast",
+        "nightStay": "Trip Concludes"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is this trip beginner-friendly?",
+        "answer": "Yes, absolutely! It is an easy-paced weekend trip suitable for anyone looking for a pocket-friendly desert break."
+      },
+      {
+        "question": "Can solo travelers join?",
+        "answer": "Most of our travelers join solo! You will be paired with a friendly same-gender roommate in clean, verified stays."
+      }
+    ],
+    "host": {
+      "name": "Ashraf Siddiqui",
+      "role": "Trip Leader & Explorer",
+      "experience": "Jaipur based · 24 Indian states explored",
+      "avatar": "/img/travel/ashraf.jpeg",
+      "message": "Rajasthan is my home ground. I'll take you to the real desert spots away from crowded tourist traps."
+    }
+  },
+  {
     "id": "trip-kashmir-2026",
     "slug": "kashmir-winter-expedition-2026",
     "title": "Kashmir Winter & Alpine Powder Expedition",
@@ -18,7 +107,7 @@
     "durationDays": 7,
     "durationLabel": "7 Days / 6 Nights",
     "departureCity": "Srinagar (SXR)",
-    "pricePerPerson": 0,
+    "pricePerPerson": 18999,
     "currency": "INR (₹)",
     "maxGroupSize": 12,
     "availableSeats": 4,
@@ -27,17 +116,17 @@
     "status": "Almost Full",
     "isConfirmed": true,
     "isUpcoming": false,
-    "overview": "A meticulously designed 7-day winter journey across Kashmir based on Ashraf Siddiqui's field-tested route. Covering Srinagar heritage houseboats, the frozen wonderland of Sonmarg and Thajiwas Glacier, 14,000-ft Apharwat Peak at Gulmarg via the Gondola, the pristine valleys of Pahalgam (Betaab, Aru & Chandanwari), and authentic street food walks in Lal Chowk.",
+    "overview": "A budget-conscious 7-day winter journey across Kashmir based on Ashraf Siddiqui's field-tested route. Covering Srinagar heritage houseboats, the frozen wonderland of Sonmarg and Thajiwas Glacier, 14,000-ft Apharwat Peak at Gulmarg via the Gondola, the pristine valleys of Pahalgam, and authentic street food walks.",
     "highlights": [
-      "2 nights aboard a traditional cedarwood heritage houseboat on peaceful Dal/Nigeen Lake",
+      "2 nights aboard a traditional cedarwood heritage houseboat on peaceful Dal Lake",
       "Full day Sonmarg exploration to Thajiwas Glacier and the historic wooden bridge",
       "Gondola Phase 1 & 2 tickets to 13,780 ft on Apharwat Peak plus frozen Drung Waterfall",
-      "Overnight stay in Pahalgam with Betaab Valley, Aru Valley & Chandanwari excursions",
-      "Authentic Srinagar street food walk in Lal Chowk and multi-course Wazwan feast",
+      "Overnight stay in Pahalgam with Betaab Valley and Aru Valley excursions",
+      "Authentic Srinagar street food walk in Lal Chowk and Kashmiri Wazwan feast",
       "Curated small-group experience capped strictly at 10–12 fellow travelers"
     ],
     "inclusions": [
-      "All accommodation (Double-occupancy in boutique heritage stays, Pahalgam hotel & heated houseboats)",
+      "All accommodation (Double-occupancy in boutique stays, Pahalgam hotel & heated houseboats)",
       "Daily breakfast and traditional Kashmiri dinners throughout the 7 days",
       "Private dedicated mountain transport with professional local drivers and winter tire chains",
       "Gondola cable car passes for Apharwat Peak in Gulmarg",
@@ -48,9 +137,8 @@
     "exclusions": [
       "Airfare or train transit to and from Srinagar / Jammu",
       "Lunches, personal snacks, and extra Kehwa outside scheduled meals",
-      "Winter gear rental (heavy snow jackets/boots) if you do not bring your own",
-      "Personal expenses, shopping, pony rides, and optional ski equipment",
-      "Travel insurance (highly recommended)"
+      "Winter gear rental if you do not bring your own",
+      "Personal expenses, shopping, pony rides, and optional ski equipment"
     ],
     "dayWiseItinerary": [
       {
@@ -63,42 +151,42 @@
       {
         "day": 2,
         "title": "Srinagar to Sonmarg & Thajiwas Glacier Exploration",
-        "description": "Morning drive (approx 100 km, 2.5–3 hours) along the Sindh River to Sonmarg ('Meadow of Gold' at 8,950 ft). Explore the snow-clad valley and hike or take a pony ride to the majestic Thajiwas Glacier viewpoint. Enjoy hot Maggi and Kehwa amidst towering Himalayan peaks. On the return drive, stop at the historic wooden bridge of Sonmarg before returning to Srinagar by evening.",
+        "description": "Morning drive along the Sindh River to Sonmarg ('Meadow of Gold' at 8,950 ft). Explore the snow-clad valley and hike to the majestic Thajiwas Glacier viewpoint. Enjoy hot Maggi and Kehwa amidst towering peaks before returning to Srinagar.",
         "mealsIncluded": "Breakfast & Dinner",
         "nightStay": "Srinagar Hotel / Houseboat"
       },
       {
         "day": 3,
         "title": "Srinagar to Gulmarg, Drung Waterfall & Gondola Ride (14,000 ft)",
-        "description": "Early 7:30 AM departure to beat traffic. Visit the frozen Drung Waterfall near Tangmarg cascading down pine-clad cliffs. Ascend to Gulmarg (2,650 m) through dense snow-covered pine forests. Ride the world-famous Gulmarg Gondola: Phase 1 (Kongdoori) and Phase 2 (Apharwat Peak at 13,780 ft) for breathtaking views of the Pir Panjal range. Enjoy sledging, snow activities, and pine forest walks before returning to Srinagar.",
+        "description": "Early departure to beat traffic. Visit the frozen Drung Waterfall cascading down pine cliffs. Ride the famous Gulmarg Gondola up to Apharwat Peak for breathtaking views of the Pir Panjal range. Enjoy snow walks before returning to Srinagar.",
         "mealsIncluded": "Breakfast & Dinner",
         "nightStay": "Srinagar Hotel / Houseboat"
       },
       {
         "day": 4,
-        "title": "Srinagar to Pahalgam — Betaab Valley, Aru Valley & Chandanwari",
-        "description": "Scenic morning drive past the saffron fields of Pampore and historic Awantipora temple ruins toward Pahalgam ('Valley of Shepherds') along the Lidder River. Explore the emerald pine meadows of Betaab Valley, scenic Aru Valley, and the snowy gateway of Chandanwari. Evening riverside stroll and bonfire.",
+        "title": "Srinagar to Pahalgam — Betaab Valley & Aru Valley",
+        "description": "Scenic morning drive past saffron fields toward Pahalgam along the Lidder River. Explore the emerald pine meadows of Betaab Valley and scenic Aru Valley. Evening riverside stroll and bonfire.",
         "mealsIncluded": "Breakfast & Traditional Dinner",
         "nightStay": "Pahalgam Riverside Stay (1 Night)"
       },
       {
         "day": 5,
         "title": "Return to Srinagar — Dal Lake Shikara Drift & Mughal Gardens",
-        "description": "Morning peace in Pahalgam before driving back to Srinagar. Settle into Srinagar and embark on a serene 2-hour Shikara ride across Dal Lake. Explore the royal Mughal heritage: Nishat Bagh (Garden of Bliss), Shalimar Bagh, Chashme Shahi, and sunset at Pari Mahal (Palace of Fairies) overlooking Dal Lake, followed by a visit to Hazratbal Shrine.",
+        "description": "Drive back to Srinagar and embark on a serene 2-hour Shikara ride across Dal Lake. Explore the royal Mughal heritage gardens and watch the sunset from Pari Mahal overlooking the lake.",
         "mealsIncluded": "Breakfast & Dinner",
         "nightStay": "Srinagar Hotel / Cedar Houseboat"
       },
       {
         "day": 6,
-        "title": "Srinagar Heritage Trail — Lal Chowk & Authentic Wazwan Food Walk",
-        "description": "Discover the vibrant heartbeat of Srinagar at Lal Chowk and the Clock Tower. Explore traditional pashmina and spice bazaars. Enjoy an authentic street food walk trying Seekh Kebabs, Girda Bread, Rajma Chawal, Kalari Kulcha, and traditional pink Noon Chai. In Dal Lake (Ghat No. 6), indulge in authentic Wazwan specialties including Rogan Josh, Yakhni, Dum Aloo, and Kashmiri Pulao. Evening illuminated city walk.",
+        "title": "Srinagar Heritage Trail — Lal Chowk & Wazwan Dinner",
+        "description": "Discover Srinagar's heartbeat at Lal Chowk. Explore traditional spice and handicraft bazaars. Savor a royal multi-course Wazwan feast with local specialties.",
         "mealsIncluded": "Breakfast & Grand Wazwan Dinner",
         "nightStay": "Srinagar Hotel / Cedar Houseboat"
       },
       {
         "day": 7,
-        "title": "Souvenir Keepsakes & Departure Day",
-        "description": "Enjoy a final morning cup of steaming saffron Kehwa. Check out from your stay and do last-minute shopping for pure saffron, walnuts, and Kashmiri handicrafts. Transfer to Srinagar Airport / Jammu transit with lifelong memories of the paradise on earth.",
+        "title": "Departure Day",
+        "description": "Final morning saffron Kehwa. Check out and transfer to Srinagar Airport with unforgettable winter memories.",
         "mealsIncluded": "Breakfast",
         "nightStay": "Expedition Concludes"
       }
@@ -106,303 +194,19 @@
     "faqs": [
       {
         "question": "How cold will it get in Kashmir during February?",
-        "answer": "Daytime temperatures in Srinagar range from 5°C to 12°C, dropping to -2°C to 2°C at night. In Gulmarg, temperatures can plunge to -8°C at night. All our accommodations feature traditional bukhari wood heaters or central electric heating with heated electric blankets."
+        "answer": "Daytime temperatures in Srinagar range from 5°C to 12°C, dropping to -2°C to 2°C at night. All our stays feature traditional heaters or electric heating."
       },
       {
-        "question": "Can beginners join this trip? Is high fitness required?",
-        "answer": "Yes, absolutely! This is an experiential expedition suitable for travelers of average fitness. Walking in snow is slow and peaceful. Crampons and walking sticks are provided for ridge walks."
-      },
-      {
-        "question": "What is the group size and who else travels?",
-        "answer": "The group is strictly capped at 12 people. Our community comprises photographers, solo professionals, creatives, and adventure enthusiasts aged between 22 and 45. Solo travelers are warmly welcomed and matched with a same-gender roommate."
-      },
-      {
-        "question": "What is the booking and payment process?",
-        "answer": "In this phase, submitting your registration reserves your seat enquiry without immediate card payment. Our team verifies seat availability and contacts you on WhatsApp within 24 hours to confirm your spot with an advance deposit."
+        "question": "Can beginners join this trip?",
+        "answer": "Yes, absolutely! This is an experiential budget expedition suitable for anyone of average fitness."
       }
     ],
     "host": {
       "name": "Ashraf Siddiqui",
-      "role": "Expedition Leader & Creator",
+      "role": "Expedition Leader",
       "experience": "24 Indian states explored · 6 expeditions led",
-      "avatar": "/img/travel/kashmir_hero.jpg",
-      "message": "I personally lead every minute of this journey. We travel slow, respect local communities, and create genuine bonds that outlive the trip."
-    }
-  },
-  {
-    "id": "trip-spiti-2026",
-    "slug": "spiti-valley-circuit-2026",
-    "title": "Spiti Valley Middle Land 4x4 Circuit",
-    "tagline": "Traverse high Himalayan mountain passes, thousand-year-old Tibetan monasteries, and the world's highest post office.",
-    "destination": "Spiti",
-    "destinationSlug": "himachal",
-    "state": "Himachal Pradesh",
-    "coverImage": "/img/travel/ladakh.jpg",
-    "gallery": [
-      "/img/travel/ladakh.jpg",
-      "/img/travel/kashmir_hero.jpg",
-      "/img/travel/rajasthan.jpg"
-    ],
-    "departureDate": "10 Jun 2026",
-    "returnDate": "19 Jun 2026",
-    "durationDays": 10,
-    "durationLabel": "10 Days / 9 Nights",
-    "departureCity": "Shimla (SLV)",
-    "pricePerPerson": 0,
-    "currency": "INR (₹)",
-    "maxGroupSize": 10,
-    "availableSeats": 7,
-    "totalSeats": 10,
-    "difficulty": "Challenging",
-    "status": "Upcoming",
-    "isConfirmed": true,
-    "isUpcoming": true,
-    "overview": "A rugged overland journey through the Middle Land connecting Tibet and India. Crossing Kunzum Pass, staying in ancient village homestays like Langza, and gazing into the starlit void at 14,000 feet.",
-    "highlights": [
-      "Send a postcard from the World's Highest Post Office in Hikkim (14,567 ft)",
-      "Stay in mud-brick homestays in Langza under the shadow of Chau Chau Kang Nilda peak",
-      "Explore 1000-year-old Key Monastery and meditate with resident monks",
-      "Drive across Asia's highest suspension bridge at Chicham (13,596 ft)",
-      "Camp beside the celestial crescent waters of Chandratal Lake"
-    ],
-    "inclusions": [
-      "9 nights stay in local homestays and alpine camps",
-      "Breakfast and dinners daily (nutritious local vegetarian meals)",
-      "High ground clearance 4x4 vehicles with experienced mountain drivers",
-      "Permits, entry fees, and oxygen cylinders in every vehicle",
-      "Expedition leader and local Spitian community coordinator"
-    ],
-    "exclusions": [
-      "Travel from your home city to Shimla",
-      "Lunches and personal shopping",
-      "Insurance and medical evacuation expenses"
-    ],
-    "dayWiseItinerary": [
-      {
-        "day": 1,
-        "title": "Shimla to Sangla Valley",
-        "description": "Drive along Hindustan-Tibet road through Kinnaur gorges.",
-        "mealsIncluded": "Dinner",
-        "nightStay": "Sangla Riverside Camp"
-      },
-      {
-        "day": 2,
-        "title": "Sangla to Kalpa & Kinner Kailash Views",
-        "description": "Visit Chitkul (last Indian village) and watch sunset over sacred Kinner Kailash.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Kalpa Heritage Stay"
-      },
-      {
-        "day": 3,
-        "title": "Kalpa to Nako & Tabo Monastery",
-        "description": "Cross into Spiti district; visit thousand-year-old UNESCO Tabo mud monastery.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Tabo Guesthouse"
-      },
-      {
-        "day": 4,
-        "title": "Tabo to Dhankar Fort & Kaza",
-        "description": "Climb Dhankar monastery perched on cliff edge; reach Spiti headquarters in Kaza.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Kaza Homestay"
-      },
-      {
-        "day": 5,
-        "title": "Key Monastery & Kibber High Village",
-        "description": "Morning prayers at Key Monastery; explore Kibber wildlife sanctuary.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Kaza Homestay"
-      },
-      {
-        "day": 6,
-        "title": "Hikkim, Komic & Langza Fossil Village",
-        "description": "Send postcards from Hikkim; explore Langza prehistoric marine fossils.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Langza Mud Homestay"
-      },
-      {
-        "day": 7,
-        "title": "Chicham Bridge & Chandratal Lake",
-        "description": "Cross Chicham gorge; camp beside the moon lake Chandratal at 14,100 ft.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Chandratal Swiss Tents"
-      },
-      {
-        "day": 8,
-        "title": "Chandratal over Rohtang Pass to Manali",
-        "description": "Navigate raw river crossings and boulder beds; cross Rohtang Pass to Manali.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Old Manali Cottage"
-      },
-      {
-        "day": 9,
-        "title": "Manali Leisure & Cafe Stroll",
-        "description": "Relax aching muscles in natural hot springs; celebration dinner in Old Manali.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Old Manali Cottage"
-      },
-      {
-        "day": 10,
-        "title": "Departure from Manali",
-        "description": "Overnight Volvo bus or airport transfer to Kullu/Chandigarh.",
-        "mealsIncluded": "Breakfast",
-        "nightStay": "Trip Concludes"
-      }
-    ],
-    "faqs": [
-      {
-        "question": "Is Spiti suitable for first-time high-altitude travelers?",
-        "answer": "We take the gradual ascent route via Shimla and Kinnaur, allowing your body to adapt slowly to altitude over 4 days before reaching Kaza."
-      },
-      {
-        "question": "Will my phone work in Spiti?",
-        "answer": "Only BSNL and Jio postpaid connections receive network coverage in Kaza. Enjoy the digital detox!"
-      }
-    ],
-    "host": {
-      "name": "Ashraf Siddiqui",
-      "role": "Expedition Leader",
-      "experience": "Led 4 Spiti Valley circuits",
-      "avatar": "/img/travel/kashmir_hero.jpg",
-      "message": "Spiti strips life to its raw essentials. You will return transformed."
-    }
-  },
-  {
-    "id": "trip-ladakh-2026",
-    "slug": "ladakh-high-passes-overland-2026",
-    "title": "Ladakh High Passes Overland Expedition",
-    "tagline": "Overland 10-day circuit crossing Khardung La, Nubra cold desert dunes, Turtuk village, and Pangong Tso.",
-    "destination": "Ladakh",
-    "destinationSlug": "ladakh",
-    "state": "Ladakh",
-    "coverImage": "/img/travel/ladakh.jpg",
-    "gallery": [
-      "/img/travel/ladakh.jpg",
-      "/img/travel/kashmir_hero.jpg",
-      "/img/travel/rajasthan.jpg"
-    ],
-    "departureDate": "18 Jul 2026",
-    "returnDate": "27 Jul 2026",
-    "durationDays": 10,
-    "durationLabel": "10 Days / 9 Nights",
-    "departureCity": "Leh (IXL)",
-    "pricePerPerson": 0,
-    "currency": "INR (₹)",
-    "maxGroupSize": 12,
-    "availableSeats": 6,
-    "totalSeats": 12,
-    "difficulty": "Moderate",
-    "status": "Upcoming",
-    "isConfirmed": true,
-    "isUpcoming": true,
-    "overview": "A bucket-list overland Himalayan crossing across the highest motorable roads on planet Earth. Built with mandatory 48-hour acclimatization in Leh, double-humped camel safaris in Hunder, and starlit camps along the Tibetan border.",
-    "highlights": [
-      "Khardung La Pass crossing at 17,982 ft",
-      "Stargazing camps beside the changing blues of Pangong Tso",
-      "Visit Turtuk — India's northernmost Balti border village",
-      "Morning prayers at 15th-century Thiksey Monastery",
-      "Small group capped at 12 participants"
-    ],
-    "inclusions": [
-      "9 nights stay (Boutique guesthouse in Leh, luxury tents in Nubra & Pangong)",
-      "Daily breakfast and dinners",
-      "All Inner Line Permits and Wildlife / Environmental fees",
-      "Private Innova / Scorpio vehicles with oxygen support",
-      "Certified local guide and expedition host"
-    ],
-    "exclusions": [
-      "Flights to/from Leh Airport (IXL)",
-      "Lunches and beverages",
-      "Personal medical insurance"
-    ],
-    "dayWiseItinerary": [
-      {
-        "day": 1,
-        "title": "Touchdown in Leh & Compulsory Rest",
-        "description": "Arrive at 11,500 ft; mandatory 24-hr rest to acclimatize safely.",
-        "mealsIncluded": "Dinner",
-        "nightStay": "Leh Boutique Guesthouse"
-      },
-      {
-        "day": 2,
-        "title": "Indus Valley Monasteries & Shanti Stupa",
-        "description": "Visit Thiksey, Shey Palace, and sunset at Shanti Stupa.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Leh Boutique Guesthouse"
-      },
-      {
-        "day": 3,
-        "title": "Crossing Khardung La into Nubra Valley",
-        "description": "Ascend 17,982 ft pass; descend into Hunder sand dunes.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Nubra Luxury Camps"
-      },
-      {
-        "day": 4,
-        "title": "Turtuk Balti Border Village",
-        "description": "Walk through apricot orchards in Turtuk; meet local Balti elders.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Nubra Luxury Camps"
-      },
-      {
-        "day": 5,
-        "title": "Shyok River Route to Pangong Tso",
-        "description": "Overland gorge drive along turquoise river; arrive at Pangong Lake.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Pangong Lakeshore Camp"
-      },
-      {
-        "day": 6,
-        "title": "Pangong Sunrise & Return over Chang La",
-        "description": "Cross 17,590 ft Chang La; visit Hemis Monastery; return to Leh.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Leh Boutique Guesthouse"
-      },
-      {
-        "day": 7,
-        "title": "Magnetic Hill, Sangam & Alchi Frescoes",
-        "description": "Confluence of Indus & Zanskar rivers; 11th-century frescoes at Alchi.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Leh Boutique Guesthouse"
-      },
-      {
-        "day": 8,
-        "title": "Leh Palace, Tsemo Fort & Local Bazaars",
-        "description": "Explore historic Leh Palace; shop for pashmina and apricots.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Leh Boutique Guesthouse"
-      },
-      {
-        "day": 9,
-        "title": "Stok Village Cultural Day & Farewell Feast",
-        "description": "Visit Stok royal museum; celebration dinner with Tibetan dishes.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Leh Boutique Guesthouse"
-      },
-      {
-        "day": 10,
-        "title": "Departure from Leh Airport",
-        "description": "Morning flights home over the snow peaks of Karakoram.",
-        "mealsIncluded": "Breakfast",
-        "nightStay": "Trip Concludes"
-      }
-    ],
-    "faqs": [
-      {
-        "question": "Is oxygen provided in vehicles?",
-        "answer": "Yes, every vehicle carries medical oxygen canisters and oximeters for daily monitoring."
-      },
-      {
-        "question": "What permits are needed?",
-        "answer": "All Inner Line Permits are handled by our team before you land."
-      }
-    ],
-    "host": {
-      "name": "Ashraf Siddiqui",
-      "role": "Expedition Leader",
-      "experience": "24 states explored · 8 Ladakh circuits",
-      "avatar": "/img/travel/kashmir_hero.jpg",
-      "message": "Ladakh will change your perspective on size and stillness forever."
+      "avatar": "/img/travel/ashraf.jpeg",
+      "message": "I personally lead every minute of this journey. We travel slow, respect local communities, and create genuine bonds."
     }
   },
   {
@@ -420,11 +224,11 @@
       "/img/travel/ladakh.jpg"
     ],
     "departureDate": "15 Oct 2026",
-    "returnDate": "21 Oct 2026",
-    "durationDays": 7,
-    "durationLabel": "7 Days / 6 Nights",
+    "returnDate": "20 Oct 2026",
+    "durationDays": 6,
+    "durationLabel": "6 Days / 5 Nights",
     "departureCity": "Guwahati (GAU)",
-    "pricePerPerson": 0,
+    "pricePerPerson": 14999,
     "currency": "INR (₹)",
     "maxGroupSize": 12,
     "availableSeats": 12,
@@ -433,7 +237,7 @@
     "status": "Upcoming",
     "isConfirmed": false,
     "isUpcoming": true,
-    "overview": "A preliminary draft itinerary for our autumn 2026 Northeast expedition. Registration is open for early interest; confirmed dates will be announced in mid-2026.",
+    "overview": "A budget backpacking trip to the Abode of the Clouds. Hike down stone steps to century-old living root bridges in Nongriat, boat on the crystal glass waters of Dawki river, and stand beside roaring waterfalls.",
     "highlights": [
       "Hike to the Double Decker Living Root Bridge in Nongriat",
       "Boat ride on the glass-like waters of Umngot River in Dawki",
@@ -441,77 +245,190 @@
       "Stand at the edge of Nohkalikai Falls in Cherrapunji"
     ],
     "inclusions": [
-      "6 nights stay in boutique eco-resorts and homestays",
-      "Breakfast and dinners",
-      "Private AC vehicle transfers"
+      "5 nights stay in clean homestays and bamboo cottages",
+      "Breakfast and home-cooked dinners",
+      "Shared dedicated vehicle for all inter-city transfers",
+      "Local Khasi guide for root bridge hike"
     ],
     "exclusions": [
-      "Airfare to Guwahati",
-      "Personal trekking gear"
+      "Airfare or train to Guwahati",
+      "Lunches and personal snacks"
     ],
     "dayWiseItinerary": [
       {
         "day": 1,
         "title": "Guwahati to Shillong",
-        "description": "Scenic drive past Umiam Lake; cafe evening in Shillong.",
+        "description": "Drive up the pine hills from Guwahati to Shillong with a stop at Umiam Lake.",
         "mealsIncluded": "Dinner",
-        "nightStay": "Shillong Heritage Stay"
+        "nightStay": "Shillong Homestay"
       },
       {
         "day": 2,
-        "title": "Shillong to Cherrapunji",
-        "description": "Waterfalls, caves, and dramatic misty gorge viewpoints.",
+        "title": "Cherrapunji Waterfalls",
+        "description": "Visit Nohkalikai and Wei Sawdong waterfalls amidst rolling misty hills.",
         "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Cherrapunji Eco Resort"
+        "nightStay": "Cherrapunji Stay"
       },
       {
         "day": 3,
-        "title": "Nongriat Root Bridge Trek",
-        "description": "3,000 stone steps down to the living bio-engineered wonder.",
+        "title": "Double Decker Living Root Bridge Hike",
+        "description": "Hike 3,000 steps down to Nongriat and see the living bio-engineered bridges.",
         "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Nongriat Homestay"
+        "nightStay": "Nongriat Village Homestay"
       },
       {
         "day": 4,
-        "title": "Rainbow Falls & Climb Back to Tyrna",
-        "description": "Turquoise lagoon plunge pool; return climb to Cherrapunji.",
+        "title": "Rainbow Falls & Return Hike",
+        "description": "Early morning hike to Rainbow Falls with natural turquoise pools.",
         "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Cherrapunji Eco Resort"
+        "nightStay": "Cherrapunji Stay"
       },
       {
         "day": 5,
-        "title": "Dawki & Mawlynnong Clean Village",
-        "description": "Crystal Umngot river boating; stroll through flower gardens.",
+        "title": "Dawki River & Mawlynnong Clean Village",
+        "description": "Boat on clear Umngot river in Dawki and walk through Mawlynnong.",
         "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Dawki Riverside Camp"
+        "nightStay": "Shillong Stay"
       },
       {
         "day": 6,
-        "title": "Krang Shuri Falls & Return to Shillong",
-        "description": "Blue natural swimming pools; farewell dinner in Shillong.",
-        "mealsIncluded": "Breakfast & Dinner",
-        "nightStay": "Shillong Heritage Stay"
-      },
-      {
-        "day": 7,
-        "title": "Departure to Guwahati Airport",
-        "description": "Airport transfer for flights home.",
+        "title": "Return to Guwahati",
+        "description": "Morning souvenir shopping and drive to Guwahati airport/railway station.",
         "mealsIncluded": "Breakfast",
         "nightStay": "Trip Concludes"
       }
     ],
     "faqs": [
       {
-        "question": "Is this trip confirmed?",
-        "answer": "This is a draft sample itinerary. You may register your early interest, and our team will notify you when bookings officially open."
+        "question": "How hard is the root bridge hike?",
+        "answer": "It involves about 3,000 stone steps down and back up. We take plenty of breaks and carry water sticks."
+      }
+    ],
+    "host": {
+      "name": "Ashraf Siddiqui",
+      "role": "Trip Leader",
+      "experience": "24 Indian states explored",
+      "avatar": "/img/travel/ashraf.jpeg",
+      "message": "Meghalaya will make you fall in love with rain and quiet village trails."
+    }
+  },
+  {
+    "id": "trip-spiti-2026",
+    "slug": "spiti-valley-circuit-2026",
+    "title": "Spiti Valley Middle Land 4x4 Circuit",
+    "tagline": "Traverse high Himalayan mountain passes, thousand-year-old Tibetan monasteries, and the world's highest post office.",
+    "destination": "Spiti Valley",
+    "destinationSlug": "himachal",
+    "state": "Himachal Pradesh",
+    "coverImage": "/img/travel/ladakh.jpg",
+    "gallery": [
+      "/img/travel/ladakh.jpg",
+      "/img/travel/kashmir_hero.jpg",
+      "/img/travel/rajasthan.jpg"
+    ],
+    "departureDate": "10 Jun 2026",
+    "returnDate": "17 Jun 2026",
+    "durationDays": 8,
+    "durationLabel": "8 Days / 7 Nights",
+    "departureCity": "Shimla (SLV)",
+    "pricePerPerson": 19499,
+    "currency": "INR (₹)",
+    "maxGroupSize": 10,
+    "availableSeats": 7,
+    "totalSeats": 10,
+    "difficulty": "Moderate",
+    "status": "Upcoming",
+    "isConfirmed": true,
+    "isUpcoming": true,
+    "overview": "A budget overland mountain circuit connecting ancient monasteries and high Himalayan villages. Crossing Kunzum Pass, staying in family homestays like Langza, and gazing into starlit skies at 14,000 feet.",
+    "highlights": [
+      "Send a postcard from the World's Highest Post Office in Hikkim (14,567 ft)",
+      "Stay in mud-brick homestays in Langza under snow peaks",
+      "Explore 1000-year-old Key Monastery and meditate with resident monks",
+      "Drive across Asia's highest suspension bridge at Chicham (13,596 ft)",
+      "Camp beside the celestial crescent waters of Chandratal Lake"
+    ],
+    "inclusions": [
+      "7 nights stay in local homestays and alpine camps",
+      "Breakfast and dinners daily (nutritious local meals)",
+      "Shared high ground-clearance vehicle with mountain driver",
+      "All permits and oxygen cylinders support",
+      "Trip leader and local host guidance"
+    ],
+    "exclusions": [
+      "Travel from your home city to Shimla/Manali",
+      "Lunches and personal shopping"
+    ],
+    "dayWiseItinerary": [
+      {
+        "day": 1,
+        "title": "Shimla to Sangla Valley",
+        "description": "Drive through scenic Kinnaur valleys.",
+        "mealsIncluded": "Dinner",
+        "nightStay": "Sangla Camp"
+      },
+      {
+        "day": 2,
+        "title": "Kalpa & Chitkul",
+        "description": "Visit Chitkul (last Indian village) and watch sunset over sacred Kinner Kailash.",
+        "mealsIncluded": "Breakfast & Dinner",
+        "nightStay": "Kalpa Stay"
+      },
+      {
+        "day": 3,
+        "title": "Nako & Tabo Monastery",
+        "description": "Cross into Spiti and visit thousand-year-old Tabo monastery.",
+        "mealsIncluded": "Breakfast & Dinner",
+        "nightStay": "Tabo Homestay"
+      },
+      {
+        "day": 4,
+        "title": "Dhankar & Kaza",
+        "description": "Climb cliffside Dhankar monastery; settle into Kaza town.",
+        "mealsIncluded": "Breakfast & Dinner",
+        "nightStay": "Kaza Homestay"
+      },
+      {
+        "day": 5,
+        "title": "Key Monastery, Kibber & Hikkim",
+        "description": "Visit Key Monastery, Kibber village, and highest post office at Hikkim.",
+        "mealsIncluded": "Breakfast & Dinner",
+        "nightStay": "Kaza Homestay"
+      },
+      {
+        "day": 6,
+        "title": "Chicham Bridge & Chandratal Lake",
+        "description": "Cross deep Chicham gorge; camp beside the crescent Chandratal lake.",
+        "mealsIncluded": "Breakfast & Dinner",
+        "nightStay": "Chandratal Camp"
+      },
+      {
+        "day": 7,
+        "title": "Chandratal to Manali",
+        "description": "Cross Rohtang Pass down to pine forests of Manali.",
+        "mealsIncluded": "Breakfast & Dinner",
+        "nightStay": "Old Manali Cottage"
+      },
+      {
+        "day": 8,
+        "title": "Departure from Manali",
+        "description": "Overnight Volvo bus or transit back home.",
+        "mealsIncluded": "Breakfast",
+        "nightStay": "Trip Concludes"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Is Spiti suitable for budget travelers?",
+        "answer": "Yes! By staying in genuine village homestays and sharing 4x4 vehicles, we keep costs honest without compromising safety."
       }
     ],
     "host": {
       "name": "Ashraf Siddiqui",
       "role": "Expedition Leader",
-      "experience": "Solo traveler across Northeast India",
-      "avatar": "/img/travel/kashmir_hero.jpg",
-      "message": "Meghalaya's rainforests and living root bridges are unlike anywhere else on earth."
+      "experience": "Led 4 Spiti circuits",
+      "avatar": "/img/travel/ashraf.jpeg",
+      "message": "Spiti teaches you how little you need to be truly happy."
     }
   }
 ]
