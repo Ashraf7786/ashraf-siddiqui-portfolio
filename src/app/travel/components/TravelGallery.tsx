@@ -173,12 +173,25 @@ export default function TravelGallery() {
     return categoryFiltered.filter(p => p.orientation === 'portrait' || p.orientation === 'square');
   }, [categoryFiltered]);
 
-  // Active photos list for lightbox navigation
-  const activePhotosList = useMemo(() => {
+  // Target photos according to active format filter
+  const targetPhotos = useMemo(() => {
     if (orientationFilter === 'landscape') return landscapePhotos;
     if (orientationFilter === 'portrait') return portraitPhotos;
-    return [...landscapePhotos, ...portraitPhotos];
-  }, [orientationFilter, landscapePhotos, portraitPhotos]);
+    return categoryFiltered;
+  }, [orientationFilter, landscapePhotos, portraitPhotos, categoryFiltered]);
+
+  // Limit to ONLY 3 rows on the home page section (3 cols x 3 rows = 9 photos)
+  const MAX_HOME_PHOTOS = 9;
+  const displayedPhotos = useMemo(() => {
+    return targetPhotos.slice(0, MAX_HOME_PHOTOS);
+  }, [targetPhotos]);
+
+  const remainingCount = Math.max(0, targetPhotos.length - displayedPhotos.length);
+
+  // Active photos list for lightbox navigation
+  const activePhotosList = useMemo(() => {
+    return targetPhotos;
+  }, [targetPhotos]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (lightboxIndex === null) return;
@@ -310,128 +323,98 @@ export default function TravelGallery() {
           </div>
         </div>
 
-        {/* ─── SECTION 1: HORIZONTAL (LANDSCAPE) FRAMES ─── */}
-        {(orientationFilter === 'all' || orientationFilter === 'landscape') && landscapePhotos.length > 0 && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/60">
-                  <rect x="2" y="5" width="20" height="14" rx="2" />
-                </svg>
-                <h3 className="text-base sm:text-lg font-bold text-white" style={{ fontFamily: 'var(--font-fredoka)' }}>
-                  Horizontal Frames · Wide Horizons (16:9)
-                </h3>
-              </div>
-              <span className="text-[11px] font-mono text-white/40">
-                {landscapePhotos.length} {landscapePhotos.length === 1 ? 'Photo' : 'Photos'}
-              </span>
-            </div>
-
-            {/* Clean Uniform 16:9 Landscape Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-              {landscapePhotos.map((photo) => (
-                <div
-                  key={photo.id}
-                  className="cursor-pointer group relative overflow-hidden rounded-2xl bg-[#111113] border border-white/10 hover:border-white/25 transition-all duration-300 shadow-md"
-                  onClick={() => openPhotoLightbox(photo)}
-                >
-                  <div className="relative w-full aspect-[16/10] overflow-hidden">
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-white/70 font-semibold mb-0.5">
-                        {photo.category}
-                      </span>
-                      <h4 className="text-white font-bold text-sm leading-snug" style={{ fontFamily: 'var(--font-fredoka)' }}>
-                        {photo.title}
-                      </h4>
-                      <div className="flex items-center gap-1 mt-1 text-white/70 text-xs">
-                        <MapPinIcon />
-                        <span>{photo.location}</span>
+        {/* ─── 3-ROW PHOTO GRID (MAX 9 PHOTOS ON HOME PAGE) ─── */}
+        {displayedPhotos.length > 0 ? (
+          <div className="space-y-10">
+            {/* Grid constrained to 3 rows max */}
+            <div className={`grid gap-4 sm:gap-5 ${
+              orientationFilter === 'portrait'
+                ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-3'
+                : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+            }`}>
+              {displayedPhotos.map((photo) => {
+                const isPortrait = photo.orientation === 'portrait' || photo.orientation === 'square';
+                return (
+                  <div
+                    key={photo.id}
+                    className="cursor-pointer group relative overflow-hidden rounded-2xl bg-[#111113] border border-white/10 hover:border-white/30 transition-all duration-300 shadow-md hover:shadow-2xl"
+                    onClick={() => openPhotoLightbox(photo)}
+                  >
+                    <div className={`relative w-full overflow-hidden ${
+                      orientationFilter === 'portrait' || isPortrait
+                        ? 'aspect-[4/5] sm:aspect-[3/4]'
+                        : 'aspect-[16/10]'
+                    }`}>
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-white/70 font-semibold mb-0.5">
+                          {photo.category}
+                        </span>
+                        <h4 className="text-white font-bold text-sm leading-snug" style={{ fontFamily: 'var(--font-fredoka)' }}>
+                          {photo.title}
+                        </h4>
+                        <div className="flex items-center gap-1.5 mt-1 text-white/70 text-xs">
+                          <MapPinIcon />
+                          <span>{photo.location}</span>
+                          <span className="text-white/40 font-mono text-[10px] ml-1">· {photo.year}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ─── SECTION 2: VERTICAL (PORTRAIT) FRAMES ─── */}
-        {(orientationFilter === 'all' || orientationFilter === 'portrait') && portraitPhotos.length > 0 && (
-          <div className="space-y-4 pt-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-white/60">
-                  <rect x="5" y="2" width="14" height="20" rx="2" />
-                </svg>
-                <h3 className="text-base sm:text-lg font-bold text-white" style={{ fontFamily: 'var(--font-fredoka)' }}>
-                  Vertical Frames · Portraits &amp; Stories (3:4)
-                </h3>
-              </div>
-              <span className="text-[11px] font-mono text-white/40">
-                {portraitPhotos.length} {portraitPhotos.length === 1 ? 'Photo' : 'Photos'}
-              </span>
+                );
+              })}
             </div>
 
-            {/* Clean Uniform 3:4 Vertical Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {portraitPhotos.map((photo) => (
-                <div
-                  key={photo.id}
-                  className="cursor-pointer group relative overflow-hidden rounded-2xl bg-[#111113] border border-white/10 hover:border-white/25 transition-all duration-300 shadow-md"
-                  onClick={() => openPhotoLightbox(photo)}
+            {/* ─── LOAD MORE PHOTOS BUTTON (REDIRECTS TO FULL GALLERY) ─── */}
+            <div className="pt-2 flex flex-col items-center justify-center text-center space-y-3">
+              <Link
+                href={
+                  activeCategory !== 'All'
+                    ? `/travel/gallery?category=${encodeURIComponent(activeCategory)}`
+                    : '/travel/gallery'
+                }
+                className="group inline-flex items-center gap-3 px-8 py-3.5 rounded-full bg-white text-black font-bold text-xs sm:text-sm hover:bg-[#eaeaea] hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl cursor-pointer"
+              >
+                <span>Load More Photos</span>
+                {remainingCount > 0 ? (
+                  <span className="px-2.5 py-0.5 rounded-full bg-black/10 text-black/80 text-xs font-mono font-bold">
+                    +{remainingCount} more
+                  </span>
+                ) : (
+                  <span className="px-2.5 py-0.5 rounded-full bg-black/10 text-black/80 text-xs font-mono font-bold">
+                    {photos.length} total
+                  </span>
+                )}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  className="transition-transform group-hover:translate-x-1"
                 >
-                  <div className="relative w-full aspect-[3/4] overflow-hidden">
-                    <Image
-                      src={photo.src}
-                      alt={photo.alt}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3 sm:p-4">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-white/70 font-semibold mb-0.5">
-                        {photo.category}
-                      </span>
-                      <h4 className="text-white font-bold text-xs sm:text-sm leading-snug" style={{ fontFamily: 'var(--font-fredoka)' }}>
-                        {photo.title}
-                      </h4>
-                      <div className="flex items-center gap-1 mt-1 text-white/70 text-[11px]">
-                        <MapPinIcon />
-                        <span className="truncate">{photo.location}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </Link>
+              <p className="text-xs text-white/40 font-mono">
+                Clicking opens the Full Gallery with all {photos.length} photos, search &amp; high-res viewer
+              </p>
             </div>
           </div>
-        )}
-
-        {/* Empty State */}
-        {landscapePhotos.length === 0 && portraitPhotos.length === 0 && (
+        ) : (
+          /* Empty State */
           <div className="text-center py-16 p-6 rounded-2xl bg-[#111113] border border-white/10 space-y-2">
             <p className="text-white font-semibold text-sm">No photos found for this filter</p>
             <p className="text-xs text-white/50">Try selecting &ldquo;All&rdquo; or switching the format filter above.</p>
           </div>
         )}
-
-        {/* Bottom CTA */}
-        <div className="pt-6 text-center">
-          <Link
-            href="/travel/gallery"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-white text-black font-bold text-xs hover:bg-[#eaeaea] transition-all shadow-md cursor-pointer"
-          >
-            <span>Explore Complete Gallery</span>
-            <ArrowRightIcon />
-          </Link>
-        </div>
 
       </div>
 

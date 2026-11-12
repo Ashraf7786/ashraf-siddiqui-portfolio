@@ -152,6 +152,14 @@ export default function GalleryClient() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get("category");
+      if (cat) setActiveCategory(cat);
+      const ori = params.get("orientation");
+      if (ori === "landscape" || ori === "portrait") setOrientationFilter(ori);
+    }
+
     fetch("/api/travel/gallery")
       .then((r) => r.json())
       .then((d) => {
