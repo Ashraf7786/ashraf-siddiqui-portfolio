@@ -1,22 +1,22 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Loader from "./sending-loader";
+import TravelLoader from "./TravelLoader";
 
 export default function Preloader() {
     const [loading, setLoading] = useState(true);
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
-        // Ensure the animation is fully shown, simulating load time
+        // Complete smoothly after travel sequence (2.5s)
         const loadingTimer = setTimeout(() => {
             setLoading(false);
-        }, 2500);
+        }, 2600);
 
-        // Completely remove the element from DOM after fade out
+        // Completely unmount after fade out
         const visibilityTimer = setTimeout(() => {
             setVisible(false);
-        }, 3000);
+        }, 3100);
 
         return () => {
             clearTimeout(loadingTimer);
@@ -28,9 +28,11 @@ export default function Preloader() {
 
     return (
         <div
-            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#0a0a0a] transition-opacity duration-500 ease-in-out ${loading ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#080808] transition-opacity duration-500 ease-in-out ${
+                loading ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
         >
-            <Loader />
+            <TravelLoader onFinish={() => setLoading(false)} />
         </div>
     );
 }
